@@ -1,0 +1,30 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: typst-community/setup-typst@v5
+      - run: typst compile main.typ main.pdf
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TIMESTAMP_TAG=$(date +'%Y%m%d-%H%M%S')
+          TIMESTAMP_TITLE=$(date +'%Y-%m-%d %H:%M:%S')
+          REPO_NAME=${GITHUB_REPOSITORY#*/}
+
+          gh release create "build-$TIMESTAMP_TAG" main.pdf \
+            --title "$REPO_NAME - $TIMESTAMP_TITLE" \
+            --notes "Automated PDF build from $GITHUB_SHA" \
+            --target "$GITHUB_SHA" \
+            --latest
