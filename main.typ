@@ -86,6 +86,108 @@ Note: the uniform convergence on the sequence of derivatives converges the "shap
 
 = Series of Functions
 
+$sum f_n$ denotes the series of functions, i.e., the sum of the sequence $(f_n)$.
+
+== easy stuff
+
+$f = sum f_n$ is more specifically $f : x mapsto sum_(n=infinity)^infinity f_n (x)$. \
+Clearly, this (infinite) sum may be undefined.
+
+The partial sums of a series is a sequence itself: $(sum_(k=0)^n f_k (x))_n$
+
+$sum f_n$ *converges _pointwise_* on $A$ if the sequence of _partial sums_ converges pointwise on $A$.
+
+/ Weierstrass M-Test: A test for determining whether a series of functions converges _normally_: \
+  $sum f_n$ *converges _normally_* on $A$ \
+  if $forall n in NN, forall x in A : abs(f_n (x)) <= M_n$ \
+  for $M_n >= 0$, $sum M_n$ converges.
+
+Note that _normal convergence_ implies *_uniform_* and *_absolute_ convergence*. \
+The Weierstrass M-test may be seen as the Cauchy Criterion for uniform convergence. \
+Furthermore, the $x$-dependence is eliminated by effectively taking the suprema:
+$
+  sup_x abs(sum_(n=N)^infinity f_n (x)) <= sum_(n=N)^infinity sup_x abs(f_n (x)) = sum_(n=N)^infinity M_n -> 0
+$
+- Does not help find the actual limit.
+- Main tool used to test for uniform convergence.
+
+
+== Power Series
+
+/ Power Series: Series of functions of the form $ sum_(n>=0) a_n (x - b)^n $
+
+- "centered" around $b$
+- effectively an infinite polynomial
+
+A power series always converges for certain $x$:
+- trivially true for $x=b$,
+- then there exists a convergent neighborhood around $b$.
+
+/ Radius of Convergence: Some $r >= 0$ where a power series converges uniformly on any closed interval $A subset (b-r, b+r)$. \
+  Divergence when $x in.not [b-r, b+r]$; unknown when $x = b plus.minus r$. \
+  Can be infinite for series convergent everywhere.
+
+/ D'Alembert's Ratio Test: A test to find the radius of convergence $r$ of a power series. \
+  For some $sum_(n >= 0) a_n (x - b)^n$,
+  consider the limit of the sequence of $a$-ratios $L = lim_(n -> infinity) abs(a_(n+1) / a_n)$:
+  $
+    r = cases(
+      1 / L & "if" L != 0,
+      infinity & "if" L = 0,
+      0 & "if" L = infinity
+    )
+  $
+
+I.e., convergence when $abs(x - b) < 1 / L$.
+
+
+== Taylor Series
+
+Taylor Series are a special case of power series. \
+They converge (within the radius) to arbitrary functions.
+
+For a function $f$ infinitely differentiable at $b in RR$, its Taylor Series centered at $b$ is
+$
+  sum_(n>=0) (f^((n))(b)) / n! (x - b)^n
+$
+
+- converges to $f$ in $(b - r, b + r)$
+- Maclaurin Series are a special case where $b=0$
+
+=== Well-known Functions
+
+$
+  e^x & = sum_(n>=0) x^n / n! && = 1 + x + x^2/2! + x^3/3! + ... &&\
+  cos(x) & = sum_(n>=0) (-1)^n / (2n!) x^(2n) && = 1 - x^2/2! + x^4/4! - x^6/6! + ... &&\
+  sin(x) & = sum_(n>=0) (-1)^n / (2n+1)! x^(2n+1) && = x - x^3/3! + x^5/5! - x^7/7! + ... &&\
+  ln(1+x) & = sum_(n>=1) (-1)^(n+1)/n x^n && = x - x^2/2 + x^3/3 - x^4/4 + ... &quad quad& "for" abs(x) < 1, x = 1 \
+  1 / (1 - x) & = sum_(n>=0) x^n && = 1 + x + x^2 + x^3 + ... &quad quad &"for" abs(x) < 1 \
+  arctan(x) & = sum_(n>=0) (-1)^n / (2n+1) x^(2n+1) && = x - x^3/3 + x^5/5 - x^7/7 + ... &quad quad &"for" abs(x) < 1 \
+$
+
+=== Approximations
+
+The degree-$n$ Taylor polynomial of $f$ centered at $b$ is just the series truncated after $n+1$  terms:
+$ T_n (x) = sum_(k=0)^n (f^((k))(b)) / k! (x - b)^k $
+
+$f(x) approx T_n (x)$ for $x approx a$.
+
+$R_n (x) = f(x) - T_n (x)$ is the tail of the terms in the series. \
+There are numerous ways to express this sub-series beyond a simple summation.
+
+/ Lagrange Form of the Taylor Remainder:
+  $ R_n (x) = (f^((n+1)) (xi))/(n+1)! (x-b)^(n+1) $
+  where $xi$ is a function of $x$ and is strictly between $b$ and $x$ (open interval).
+
+The derivation of such a term that "captures" an entire series comes from the Mean Value Theorem; the heavy lifting is done by $xi$, which is a function itself and is _not_ computable, but is bounded and thus provides an upper bound for $R_n (x)$. Let $M = max_(xi in (b, x)) abs(f^((n+1)) (xi))$:
+$ abs(R_n (x)) <= M / (n+1)! abs(x - b)^(n+1) $
+
+Since $M$ is constant, we have, for $x -> b$:
+- $R_n (x) approx abs(x - b)^(n+1)$, or more specifically,
+- $R_n (x) = O((x - b)^(n + 1))$
+- $R_n (x) = o((x - b)^n)$
+
+
 = Linear Algebra
 
 = Matrix Reduction
