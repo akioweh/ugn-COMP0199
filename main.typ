@@ -16,6 +16,12 @@
 
 = Sequences of Functions
 
+$(f_n)_(n=0)^infinity$ or $(f_n)$ denotes the sequence of functions where $f_n : A mapsto RR$ for all $n in NN$.
+
+/ Sequence of Functions: An assignment of a function $f_n : A mapsto RR$ to each $n in NN$.
+
+Hereafter, assume $A$ as the domain / target interval.
+
 == Backgroud
 
 For numbers, the sequence $u_n$ tends to $l$ iff.
@@ -31,48 +37,51 @@ $
 A sequence is Cauchy iff. it is convergent (in _complete_ metric spaces).
 Note that the Cauchy Criterion does not refer to the limit itself.
 
-$(f_n)$ denotes the sequence of functions where $f_n : A mapsto RR$ for all $n in NN$.
 
 == Pointwise Convergence
 
-The sequence $(f_n)_(n in NN)$ *converges _pointwise_* to $f$ on the interval $A$ if
-$
-  forall x in A, forall epsilon > 0, exists N in NN, forall n > N : abs(f(x) - f_n (x)) < epsilon
-$
-
 If $lim_(n->infinity) (f_n (a))$ exists and is finite for all $a in A$, \
-then we can define the _limit function_ $f : x mapsto lim_(n->infinity) (f_n (x))$. \
+we can define the _limit function_ $f : x mapsto lim_(n->infinity) (f_n (x))$. \
 $(f_n (a))_(n in NN)$ is said to *converge _pointwise_* towards $f$.
 
-A sequence of functions $(f_n)$ is pointwise Cauchy if $(f_n (x))$ is Cauchy for all $x$.
+/ Pointwise Convergence: The sequence $(f_n)_(n in NN)$ converges pointwise to $f : A mapsto RR$ if
+  $
+    forall x in A, forall epsilon > 0, exists N in NN, forall n > N : abs(f(x) - f_n (x)) < epsilon
+  $
+  I.e., $forall x in A, f_n (x) -> f(x)$ as $n -> infinity$.
 
+
+A sequence of functions $(f_n)$ is pointwise Cauchy if $(f_n (x))$ is Cauchy for all $x$. \
 A sequence is pointwise Cauchy iff. it converges pointwise.
 
 
 == Uniform Convergence
 
-The sequence $(f_n)_(n in NN)$ *converges _uniformly_* to $f$ on the interval $A$ if
-$
-  forall epsilon > 0, exists N in NN, forall x in A, forall n > N : abs(f(x) - f_n (x)) < epsilon
-$
+/ Uniform Convergence: The sequence $(f_n)_(n in NN)$ *converges _uniformly_* to $f$ on the interval $A$ if
+  $
+    forall epsilon > 0, exists N in NN, forall x in A, forall n > N : abs(f(x) - f_n (x)) < epsilon
+  $
+  I.e., $sup_(x in A) abs(f_n (x) - f(x)) -> 0$ as $n -> infinity$.
 
 Uniform convergence implies pointwise convergence, to the same limit. (It is _stronger_.)
 
-Uniform convergence preserves *uniformity*; \
-The limit is continuous if the sequence is of continuous functions and converges uniformly.
+*Uniformity* is preserved: \
+The limit $f$ continuous if all $f_n$ is continuous and $(f_n)$ converges uniformly.
 
-*Integration*: \
-If the sequence $(f_n (a))_(n in NN)$ converges uniformly to $f$ on $[a, b]$, then
+*Integrals* are preserved: \
+If $(f_n)$ converges uniformly to $f$ on $[a, b]$, then
 $
   lim_(n->infinity) integral_a^b f_n (x) d x = integral_a^b f(x) d x
 $
 
-*Differentiation*: \
-If $(f_n (a))_(n in NN)$ converges to $f(a)$ and *$(f'_n)$* converges uniformly on $[a, b]$, then
+*Derivatives* are more complicated: \
+If $(f_n (x_0))$ converges for some $x_0 in [a, b]$ and $(bold(f'_n))$ converges uniformly on $[a, b]$, then
 $
-  lim_(n->infinity) f'_n (x) = f'(x)
+  lim_(n->infinity) f'_n (x) = f'(x) quad quad ("for" x in [a, b])
 $
 ...and the convergence of $(f_n)$ is also uniform.
+
+Note: the uniform convergence on the sequence of derivatives converges the "shape" of the function, while the single-point convergence on the sequence itself asserts that the solution is uniquely well-defined. (Consider $f_n (x) = n + x$.)
 
 
 = Series of Functions
