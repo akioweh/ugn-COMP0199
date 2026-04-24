@@ -84,6 +84,7 @@ $
 Note: the uniform convergence on the sequence of derivatives converges the "shape" of the function, while the single-point convergence on the sequence itself asserts that the solution is uniquely well-defined. (Consider $f_n (x) = n + x$.)
 
 
+#pagebreak()
 = Series of Functions
 
 $sum f_n$ denotes the series of functions, i.e., the sum of the sequence $(f_n)$.
@@ -188,16 +189,24 @@ Since $M$ is constant, we have, for $x -> b$:
 - $R_n (x) = o((x - b)^n)$
 
 
+#pagebreak()
 = Linear Algebra
 
+
+
+#pagebreak()
 = Matrix Reduction
 
+#pagebreak()
 = Differential Calculus
 
+#pagebreak()
 = Euclidean Spaces
 
+#pagebreak()
 = Numerical Methods
 
+#pagebreak()
 = Probabilities
 
 PDF:
@@ -282,6 +291,7 @@ _marginal distributions_ are single-variate distributions at some fixed values o
 For a sequence of _independent and identically distributed_ (i.i.d.) random variables, the sum
 
 
+#pagebreak()
 = Statistics
 
 
