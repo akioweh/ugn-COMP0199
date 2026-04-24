@@ -16,9 +16,9 @@
 
 = Sequences of Functions
 
-$(f_n)_(n=0)^infinity$ or $(f_n)$ denotes the sequence of functions where $f_n : A mapsto RR$ for all $n in NN$.
+$(f_n)_(n=0)^infinity$ or $(f_n)$ denotes the sequence of functions where $f_n : A -> RR$ for all $n in NN$.
 
-/ Sequence of Functions: An assignment of a function $f_n : A mapsto RR$ to each $n in NN$.
+/ Sequence of Functions: An assignment of a function $f_n : A -> RR$ to each $n in NN$.
 
 Hereafter, assume $A$ as the domain / target interval.
 
@@ -44,7 +44,7 @@ If $lim_(n->infinity) (f_n (a))$ exists and is finite for all $a in A$, \
 we can define the _limit function_ $f : x mapsto lim_(n->infinity) (f_n (x))$. \
 $(f_n (a))_(n in NN)$ is said to *converge _pointwise_* towards $f$.
 
-/ Pointwise Convergence: The sequence $(f_n)_(n in NN)$ converges pointwise to $f : A mapsto RR$ if
+/ Pointwise Convergence: The sequence $(f_n)_(n in NN)$ converges pointwise to $f : A -> RR$ if
   $
     forall x in A, forall epsilon > 0, exists N in NN, forall n > N : abs(f(x) - f_n (x)) < epsilon
   $
