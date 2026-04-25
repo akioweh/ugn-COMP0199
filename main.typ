@@ -1,4 +1,4 @@
-#import "/style.typ": theme
+#import "/style.typ": note, note-ref, theme
 #show: theme
 
 #import "@preview/booktabs:0.0.4": *

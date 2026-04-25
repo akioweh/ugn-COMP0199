@@ -31,23 +31,24 @@
   set math.mat(delim: "[")
   set math.vec(delim: "[")
 
-  let note-counter = counter("notes")
-  let note-ref(label) = context {
-    link(label)[#super[#text(fill: rgb(255, 155, 200))[
-      #note-counter.at(label).first()
-    ]]]
-  }
-  let note(label, body, number: false) = {
-    note-counter.step()
-    block([
-      #if number {
-        context note-counter.display()
-      }
-      #body
-      #label
-    ])
-  }
-
 
   body
+}
+
+
+#let note-counter = counter("notes")
+#let note-ref(label) = context {
+  link(label)[#super[#text(fill: rgb(10, 100, 200))[
+    #note-counter.at(label).first()
+  ]]]
+}
+#let note(label, body, number: false) = {
+  note-counter.step()
+  block([
+    #if number {
+      context note-counter.display()
+    }
+    #body
+    #label
+  ])
 }
