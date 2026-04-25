@@ -192,19 +192,27 @@ Since $M$ is constant, we have, for $x -> b$:
 #pagebreak()
 = Linear Algebra
 
-Assume $V$, $U$, and $W$ to be vector spaces. \
+Assume $U$, $V$, and $W$ to be vector spaces. \
+Assume vector spaces to be over the field of $RR$. \
 Assume $+$ over functions be _pointwise addition_ -- $(f + g)(x) = f(x) + g(x)$. \
 
 == easy stuff
+
+/ Linear Independence: A subset $S = {v_1, ..., v_k} subset.eq V$ is linearly independent if \
+  $sum_(i=0)^k a_i v_i = bold(0) quad ==> quad "all" a_i = 0$ \
+
+Alternatively, the map $(a_1, ..., a_k) mapsto a_1 v_1 + ... + a_k v_k$ is injective.
 
 / Linear: A map $f: V -> W$ is linear iff. \
   *additivity* $f(u + v) = f(u) + f(v)$ and \
   *homogeneity* $f(lambda v) = lambda f(v)$ \
   are preserved (for arbitrary $u, v in V$ and $lambda in FF$). \
-  Linear maps are the _homomorphisms_ (see below) of _vector spaces_.
 
 Additivity and homogeneity are commonly combined into $f(lambda u + v) = lambda f(u) + f(v)$.
 
+/ Linear Map: A _homomorphism_ (see below) of a _vector space_.
+
+/ Basis: (...of a vector space $V$) is a subset $B subset.eq V$ that is linearly independent and _spans_ $V$.
 
 / Direct Sum: A structure-_propagating_ Cartesian product#note-ref(<directsum>) with operations defined element-wise.
   Notated with "oplus" $plus.o$. \
@@ -240,10 +248,9 @@ The generalized intersection criteria: $plus.o.big_i V_i quad <==> quad forall i
 If $(u_1, ..., u_n)$ is a basis of $U$ and $(v_1, ..., v_m)$ is a basis of $V$, then $U plus.o V$ iff. $(u_1, ..., u_n, v_1, ..., v_m)$ are linearly independent. ($U$ and $V$ are in the same ambient space.) \
 The internal direct sum is associative; the external direct sum is associative up to isomorphism.
 
-/ Composition: For two functions $f : B -> C$ and $g : A -> B$, \
-  composition is a binary operator defined s.t. $f compose g : A -> C$.
 
-
+/ Composition: For functions $f : B -> C$ and $g : A -> B$, \
+  composition is a binary operator where $f compose g : A -> C, thick x mapsto f(g(x))$.
 
 Composition verifies (for arbitrary functions $f, g, h$):
 - associativity $f compose (g compose h) = (f compose g) compose h$,
@@ -270,14 +277,13 @@ For a function $f : A -> B$:
 / Surjectivity: $forall y in B, exists x in A : f(x) = y$ #h(29pt)i.e., $im f = B$
 / Bijectivity: Injectivity _and_ Surjectivity.
 
-Injectivity produces invertibility.
 
 == Linear Maps
 
 Assume $f, g, h$ to be linear maps, and by default $f : V -> W$.
 
 / Image: $im f := {f(v) | v in V} quad = f(V) subset.eq W$
-/ Kernel: $ker f := {v in V | f(v) = bold(0)} quad subset.eq W$
+/ Kernel: $ker f := {v in V | f(v) = bold(0)}$
 / Rank: $op("rank") f = dim im f$
 / Rank-Nullity Theorem: $op("rank") f + dim ker f = dim V$
 
@@ -315,9 +321,20 @@ A matrix is invertible iff. it represents a bijection.
 / Endomorphism: A map $f: V -> V$; same domain and codomain.
 / Automorphism: An endomorphism that is also an isomorphism.
 
-For endomorphisms, *injectivity, surjectivity, and bijectivity become equivalent*.
+For endomorphisms, *injectivity, surjectivity, and bijectivity are equivalent* (in finite dimension).
 
+$f$ is bijective iff. it maps a basis to a basis.
 
+=== Change of Basis
+
+Consider an endomorphism $f$ of $V$ represented by matrix $M$ in the basis $B_1$.
+
+$N = P^(-1) M P$ is the matrix representing $f$ in $B_2$ where
+$P$ is a matrix whose columns are the coordinate vectors of $B_2$ in $B_1$. \
+
+/ Transition Matrix: (aka. change-of-basis matrix) what $P$ is above.
+
+Observe that if $P^(-1) M P = N$, then $P N P^(-1) = M$.
 
 
 
