@@ -197,13 +197,48 @@ Assume $+$ over functions be _pointwise addition_ -- $(f + g)(x) = f(x) + g(x)$.
 
 == easy stuff
 
-/ Direct Sum: Two subspaces $U$ and $V$ of $W$ are in direct sum if $U inter V = {0}$. $U xor V$
+/ Linear: A map $f: V -> W$ is linear iff. \
+  *additivity* $f(u + v) = f(u) + f(v)$ and \
+  *homogeneity* $f(lambda v) = lambda f(v)$ \
+  are preserved (for arbitrary $u, v in V$ and $lambda in FF$). \
+  Linear maps are the _homomorphisms_ (see below) of _vector spaces_.
 
-If $(u_1, ..., u_n)$ is a basis of $U$ and $(v_1, ..., v_n)$ is a basis of $V$, then $U xor V$ iff. $(u_1, ..., u_n, v_1, ..., v_n)$ are linearly independent. \
+Additivity and homogeneity are commonly combined into $f(lambda u + v) = lambda f(u) + f(v)$.
+
+
+/ Direct Sum: A structure-_propagating_ Cartesian product#note-ref(<directsum>) with operations defined element-wise.
+  Notated with "oplus" $plus.o$. \
+
+  The above is more specifically an _external_ direct sum; an _internal_ direct sum _conditionally_ exists for #emph("sub")structures of (a common abelian-group-like structure) iff. their intersection is _trivial_; \
+  $A plus.o B$ is well-defined#note-ref(<directsuminternal>) ("$A$ and $B$ are in direct sum") iff. $A inter B = {bold(0)}$. \
+
+  There furthermore are _decomposition statements_ using direct sums.
+  For a structure $S$ with substructures $A$ and $B$: \
+  $ S = A plus.o B quad <==> quad #quote([$A plus.o B$]) #text([*and*]) S = A + B $
+  $S = A plus.o B$ is the decomposition statement.
+
+#note(<directsuminternal>)[
+  Note: with internal direct sums, the $A plus.o B$ notation has overloaded meanings: it denotes the same sum set as $A + B$ while simultaneously _asserting_ that $A inter B = {bold(0)}$.
+]
+
+Alternative definitions of internal direct sum: \
+Substructures $A$ and $B$ of a common $S$ are in direct sum iff. every element of $T = A + B$ can be written in exactly one way as the sum of some $a in A$ and $b in B$. I.e.,
+$ A plus.o B thick <==> thick forall t in T thick exists! (a, b) in A times B : t = a + b $
+Again, $S = A plus.o B$ if also $T = S$.
+A more general version, assuming $V = sum_i V_i$:
 $
-        W = U xor V quad & <==> quad forall w in W thick exists! (u, v) in U times V : u + v = w \
-  V = xor.big_i V_i quad & <==> quad forall v in V, exists! (v_i)_i in product_i V_i : v = sum_i v_i
+  V = plus.o.big_i V_i quad & <==> quad forall v in V, exists! (v_i)_i in plus.o.big_i V_i : v = sum_i v_i
 $
+Note that the second $plus.o$ denotes the external direct sum.\
+The generalized intersection criteria: $plus.o.big_i V_i quad <==> quad forall i : V_i inter sum_(j!=i) V_j = {bold(0)}$.
+
+#note(<directsum>)[
+  Note: the _direct product_ is a structure-propagating Cartesian product; \
+  the external direct sum is a direct product with the restriction that the resulting tuples can only have finitely many non-zero elements (which matters if there are infinite operands).
+]
+
+If $(u_1, ..., u_n)$ is a basis of $U$ and $(v_1, ..., v_m)$ is a basis of $V$, then $U plus.o V$ iff. $(u_1, ..., u_n, v_1, ..., v_m)$ are linearly independent. ($U$ and $V$ are in the same ambient space.) \
+The internal direct sum is associative; the external direct sum is associative up to isomorphism.
 
 / Composition: For two functions $f : B -> C$ and $g : A -> B$, \
   composition is a binary operator defined s.t. $f compose g : A -> C$.
