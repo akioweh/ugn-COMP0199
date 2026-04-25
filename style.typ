@@ -38,9 +38,8 @@
 
 #let note-counter = counter("notes")
 #let note-ref(label) = context {
-  link(label)[#super[#text(fill: rgb(10, 100, 200))[
-    #note-counter.at(label).first()
-  ]]]
+  let n = note-counter.at(label).first()
+  link(label)[#super[#text(fill: rgb(10, 100, 200))[#n]]]
 }
 #let note(label, body, number: false) = {
   note-counter.step()
