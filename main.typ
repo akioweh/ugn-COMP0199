@@ -341,6 +341,107 @@ Observe that if $P^(-1) M P = N$, then $P N P^(-1) = M$.
 #pagebreak()
 = Matrix Reduction
 
+Assume $V$ denotes some finite-dimensional vector space over $FF$. \
+Assume $T : V -> V$ denotes some endomorphism of $V$.
+
+
+== Block Matrices
+
+/ Invariant Subspace: (aka. stable subspace) $U subset.eq V$ is an invariant subspace for $T$ if $T(U) subset.eq U$. \
+  I.e., $forall u in U : T(u) in U$.
+
+Observe that $V$, ${bold(0)}$, $ker T$, and $im T$ are always invariant subspaces for some $T$. \
+It is also written "$U$ is #box[$T$--invariant]" for some subspace $U$ and transformation $T$.
+
+#line(length: 100%, stroke: 0.3pt)
+
+...its matrix representation $M in cal(M)_(n,n)$.
+
+yada yada
+
+
+== Eigenvalues and Eigenvectors
+
+/ Eigenvector: A nonzero vector $v in V$ is an eigenvector of some $T$ iff. there exists a scalar $lambda in FF$ where $T(v) = lambda v$.
+
+/ Eigenvalue: The scalar $lambda$ above is the eigenvalue of $T$ _corresponding_ to the eigenvector $v$.
+
+Other equations characterizing eigenvalues and eigenvectors for a matrix representation $M$ include
+$
+  (M - lambda I) v = bold(0) quad "or" quad v in ker (M - lambda I)
+$
+(See section below on the computational utility of these.)
+
+Eigenvectors' spans are invariant subspaces where the associated endomorphism acts like a scaling.
+
+/ Eigenspace: For a given eigenvalue $lambda$, its eigenspace $E subset.eq V$ is $ker (M - lambda I)$.
+
+Note that any $v in E \/ {bold(0)}$ is an eigenvector of $E$'s eigenvalue.
+
+/ Geometric Multiplicity: The geometric multiplicity of an eigenvalue $lambda$ of $M$, $gamma_M (lambda)$, is $dim E$. \
+  This is the "physical" dimension of the associated eigenspace.
+
+/ Algebraic Multiplicity: The algebraic multiplicity of an eigenvalue $lambda$ of $M$, $mu_M (lambda)$, is its multiplicity as a root (of $M$'s characteristic polynomial; see below).
+
+/ Linear Independence of Eigenvectors: For _distinct_ eigenvalues $lambda_1, ..., lambda_n$, their corresponding eigenvectors $v_1, ..., v_n$ are linearly independent. \
+  _Alternatively: Take a basis for each eigenspace; the union of all these bases, across distinct eigenvalues, is linearly independent._\
+  This allows the construction of bases out of eigenvectors if we have enough eigenvalues.
+
+
+=== Finding Eigenvalues
+
+Here we will work with $n times n$ ($n = dim V$) matrix representations $M$ of endomorphisms $T$. \
+Assume $v in V != bold(0)$ and $lambda in FF$.
+
+Derivation from $M v = lambda v$ to the _characteristic polynomial_:
+$
+                 M v & = lambda v \
+      M v - lambda v & = bold(0) \
+  M v - lambda (I v) & = bold(0) \
+    (M - lambda I) v & = bold(0)
+$
+
+Observe that a given $lambda$ is a solution \
+$<==>$ $ker (M - lambda I)$ is non-trivial \
+$<==>$ $M - lambda I$ is not injective $<=>$ surjective $<=>$ bijective \
+$<==>$ $M - lambda I$ is not _invertible_ \
+$<==>$ $det(M - lambda I) = 0$.
+
+
+/ Characteristic Polynomial: The characteristic polynomial $chi_M$ for matrix $M$ represents the
+  $ chi_M = det(M - lambda I) $
+  The roots of $chi_M$ (expanding $det$ with the Leibniz formula) are exactly the eigenvalues of $M$. \
+
+Observe that $T: V -> V$ cannot more than $n = dim V$ eigenvectors or eigenvalues. \
+Observe that $chi_M$ has degree $n$. \
+$0$ being a root of $chi_M$ means $M$ itself is not invertible.
+
+/ Complex vs Real fields: \
+  Per the fundamental theorem of algebra, not all roots of the characteristic polynomial may be real. \
+  For $FF = RR$, some $n times n$ matrix $M$ has $<= n$ eigenvalues. \
+  For $FF = CC$, $M$ has exactly $n$ eigenvalues (counted with algebraic multiplicity).
+
+=== Finding Eigenvectors
+
+Obviously, we just compute $ker (M - lambda I)$ for a given $lambda$ to obtain its eigenspace.
+
+
+
+
+== Polynomials and Linear Maps
+
+The characteristic polynomial computes eigenvalues. \
+The roots and their multiplicity provide information on possible diagonalization.
+
+
+== Matrix Reduction
+
+Matrix reduction is finding subspaces where the associated transformation is simple.
+
+
+
+
+
 #pagebreak()
 = Differential Calculus
 
