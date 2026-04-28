@@ -93,7 +93,9 @@
 }
 
 
-#let aside(body, fade: 50%) = context {
+#let aside(body, fade: 50%) = context if target() == "html" {
+  html.elem("blockquote", attrs: (class: "aside"))[#body]
+} else {
   let fg = text.fill
   let bg = page.fill
   if bg == none or bg == auto { bg = white }

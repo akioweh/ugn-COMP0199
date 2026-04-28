@@ -240,8 +240,8 @@ $
 Note that the second $plus.o$ denotes the external direct sum.\
 The generalized intersection criteria: $plus.o.big_i V_i quad <==> quad forall i : V_i inter sum_(j!=i) V_j = {bold(0)}$.
 
-#aside[
-  #note(<directsum>)[
+#note(<directsum>)[
+  #aside[
     Note: the _direct product_ is a structure-propagating Cartesian product; \
     the external direct sum is a direct product with the restriction that the resulting tuples can only have finitely many non-zero elements (which matters if there are infinite operands).
   ]
