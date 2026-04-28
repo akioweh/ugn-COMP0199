@@ -345,7 +345,7 @@ Assume $V$ denotes some finite-dimensional vector space over $FF$ ($= RR$ or $CC
 Assume $T : V -> V$ denotes some endomorphism of $V$. \
 Assume $M in cal(M)_(n,n)$ is the matrix representation of any such $T$.
 
-Observe that as $n = dim V$ is finite and $T$ is an endomorphism, we can always represent it as some square matrix.
+Observe that as $T$ is an endomorphism and $n = "rank" T = dim V$, we can always represent it as some square matrix.
 
 == Abstract ahh Stuff
 
@@ -356,32 +356,71 @@ Observe that $V$ and ${bold(0)}$ are always invariant subspaces under _any_ $T$;
 $ker T$ and $im T$ are always invariant subspaces under a given $T$. \
 Note: it is also written "$U$ is #box[$T$-invariant]" for some subspace $U$ and transformation $T$.
 
-#line(length: 100%, stroke: 0.3pt)
-
-First, see the definition of _cosets_ and _quotient groups_ from my COMP0147 notes.
+Highly relevant to the concepts below: my #link("https://akioweh.com/shared/COMP0147#more-abstract-algebra-that-is-definitely-in-the-course-span-idabstract-algebraspan")[COMP0147 notes] on _cosets_ and _quotient groups_.
 
 Let $U$ be an invariant subspace under $T$.
 
 / Coset: For any $v in V$, the coset $v + U$ (or $[v]$ in _equivalence class_ notation) is the set ${v + u | u in U}$.
 
-/ Quotient Space: A quotient (vector) space $V \/ U$ is a new vector space over the set of all cosets of $U$.
-  $V \/ U$ has dimension $dim V - dim U$ and vector operations are defined as
+/ Quotient Space: A quotient (vector) space $V \/ U$ is a new vector space over the set of all cosets of $U$. \
+  I.e., $FF = {{v + u | u in U} | v in V}$. \
+  Vector operations are defined as
   $[u] + [v] = [u + v]$ and
-  $c[v] = [c v]$.
+  $c[v] = [c v]$. \
+  Observe that $dim (V \/ U) = dim V - dim U$.
 
 
-/ Complementary Subspace: A subspace $W subset.eq V$ is a complementary subspace to $U$ iff. $V = W plus.o U$.
+/ Complementary Subspace: A subspace $W subset.eq V$ is complementary to $U$ iff. $V = U plus.o W$. \
+  Construction from a Quotient Space: \
+  Pick a basis ${[v]_1, ..., [v]_k}$ for $V \/ U$. \
+  Pick any $v_i in [v]_i$ as the _representative_ for every coset in the basis. \
+  $W = op("span"){v_1, ..., v_k}$ is the complementary subspace to $U$.
 
-Note / TODO: see "canonical projection" and "section map" for quotient space $->$ complementary subspace without assuming an inner product. (But we will have to "re-enforce" linearity.)
+Observe that $(V \/ U) tilde.equiv W$ for any $W$ complement to $V$, so it follows that $V tilde.equiv U plus.o (V \/ U)$.
+
+A complementary subspace is a (geometric) _section_ of the corresponding quotient space.
+
+Note that the complement to a subspace is *non-unique*.
+In our "picking" construction above, the choices affect the exact subspace constructed.
+The existence of an inner product (giving orthogonality) allows the construction of a unique *canonical* complement $U^perp$. \
+(See _canonical projections_ and _section maps_.)
 
 == Block Matrices
 
-For a $T$-invariant $U$, one can construct, in some basis for $U$, a _block matrix_.
+For a $T$-invariant $U$, one can construct, in a deliberate basis, a _block triangular_ matrix. \
+Let $W$ be a subspace complementary to $U$.
 
-Pick a basis $B = (u_1, ..., u_k, w_(k+1), ..., w_n)$ for $V$ \
-where $(u_1, ..., u_k)$ is a basis for $U$ and $(w_(k+1), ..., w_n)$ is a basis for $U$'s complementary subspace.
+Pick a basis $B_U = (u_1, ..., u_k)$ for $U$ and a basis $B_W = (w_1, ..., w_(n-k))$ for $W$. \
+$B = (u_1, ..., u_k, w_1, ..., w_(n-k))$ is then a basis for $V$. #h(2em) (Why? ...because I said so.).
 
-Then i claim the matrix we will get is good. TO BE CONTINUED.
+Now, we construct a matrix $M$ for $T$ in $B$. \
+Recall that a matrix can be constructed column-wise for $b in B$ as $T(b)$'s coordinates (in $B$):
+$
+  M =
+  mat(
+    arrow.t, , arrow.t, arrow.t, , arrow.t;
+    T(u_1), dots.c, T(u_k), T(w_1), dots.c, T(w_(n-k));
+    arrow.b, , arrow.b, arrow.b, , arrow.b
+  )
+  = mat(
+    augment: #(vline: 1, hline: 1, stroke: 0.4pt),
+    gap: #1em,
+    A, B;
+    0, C
+  )
+$
+
+...where $A$ is a $k times k$ block; $0$ is a $(n-k) times k$ block of zeroes.
+
+Observe:
+- $A$ is the $B_U$-coordinates of $T(U)$
+- $0$ is the $B_W$-coordinates of $T(U)$, which are zero since $U$ is invariant
+- $B$ is the $B_U$-coordinates of $T(W)$
+- $C$ is the $B_W$-coordinates of $T(W)$
+
+Observe that $B$ will be zeroes if $W$ is _also_ invariant, yielding a _block diagonal_ matrix.
+
+*Usefully*, $det(M) = det(A) times det(C)$ and $chi_M = chi_A times chi_C$.
 
 == Eigenvalues and Eigenvectors
 
