@@ -343,7 +343,9 @@ Observe that if $P^(-1) M P = N$, then $P N P^(-1) = M$.
 
 Assume $V$ denotes some finite-dimensional vector space over $FF$ ($= RR$ or $CC$, as specified). \
 Assume $T : V -> V$ denotes some endomorphism of $V$. \
-Observe that as $n = dim V$ is finite and $T$ is an endomorphism, we can always represent it as some matrix $M in cal(M)_(n,n)$.
+Assume $M in cal(M)_(n,n)$ is the matrix representation of any such $T$.
+
+Observe that as $n = dim V$ is finite and $T$ is an endomorphism, we can always represent it as some square matrix.
 
 == Block Matrices
 
@@ -367,7 +369,7 @@ yada yada
 
 / Eigenvalue: The scalar $lambda$ above is the eigenvalue of $T$ _corresponding_ to the eigenvector $v$.
 
-Other equations characterizing eigenvalues and eigenvectors for a matrix representation $M$ include
+Other equations characterizing eigenvalues and eigenvectors wrt. matrix representations include
 $
   (M - lambda I) v = bold(0) quad "or" quad v in ker (M - lambda I)
 $
@@ -382,10 +384,10 @@ An eigenvector spans a 1-dimensional invariant subspace, and a linear transforma
 Observe that any $v in E_lambda \\ {bold(0)}$ is an eigenvector corresponding to $lambda$. \
 Observe that ${"eigenspaces of" T} subset.neq {"invariant subspaces of" T}$. (Unequal in nontrivial cases.)
 
-/ Geometric Multiplicity: The geometric multiplicity of an eigenvalue $lambda$ of $M$, $gamma_M (lambda)$, is $dim E$. \
+/ Geometric Multiplicity: The geometric multiplicity of an eigenvalue $lambda$ of $M$, $gamma_M (lambda)$, is $dim E_lambda$. \
   This is the "physical" dimension of the associated eigenspace.
 
-/ Algebraic Multiplicity: The algebraic multiplicity of an eigenvalue $lambda$ of $M$, $mu_M (lambda)$, is its multiplicity as a root (of $M$'s characteristic polynomial; see below).
+/ Algebraic Multiplicity: The algebraic multiplicity of an eigenvalue $lambda$ of $M$, $mu_M (lambda)$, is its multiplicity as a root of $chi_M$ ($M$'s characteristic polynomial; see below).
 
 / Linear Independence of Eigenvectors: For _distinct_ eigenvalues $lambda_1, ..., lambda_n$, their corresponding eigenvectors $v_1, ..., v_n$ are linearly independent. \
   _Alternatively: Take a basis for each eigenspace; the union of all these bases, across distinct eigenvalues, is linearly independent._\
@@ -394,7 +396,6 @@ Observe that ${"eigenspaces of" T} subset.neq {"invariant subspaces of" T}$. (Un
 
 === Finding Eigenvalues
 
-Consider matrix representations $M in cal(M)_(n,n)$ of $T$. \
 Assume $v in V != bold(0)$ and $lambda in FF$.
 
 Derivation from $M v = lambda v$ to the _characteristic polynomial_:
