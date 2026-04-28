@@ -4,7 +4,6 @@
 #import "@preview/booktabs:0.0.4": *
 #show: booktabs-default-table-style
 
-#set page(height: auto) // mimic page-less format
 
 #let Var = math.op("Var")
 #let Cov = math.op("Cov")
