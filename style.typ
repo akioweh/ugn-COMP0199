@@ -38,25 +38,28 @@
 ))
 
 // Custom <head> to inject font-related stuff for earlier loading
+// `document.title` is set via `#set document(title: ...)` in main.typ.
+// `context` is required because `document.title` is contextual.
 #let _html-head() = html.head(
   html.elem("meta", attrs: (charset: "utf-8"))
     + html.elem("meta", attrs: (
       name: "viewport",
       content: "width=device-width, initial-scale=1",
     ))
-    + html.elem("link", attrs: (
-      rel: "preconnect",
-      href: "https://fonts.gstatic.com",
-      crossorigin: "",
-    ))
-    + _preload-font(_stix-latin)
-    + _preload-font(_stix-latin-italic)
-    + html.elem("link", attrs: (rel: "stylesheet", href: fonts-url))
-    + html.elem(
-      "style",
-      ":root{--body-font:\"" + body-font + "\";--code-font:\"" + code-font + "\"}",
-    )
-    + html.elem("style", read("html-style.css")),
+    + context html.elem("title", document.title)
+      + html.elem("link", attrs: (
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossorigin: "",
+      ))
+      + _preload-font(_stix-latin)
+      + _preload-font(_stix-latin-italic)
+      + html.elem("link", attrs: (rel: "stylesheet", href: fonts-url))
+      + html.elem(
+        "style",
+        ":root{--body-font:\"" + body-font + "\";--code-font:\"" + code-font + "\"}",
+      )
+      + html.elem("style", read("html-style.css")),
 )
 
 #let _html-toc() = html.elem("details", attrs: (class: "toc"))[

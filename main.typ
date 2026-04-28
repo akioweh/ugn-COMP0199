@@ -1,17 +1,16 @@
 #import "/style.typ": aside, note, note-ref, theme
-#show: theme
-
 #import "@preview/booktabs:0.0.4": *
-#show: booktabs-default-table-style
 
+#set document(title: "COMP0199")
+
+#show: theme
+#show: booktabs-default-table-style
 
 #let Var = math.op("Var")
 #let Cov = math.op("Cov")
 
 
-#title[
-  COMP0199
-]
+#title()
 
 = Sequences of Functions
 
@@ -494,6 +493,17 @@ Observe that $T: V -> V$ cannot more than $n = dim V$ eigenvectors or eigenvalue
 Observe that $chi_M$ has degree $n$. \
 $0$ is a root iff. $M$ is non-invertible.
 
+
+=== Computing Eigenvectors
+
+Obviously, we just compute $ker (M - lambda I)$ for a given $lambda$ to obtain its eigenspace.
+
+
+== Polynomials and Linear Maps
+
+The characteristic polynomial computes eigenvalues. \
+The roots and their multiplicity provide information on possible diagonalization.
+
 / Complex vs Real fields: \
   Per the fundamental theorem of algebra, not all roots of the characteristic polynomial may be real. \
   For $FF = RR$, some $n times n$ matrix $M$ has $<= n$ eigenvalues. \
@@ -504,19 +514,6 @@ $0$ is a root iff. $M$ is non-invertible.
   E.g., one can:
   - compute matrix inverses cheaply (by rearranging $chi_M (M)$)
   - represent high powers $M^k$ where $k >= n$ as some linear combination of the lower powers
-
-=== Computing Eigenvectors
-
-Obviously, we just compute $ker (M - lambda I)$ for a given $lambda$ to obtain its eigenspace.
-
-
-
-
-== Polynomials and Linear Maps
-
-The characteristic polynomial computes eigenvalues. \
-The roots and their multiplicity provide information on possible diagonalization.
-
 
 == Matrix Reduction
 
