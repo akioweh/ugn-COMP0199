@@ -354,14 +354,32 @@ Observe that as $n = dim V$ is finite and $T$ is an endomorphism, we can always 
 
 Observe that $V$ and ${bold(0)}$ are always invariant subspaces under _any_ $T$; \
 $ker T$ and $im T$ are always invariant subspaces under a given $T$. \
-Note: it is also written "$U$ is #box[$T$--invariant]" for some subspace $U$ and transformation $T$.
+Note: it is also written "$U$ is #box[$T$-invariant]" for some subspace $U$ and transformation $T$.
 
 #line(length: 100%, stroke: 0.3pt)
 
-...its matrix representation $M in cal(M)_(n,n)$.
+First, see the definition of _cosets_ and _quotient groups_ from my COMP0147 notes.
 
-yada yada
+Let $U$ be an invariant subspace under $T$.
 
+/ Coset: For any $v in V$, the coset $v + U$ (or $[v]$ in _equivalence class_ notation) is the set ${v + u | u in U}$.
+
+/ Quotient Space: A quotient (vector) space $V \/ U$ is a new vector space over the set of all cosets of $U$.
+  $V \/ U$ has dimension $dim V - dim U$ and vector operations are defined as
+  $[u] + [v] = [u + v]$ and
+  $c[v] = [c v]$.
+
+
+/ Complementary Subspace: A subspace $W subset.eq V$ is a complementary subspace to $U$ iff. $V = W plus.o U$.
+
+Note / TODO: see "canonical projection" and "section map" for quotient space $->$ complementary subspace without assuming an inner product. (But we will have to "re-enforce" linearity.)
+
+For a $T$-invariant $U$, one can construct, in some basis for $U$, a _block matrix_.
+
+Pick a basis $B = (u_1, ..., u_k, w_(k+1), ..., w_n)$ for $V$ \
+where $(u_1, ..., u_k)$ is a basis for $U$ and $(w_(k+1), ..., w_n)$ is a basis for $U$'s complementary subspace.
+
+Then i claim the matrix we will get is good. TO BE CONTINUED.
 
 == Eigenvalues and Eigenvectors
 
