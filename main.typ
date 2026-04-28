@@ -240,9 +240,11 @@ $
 Note that the second $plus.o$ denotes the external direct sum.\
 The generalized intersection criteria: $plus.o.big_i V_i quad <==> quad forall i : V_i inter sum_(j!=i) V_j = {bold(0)}$.
 
-#note(<directsum>)[
-  Note: the _direct product_ is a structure-propagating Cartesian product; \
-  the external direct sum is a direct product with the restriction that the resulting tuples can only have finitely many non-zero elements (which matters if there are infinite operands).
+#aside[
+  #note(<directsum>)[
+    Note: the _direct product_ is a structure-propagating Cartesian product; \
+    the external direct sum is a direct product with the restriction that the resulting tuples can only have finitely many non-zero elements (which matters if there are infinite operands).
+  ]
 ]
 
 If $(u_1, ..., u_n)$ is a basis of $U$ and $(v_1, ..., v_m)$ is a basis of $V$, then $U plus.o V$ iff. $(u_1, ..., u_n, v_1, ..., v_m)$ are linearly independent. ($U$ and $V$ are in the same ambient space.) \
@@ -261,9 +263,11 @@ Composition verifies (for arbitrary functions $f, g, h$):
 
 #let End = math.op("End")
 
-$(End(V), +)$ is an abelian group; \
-$(End(V), +, compose)$ is a ring. \
-$End(V) := {f : V -> V | f "is linear"}$; see below section on Endomorphisms.
+#aside[
+  $(End(V), +)$ is an abelian group; \
+  $(End(V), +, compose)$ is a ring. \
+  $End(V) := {f : V -> V | f "is linear"}$; see below section on Endomorphisms.
+]
 
 Note that, for linear $f$ (so symmetric distributivity), we obtain the properties as matrix multiplication.
 
@@ -356,7 +360,9 @@ Observe that $V$ and ${bold(0)}$ are always invariant subspaces under _any_ $T$;
 $ker T$ and $im T$ are always invariant subspaces under a given $T$. \
 Note: it is also written "$U$ is #box[$T$-invariant]" for some subspace $U$ and transformation $T$.
 
-Highly relevant to the concepts below: my #link("https://akioweh.com/shared/COMP0147#more-abstract-algebra-that-is-definitely-in-the-course-span-idabstract-algebraspan")[COMP0147 notes] on _cosets_ and _quotient groups_.
+#aside[
+  Highly relevant to the concepts below: the #link("https://akioweh.com/shared/COMP0147#more-abstract-algebra-that-is-definitely-in-the-course-span-idabstract-algebraspan")[COMP0147 notes] on _cosets_ and _quotient groups_.
+]
 
 Assume $U subset.eq V$ a subspace.
 
