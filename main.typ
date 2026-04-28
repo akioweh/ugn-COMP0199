@@ -376,7 +376,7 @@ Let $U$ be an invariant subspace under $T$.
   Pick any $v_i in [v]_i$ as the _representative_ for every coset in the basis. \
   $W = op("span"){v_1, ..., v_k}$ is the complementary subspace to $U$.
 
-Observe that $(V \/ U) tilde.equiv W$ for any $W$ complement to $V$, so it follows that $V tilde.equiv U plus.o (V \/ U)$.
+Observe that $(V \/ U) tilde.equiv W$ for any $W$ complement to $U$, so it follows that $V tilde.equiv U plus.o (V \/ U)$.
 
 A complementary subspace is a (geometric) _section_ of the corresponding quotient space.
 
