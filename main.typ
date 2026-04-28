@@ -347,7 +347,7 @@ Assume $M in cal(M)_(n,n)$ is the matrix representation of any such $T$.
 
 Observe that as $n = dim V$ is finite and $T$ is an endomorphism, we can always represent it as some square matrix.
 
-== Block Matrices
+== Abstract ahh Stuff
 
 / Invariant Subspace: (aka. stable subspace) $U subset.eq V$ is an invariant subspace under $T$ if $T(U) subset.eq U$. \
   I.e., $forall u in U : T(u) in U$.
@@ -373,6 +373,8 @@ Let $U$ be an invariant subspace under $T$.
 / Complementary Subspace: A subspace $W subset.eq V$ is a complementary subspace to $U$ iff. $V = W plus.o U$.
 
 Note / TODO: see "canonical projection" and "section map" for quotient space $->$ complementary subspace without assuming an inner product. (But we will have to "re-enforce" linearity.)
+
+== Block Matrices
 
 For a $T$-invariant $U$, one can construct, in some basis for $U$, a _block matrix_.
 
@@ -412,7 +414,7 @@ Observe that ${"eigenspaces of" T} subset.neq {"invariant subspaces of" T}$. (Un
   This allows the construction of bases out of eigenvectors if we have enough eigenvalues.
 
 
-=== Finding Eigenvalues
+=== Computing Eigenvalues
 
 Assume $v in V != bold(0)$ and $lambda in FF$.
 
@@ -445,7 +447,7 @@ $0$ being a root of $chi_M$ means $M$ itself is not invertible.
   For $FF = RR$, some $n times n$ matrix $M$ has $<= n$ eigenvalues. \
   For $FF = CC$, $M$ has exactly $n$ eigenvalues (counted with algebraic multiplicity).
 
-=== Finding Eigenvectors
+=== Computing Eigenvectors
 
 Obviously, we just compute $ker (M - lambda I)$ for a given $lambda$ to obtain its eigenspace.
 
