@@ -479,12 +479,15 @@ I.e., any $lambda$ that satisfies any statement above is an eigenvalue, and the 
 
 Observe that $T: V -> V$ cannot more than $n = dim V$ eigenvectors or eigenvalues. \
 Observe that $chi_M$ has degree $n$. \
-$0$ being a root of $chi_M$ means $M$ itself is not invertible.
+$0$ is a root iff. $M$ is non-invertible.
 
 / Complex vs Real fields: \
   Per the fundamental theorem of algebra, not all roots of the characteristic polynomial may be real. \
   For $FF = RR$, some $n times n$ matrix $M$ has $<= n$ eigenvalues. \
   For $FF = CC$, $M$ has exactly $n$ eigenvalues (counted with algebraic multiplicity).
+
+/ Cayley-Hamilton: $chi_M (M) = 0$ for any matrix $M$. \
+  Effectively, this means ${I, M, M^2, ..., M^n}$ is linearly dependent, and $chi_M$ itself demonstrates the exact dependence (coefficients).
 
 === Computing Eigenvectors
 
