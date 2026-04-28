@@ -1,4 +1,4 @@
-#import "/style.typ": note, note-ref, theme
+#import "/style.typ": aside, note, note-ref, theme
 #show: theme
 
 #import "@preview/booktabs:0.0.4": *
@@ -379,18 +379,19 @@ This is contrary to general groups or rings, which require specific properties (
   Pick a $tilde(v)_i in [v_i]$ as a _representative_ for every coset in the basis. \
   $W = op("span"){tilde(v)_1, ..., tilde(v)_k}$ is a subspace complementary to $U$.
 
-Observe that $(V \/ U) tilde.equiv W$ for any $W$ complement to $U$.
+Complements to a subspace are generally *non-unique*, and a complementary subspace can be viewed geometrically as a _section_ of the corresponding quotient space.
+However, the addition of an inner product (to define orthogonality) allows the construction of a unique, *canonical* complement $U^perp$. \
+(See _orthogonal projections_ and _exact sequences_.)
 
-The construction above produces a linear map $s : V \/ U -> V$ with $pi compose s = id_(V \/ U)$, a _splitting_ of the projection $pi : V -> V \/ U$.
-Its image is the complement $W$.
-Given $s$, the map $(u, [v]) mapsto u + s([v])$ is an _explicit_ isomorphism $U plus.o (V \/ U) tilde.equiv V$.
+#aside[
+  Observe that $W tilde.equiv (V \/ U)$ for any complement $W$.
+  Specifically, the $W$-restriction of the projection map $pi|_W : W -> V \/ U$ is an isomorphism.
 
-A complementary subspace is a (geometric) _section_ of the corresponding quotient space.
-
-Note that complements to a subspace are *non-unique*.
-In our "picking" construction above, the choices affect the exact subspace constructed.
-The addition of an inner product (giving orthogonality) allows the construction of a unique *canonical* complement $U^perp$. \
-(See _canonical projections_ and _section maps_.)
+  The construction above produces a linear map $s : V \/ U -> V$ with $pi compose s = id_(V \/ U)$, called a _section_ (or _splitting_) of the projection $pi : V -> V \/ U$.
+  Its image is the complement $W$.
+  Given a choice of $s$, the map $(u,[v]) mapsto u + s([v])$ provides an _explicit_ isomorphism $U plus.o (V \/ U) tilde.equiv V$.
+  Because this isomorphism relies on the arbitrary choice of representatives to build $s$, there is no _canonical_ isomorphism between $V$ and $U plus.o (V \/ U)$.
+]
 
 == Block Matrices
 
