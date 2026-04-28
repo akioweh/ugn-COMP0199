@@ -91,3 +91,12 @@
     #label
   ])
 }
+
+
+#let aside(body, fade: 50%) = context {
+  let fg = text.fill
+  let bg = page.fill
+  if bg == none or bg == auto { bg = white }
+  let muted = color.mix((fg, 100% - fade), (bg, fade))
+  pad(left: 2em, text(fill: muted, body))
+}

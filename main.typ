@@ -358,31 +358,38 @@ Note: it is also written "$U$ is #box[$T$-invariant]" for some subspace $U$ and 
 
 Highly relevant to the concepts below: my #link("https://akioweh.com/shared/COMP0147#more-abstract-algebra-that-is-definitely-in-the-course-span-idabstract-algebraspan")[COMP0147 notes] on _cosets_ and _quotient groups_.
 
-Let $U$ be an invariant subspace under $T$.
+Assume $U subset.eq V$ a subspace.
 
 / Coset: For any $v in V$, the coset $v + U$ (or $[v]$ in _equivalence class_ notation) is the set ${v + u | u in U}$.
 
 / Quotient Space: A quotient (vector) space $V \/ U$ is a new vector space over the set of all cosets of $U$. \
   I.e., $FF = {{v + u | u in U} | v in V}$. \
   Vector operations are defined as
-  $[u] + [v] = [u + v]$ and
-  $c[v] = [c v]$. \
+  $[x] + [y] = [x + y]$ and
+  $c[x] = [c x]$. \
   Observe that $dim (V \/ U) = dim V - dim U$.
 
+Note: there are no conditions on $U$; one can form a quotient vector space from _any_ subspace.
+(Due to addition being abelian and multiplication being external.)
+This is contrary to general groups or rings, which require specific properties (normal subgroups or ideals) on the substructure.
 
 / Complementary Subspace: A subspace $W subset.eq V$ is complementary to $U$ iff. $V = U plus.o W$. \
   Construction from a Quotient Space: \
-  Pick a basis ${[v]_1, ..., [v]_k}$ for $V \/ U$. \
-  Pick any $v_i in [v]_i$ as the _representative_ for every coset in the basis. \
-  $W = op("span"){v_1, ..., v_k}$ is the complementary subspace to $U$.
+  Pick a basis ${[v_1], ..., [v_k]}$ for $V \/ U$. \
+  Pick a $tilde(v)_i in [v_i]$ as a _representative_ for every coset in the basis. \
+  $W = op("span"){tilde(v)_1, ..., tilde(v)_k}$ is a subspace complementary to $U$.
 
-Observe that $(V \/ U) tilde.equiv W$ for any $W$ complement to $U$, so it follows that $V tilde.equiv U plus.o (V \/ U)$.
+Observe that $(V \/ U) tilde.equiv W$ for any $W$ complement to $U$.
+
+The construction above produces a linear map $s : V \/ U -> V$ with $pi compose s = id_(V \/ U)$, a _splitting_ of the projection $pi : V -> V \/ U$.
+Its image is the complement $W$.
+Given $s$, the map $(u, [v]) mapsto u + s([v])$ is an _explicit_ isomorphism $U plus.o (V \/ U) tilde.equiv V$.
 
 A complementary subspace is a (geometric) _section_ of the corresponding quotient space.
 
-Note that the complement to a subspace is *non-unique*.
+Note that complements to a subspace are *non-unique*.
 In our "picking" construction above, the choices affect the exact subspace constructed.
-The existence of an inner product (giving orthogonality) allows the construction of a unique *canonical* complement $U^perp$. \
+The addition of an inner product (giving orthogonality) allows the construction of a unique *canonical* complement $U^perp$. \
 (See _canonical projections_ and _section maps_.)
 
 == Block Matrices
@@ -486,8 +493,11 @@ $0$ is a root iff. $M$ is non-invertible.
   For $FF = RR$, some $n times n$ matrix $M$ has $<= n$ eigenvalues. \
   For $FF = CC$, $M$ has exactly $n$ eigenvalues (counted with algebraic multiplicity).
 
-/ Cayley-Hamilton: $chi_M (M) = 0$ for any matrix $M$. \
+/ Cayley-Hamilton Theorem: $chi_M (M) = 0$ for any $M in cal(M_(i, i))$. \
   Effectively, this means ${I, M, M^2, ..., M^n}$ is linearly dependent, and $chi_M$ itself demonstrates the exact dependence (coefficients).
+  E.g., one can:
+  - compute matrix inverses cheaply (by rearranging $chi_M (M)$)
+  - represent high powers $M^k$ where $k >= n$ as some linear combination of the lower powers
 
 === Computing Eigenvectors
 
