@@ -217,13 +217,13 @@ Additivity and homogeneity are commonly combined into $f(lambda u + v) = lambda 
 / Direct Sum: A structure-_propagating_ Cartesian product#note-ref(<directsum>) with operations defined element-wise.
   Notated with "oplus" $plus.o$. \
 
-  The above is more specifically an _external_ direct sum; an _internal_ direct sum _conditionally_ exists for #emph("sub")structures of (a common abelian-group-like structure) iff. their intersection is _trivial_; \
+  The above is more specifically an *external* direct sum; an *internal* direct sum _conditionally_ exists for #emph("sub")structures (of a common abelian-group-like structure) iff. their intersection is _trivial_; \
+  For a structure $S$ with substructures $A$ and $B$, \
   $A plus.o B$ is well-defined#note-ref(<directsuminternal>) ("$A$ and $B$ are in direct sum") iff. $A inter B = {bold(0)}$. \
 
-  There furthermore are _decomposition statements_ using direct sums.
-  For a structure $S$ with substructures $A$ and $B$: \
-  $ S = A plus.o B quad <==> quad #quote([$A plus.o B$]) #text([*and*]) S = A + B $
-  $S = A plus.o B$ is the decomposition statement.
+  / Decomposition Statements: The expression $S = A plus.o B$ asserts that $A$ and $B$ are in direct sum and that their sum is exactly $S$.
+    $ S = A plus.o B quad <==> quad #quote([$A plus.o B$]) #text([*and*]) S = A + B $
+
 
 #note(<directsuminternal>)[
   Note: with internal direct sums, the $A plus.o B$ notation has overloaded meanings: it denotes the same sum set as $A + B$ while simultaneously _asserting_ that $A inter B = {bold(0)}$.
