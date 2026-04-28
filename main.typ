@@ -341,17 +341,18 @@ Observe that if $P^(-1) M P = N$, then $P N P^(-1) = M$.
 #pagebreak()
 = Matrix Reduction
 
-Assume $V$ denotes some finite-dimensional vector space over $FF$. \
-Assume $T : V -> V$ denotes some endomorphism of $V$.
-
+Assume $V$ denotes some finite-dimensional vector space over $FF$ ($= RR$ or $CC$, as specified). \
+Assume $T : V -> V$ denotes some endomorphism of $V$. \
+Observe that as $n = dim V$ is finite and $T$ is an endomorphism, we can always represent it as some matrix $M in cal(M)_(n,n)$.
 
 == Block Matrices
 
-/ Invariant Subspace: (aka. stable subspace) $U subset.eq V$ is an invariant subspace for $T$ if $T(U) subset.eq U$. \
+/ Invariant Subspace: (aka. stable subspace) $U subset.eq V$ is an invariant subspace under $T$ if $T(U) subset.eq U$. \
   I.e., $forall u in U : T(u) in U$.
 
-Observe that $V$, ${bold(0)}$, $ker T$, and $im T$ are always invariant subspaces for some $T$. \
-It is also written "$U$ is #box[$T$--invariant]" for some subspace $U$ and transformation $T$.
+Observe that $V$ and ${bold(0)}$ are always invariant subspaces under _any_ $T$; \
+$ker T$ and $im T$ are always invariant subspaces under a given $T$. \
+Note: it is also written "$U$ is #box[$T$--invariant]" for some subspace $U$ and transformation $T$.
 
 #line(length: 100%, stroke: 0.3pt)
 
@@ -372,11 +373,14 @@ $
 $
 (See section below on the computational utility of these.)
 
-Eigenvectors' spans are invariant subspaces where the associated endomorphism acts like a scaling.
+An eigenvector's span is an invariant subspace where the associated endomorphism acts like a scaling: \
+An eigenvector spans a 1-dimensional invariant subspace, and a linear transformation on 1-dimensional invariant subspaces can _only_ be a scaling.
 
-/ Eigenspace: For a given eigenvalue $lambda$, its eigenspace $E subset.eq V$ is $ker (M - lambda I)$.
+/ Eigenspace: For a given eigenvalue $lambda$, we have its eigenspace $E_lambda = ker (M - lambda I) subset.eq V$. \
+  Equivalently, $E_lambda = op("span"){v_1, ..., v_k}$ where ${v_1, ..., v_k}$ is a basis of eigenvectors for $lambda$ (and $k$ is the geometric multiplicity).
 
-Note that any $v in E \/ {bold(0)}$ is an eigenvector of $E$'s eigenvalue.
+Observe that any $v in E_lambda \\ {bold(0)}$ is an eigenvector corresponding to $lambda$. \
+Observe that ${"eigenspaces of" T} subset.neq {"invariant subspaces of" T}$. (Unequal in nontrivial cases.)
 
 / Geometric Multiplicity: The geometric multiplicity of an eigenvalue $lambda$ of $M$, $gamma_M (lambda)$, is $dim E$. \
   This is the "physical" dimension of the associated eigenspace.
@@ -390,7 +394,7 @@ Note that any $v in E \/ {bold(0)}$ is an eigenvector of $E$'s eigenvalue.
 
 === Finding Eigenvalues
 
-Here we will work with $n times n$ ($n = dim V$) matrix representations $M$ of endomorphisms $T$. \
+Consider matrix representations $M in cal(M)_(n,n)$ of $T$. \
 Assume $v in V != bold(0)$ and $lambda in FF$.
 
 Derivation from $M v = lambda v$ to the _characteristic polynomial_:
@@ -405,7 +409,8 @@ Observe that a given $lambda$ is a solution \
 $<==>$ $ker (M - lambda I)$ is non-trivial \
 $<==>$ $M - lambda I$ is not injective $<=>$ surjective $<=>$ bijective \
 $<==>$ $M - lambda I$ is not _invertible_ \
-$<==>$ $det(M - lambda I) = 0$.
+$<==>$ $det(M - lambda I) = 0$. \
+I.e., any $lambda$ that satisfies any statement above is an eigenvalue, and the set of all such solutions is all eigenvalues of the given transformation $M$.
 
 
 / Characteristic Polynomial: The characteristic polynomial $chi_M$ for matrix $M$ represents the
