@@ -486,8 +486,27 @@ I.e., any $lambda$ that satisfies any statement above is an eigenvalue, and the 
 
 
 / Characteristic Polynomial: The characteristic polynomial $chi_M$ for matrix $M$ represents the
-  $ chi_M = det(M - lambda I) $
+  $ chi_M (lambda) = det(M - lambda I) $
   The roots of $chi_M$ (expanding $det$ with the Leibniz formula) are exactly the eigenvalues of $M$. \
+
+#aside[
+  $
+    chi_M (lambda) = det(lambda I - M) = det(
+      mat(
+        lambda, 0, ..., 0;
+        0, lambda, ..., 0;
+        dots.v, dots.v, dots.down, dots.v;
+        0, 0, 0, lambda;
+      )
+      - M
+    )\
+    = lambda^n + a_(n-1) lambda^(n-1) + ... + a_2 lambda^2 + a_1 lambda + a_0
+  $
+
+  Aside#super[2]: there's a very subtle (and mostly insignificant) difference between $det(M - lambda I)$ and $det(lambda I - M)$.
+  I refuse to elaborate further.
+
+]
 
 Observe that $T: V -> V$ cannot more than $n = dim V$ eigenvectors or eigenvalues. \
 Observe that $chi_M$ has degree $n$. \
@@ -514,6 +533,30 @@ The roots and their multiplicity provide information on possible diagonalization
   E.g., one can:
   - compute matrix inverses cheaply (by rearranging $chi_M (M)$)
   - represent high powers $M^k$ where $k >= n$ as some linear combination of the lower powers
+
+If $FF = RR$, $chi_M$ factors, according to how, well, polynomials factor in $RR$, some distinct irreducible quadratic terms $P_i$ and linear terms.
+For $j$ distinct real eigenvalues:
+$
+  chi_M (x) = a times P_1^(h_1)(x) times ... times P_k^(h_k)(x) times (x - lambda_1)^(g_1) times ... times (x - lambda_j)^(g_j)
+$
+
+If $FF = CC$, the polynomial can be fully factored, for $m$ distinct eigenvalues:
+$
+  chi_M (x) = a times (x - lambda_1)^(g_1) times ... times (x - lambda_m)^(g_m)
+$
+
+/ Kernel Decomposition Theorem: \
+  For $FF = RR$:
+  $
+    V = ker(P_1^(h_1)(M)) plus.o ... plus.o ker(P_n^(h_k)(M)) plus.o ker((M - lambda_1 I)^(g_1)) plus.o ... plus.o ker((M - lambda_j I)^(g_j))
+  $
+  For $FF = CC$:
+  $
+    V = ker((M - lambda_1 I)^(g_1)) plus.o ... plus.o ker((M - lambda_m I)^(g_m))
+  $
+
+The $ker((M - lambda I))^k$ stuff are _generalized_ eigenspaces...
+
 
 == Matrix Reduction
 
