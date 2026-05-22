@@ -656,6 +656,49 @@ The general solution is built from the roots of the characteristic polynomial $c
   By superposition, these linear combinations are also solutions, and they are guaranteed to be real-valued and linearly independent.
 ]
 
+== Multivariate Functions
+
+/ Fubini's Theorem: For a function $f : RR^2 -> RR$ that is continuous over a rectangle $X times Y$ ($X$ and $Y$ are intervals), the double integral can be computed as an iterated integral:
+  $
+    integral.double_(X times Y) f(x, y) dif(x, y) = integral_X (integral_Y f(x, y) dif y) dif x = integral_Y (integral_X f(x, y) dif x) dif y
+  $
+  This double-to-iterated conversion is valid for any shape of area as long as $f$ is continuous over it.
+
+/ Gradient: A representation of the first derivative of a multivariate function. \
+  For a function $f : RR^n -> RR$, the gradient of $f$ at some point $x = (x_1, ..., x_n) in R^n$ is the vector of partial derivatives:
+  $ gradient f = vec((partial f) / (partial x_1), ..., (partial f) / (partial x_n)) $
+  The gradient points in the direction of steepest ascent, and its magnitude is the rate of increase in that direction.
+
+/ Hessian: A representation of the second derivative of a multivariate function. \
+  For a function $f : RR^n -> RR$, the Hessian of $f$ at some point $x = (x_1, ..., x_n) in R^n$ is the matrix of second partial derivatives:
+  $
+    (bold(cal(H))_f)_(i,j) = (partial^2 f) / (partial x_i partial x_j) \
+    bold(cal(H))_f = mat(
+      (partial^2 f) / (partial x_1^2), (partial^2 f) / (partial x_1 partial x_2), ..., (partial^2 f) / (partial x_1 partial x_n);
+      (partial^2 f) / (partial x_2 partial x_1), (partial^2 f) / (partial x_2^2), ..., (partial^2 f) / (partial x_2 partial x_n);
+      dots.v, dots.v, dots.down, dots.v;
+      (partial^2 f) / (partial x_n partial x_1), (partial^2 f) / (partial x_n partial x_2), ..., (partial^2 f) / (partial x_n^2)
+    )
+    = bold(upright(J))(gradient f)^top
+  $
+
+  The Hessian is used to analyze the local curvature of $f$ and classify stationary points.
+
+== Stationary Points
+
+If the second partial derivatives of $f$ are continuous near a point $x$, then
+$(partial^2 f) / (partial x partial y) (x) = (partial^2 f) / (partial y partial x) (x)$. \
+Consequently, the Hessian is symmetric for any $f$ with continuous second partial derivatives.
+
+Classification of Stationary point $x$:
+- $det(bold(cal(H))_f (x)) > 0$ \
+  - If $(partial^2 f) / (partial x_1^2) (x) > 0$, then $x$ is a local minimum.
+  - If $(partial^2 f) / (partial x_1^2) (x) < 0$, then $x$ is a local maximum.
+- $det(bold(cal(H))_f (x)) < 0$ \
+  $x$ is a saddle point.
+- $det(bold(cal(H))_f (x)) = 0$ \
+  inconclusive
+
 #pagebreak()
 = Euclidean Spaces
 
