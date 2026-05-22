@@ -482,7 +482,7 @@ $<==>$ $ker (M - lambda I)$ is non-trivial \
 $<==>$ $M - lambda I$ is not injective $<=>$ surjective $<=>$ bijective \
 $<==>$ $M - lambda I$ is not _invertible_ \
 $<==>$ $det(M - lambda I) = 0$. \
-I.e., any $lambda$ that satisfies any statement above is an eigenvalue, and the set of all such solutions is all eigenvalues of the given transformation $M$.
+I.e., any $lambda$ that satisfies any statement above is an eigenvalue, and the set of all such solutions are the eigenvalues of the transformation represented by $M$.
 
 
 / Characteristic Polynomial: The characteristic polynomial $chi_M$ for matrix $M$ represents the
@@ -508,9 +508,9 @@ I.e., any $lambda$ that satisfies any statement above is an eigenvalue, and the 
 
 ]
 
-Observe that $T: V -> V$ cannot more than $n = dim V$ eigenvectors or eigenvalues. \
+Observe that $T: V -> V$ cannot more than $n = dim V$ eigenvalues (or eigenspaces). \
 Observe that $chi_M$ has degree $n$. \
-$0$ is a root iff. $M$ is non-invertible.
+$0$ is a root of $chi_M$ iff. $det(M) = 0$
 
 
 === Computing Eigenvectors
