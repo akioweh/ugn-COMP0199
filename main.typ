@@ -458,7 +458,7 @@ Observe that ${"eigenspaces of" T} subset.neq {"invariant subspaces of" T}$. (Un
 / Geometric Multiplicity: The geometric multiplicity of an eigenvalue $lambda$ of $M$, $gamma_M (lambda)$, is $dim E_lambda$. \
   This is the "physical" dimension of the associated eigenspace.
 
-/ Algebraic Multiplicity: The algebraic multiplicity of an eigenvalue $lambda$ of $M$, $mu_M (lambda)$, is its multiplicity as a root of $chi_M$ ($M$'s characteristic polynomial; see below).
+/ Algebraic Multiplicity: The algebraic multiplicity of an eigenvalue $lambda$ of $M$, $alpha_M (lambda)$, is its multiplicity as a root of $chi_M$ ($M$'s characteristic polynomial; see below).
 
 / Linear Independence of Eigenvectors: For _distinct_ eigenvalues $lambda_1, ..., lambda_n$, their corresponding eigenvectors $v_1, ..., v_n$ are linearly independent. \
   _Alternatively: Take a basis for each eigenspace; the union of all these bases, across distinct eigenvalues, is linearly independent._\
@@ -532,12 +532,12 @@ Recall that polynomials in $RR$ factor into linear _and_ irreducible quadratic f
 
 If $FF = RR$, $chi_M$ factors into distinct irreducible quadratic terms $P_i$ and linear terms.
 $
-  chi_M (x) = a times P_1^(h_1)(x) times ... times P_k^(h_k)(x) times (x - lambda_1)^(g_1) times ... times (x - lambda_j)^(g_j)
+  chi_M (x) = a times P_1^(r_1)(x) times ... times P_k^(r_k)(x) times (x - lambda_1)^(s_1) times ... times (x - lambda_j)^(s_j)
 $
 
 If $FF = CC$:
 $
-  chi_M (x) = a times (x - lambda_1)^(g_1) times ... times (x - lambda_m)^(g_m)
+  chi_M (x) = a times (x - lambda_1)^(r_1) times ... times (x - lambda_m)^(r_m)
 $
 
 / Annihilating Polynomial: A polynomial $P$ over $FF$ is an annihilating polynomial for $M$ if \
@@ -561,12 +561,17 @@ Different bases thus correspond to different matrices that still represent the s
 - While some $T$'s matrix $M$ in the standard basis may not be diagonal, it may have a diagonal representation under a different basis.
 - Such a basis is precisely an _eigenbasis_ -- a basis consisting only of eigenvectors.
 
-For a transformation $T$ represented by a matrix $M$, an _eigenbasis_ is a basis of $V$ consisting entirely of eigenvectors of $T$. \
-If an eigenbasis exists, $M$ is _diagonalizable_; constructing $P$ with the eigenbasis as columns, we obtain a change-of-basis matrix s.t. $D = P^(-1)M P$ is diagonal. \
+/ Eigenbasis: For a transformation $T$, an _eigenbasis_ is a basis of $V$ consisting only of eigenvectors of $T$.
+
+/ Diagonalization: For a matrix $M$ and its transformation $T$, $M$ is _diagonalizable_ iff. an eigenbasis exists for $T$. \
+  Constructing $P$ with the eigenbasis as columns, we obtain a change-of-basis matrix s.t. $D = P^(-1)M P$ is diagonal.
 
 Further properties:
 - the entries of $D$ are the eigenvalues of $M$ (with multiplicity)
-// TODO: any further useful properties
+- $M$ is diagonalizable iff. $mu_M$ splits into _distinct_ linear factors.
+- $M$ is diagonalizable iff. $alpha_M (lambda) = gamma_M (lambda)$ for all eigenvalues $lambda$.
+- Powers of $M$ are easy to compute: $M^k = P D^k P^(-1)$ (where $D^k$ is just diagonal entries raised to $k$).
+- Similarly, for any analytic function $f$ (e.g., $e^M$): $f(M) = P f(D) P^(-1)$.
 
 / Kernel Decomposition Theorem: If the minimal polynomial of $T$ is split into pairwise corprime factors $p(x) = p_1 (x)^(r_1) ... p_k (x)^(r_k)$, then $V$ decomposes into a direct sum of the factors' kernels:
   $
@@ -582,15 +587,26 @@ For $FF = CC$:
 $
   V = ker((M - lambda_1 I)^(r_1)) plus.o ... plus.o ker((M - lambda_m I)^(r_m))
 $
+Note that every term and its power $r$ or $s$ directly correspond to the factorization of $chi_M$.
 
-The $ker((M - lambda I)^k)$ stuff are _generalized_ eigenspaces... \
-Usuallly, $ker(M - lambda I) != ker((M - lambda I)^k)$
-// TODO: explain briefly better-ly what generalized eigenspaces are and how they relate to everything else here.
+/ Generalized Eigenspace: For an eigenvalue $lambda$ with algebraic multiplicity $m = alpha_M (lambda)$, the generalized eigenspace is
+  $ K_lambda = ker((M - lambda I)^m) $
+  - Its elements are _generalized eigenvectors_.
+  - $dim K_lambda = alpha_M (lambda)$ (always, unlike eigenspaces where $dim E_lambda <= alpha_M (lambda)$).
+  - While the direct sum of eigenspaces $plus.o.big E_lambda$ may not span $V$, the direct sum of generalized eigenspaces always does (if $chi_M$ splits, e.g., over $CC$):
+    $ V = plus.o.big_i K_(lambda_i) $
 
+/ Triangularizable: A matrix $M$ is similar to an upper-triangular matrix iff. its characteristic polynomial $chi_M$ splits fully into linear factors over $FF$.
+  - Since $CC$ is algebraically closed, all matrices over $FF = CC$ are upper-triangularizable.
+  - A real matrix is triangularizable over $RR$ iff. all its eigenvalues are real. If it has irreducible quadratic factors, it cannot be triangularized (but can be block-triangularized with $2 times 2$ blocks).
 
-// TODO: notes on the idea that if $chi_M$ factors fully into linear factors then $M$ can be upper-triangularized (link to multiplicities of roots and such)
-// ...and the steps of finding basis for generalized eigenspaces...
-// follow this, the idea that if the $chi_M$ has irreducible factors then $M$ cannot be triangularized...
+/ Jordan Canonical Form:
+  Every matrix whose characteristic polynomial splits is similar to a block-diagonal matrix of _Jordan blocks_:
+  $
+    J = mat(J_(d_1)(lambda_1), 0, dots.c, 0; 0, J_(d_2)(lambda_2), dots.c, 0; dots.v, dots.v, dots.down, dots.v; 0, 0, dots.c, J_(d_k)(lambda_k))
+    quad "where" quad
+    J_d (lambda) = mat(lambda, 1, 0, dots.c, 0; 0, lambda, 1, dots.c, 0; dots.v, dots.v, dots.down, dots.down, dots.v; 0, 0, dots.c, lambda, 1; 0, 0, dots.c, 0, lambda)
+  $
 
 
 
