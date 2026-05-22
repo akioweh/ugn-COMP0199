@@ -460,6 +460,8 @@ Observe that ${"eigenspaces of" T} subset.neq {"invariant subspaces of" T}$. (Un
 
 / Algebraic Multiplicity: The algebraic multiplicity of an eigenvalue $lambda$ of $M$, $alpha_M (lambda)$, is its multiplicity as a root of $chi_M$ ($M$'s characteristic polynomial; see below).
 
+/ Spectrum: The spectrum of some $T$ is the multiset of all its eigenvalues (with algebraic multiplicity).
+
 / Linear Independence of Eigenvectors: For _distinct_ eigenvalues $lambda_1, ..., lambda_k$, their corresponding eigenvectors $v_1, ..., v_k$ are linearly independent. \
   _Alternatively: Take a basis for each eigenspace; the union of all these bases, across distinct eigenvalues, is linearly independent._\
   This allows the construction of bases out of eigenvectors if we have enough eigenvalues.
@@ -611,6 +613,48 @@ Note that every term and its power $r$ or $s$ directly correspond to the factori
 
 #pagebreak()
 = Differential Calculus
+
+== Homogeneous Linear DEs
+
+/ Homogeneous Linear Differential Equation: (HLDE) A linear differential equation of the form
+  $ a_n y^((n)) + a_(n-1) y^((n-1)) + ... + a_1 y' + a_0 y = 0 $
+
+/ Principle of superposition: The linear combination of any two solutions to a HLDE is also a solution. \
+  This is due to the differential operator being linear.
+
+The general solution to an $n$-th order HLDE is a linear combination of $n$ linearly independent solutions.
+
+#aside[
+  Let $D = dif / (dif x)$ be the linear differential operator. The HLDE can be written as:
+  $ P(D) y = 0 $
+  where $P(z) = a_n z^n + ... + a_1 z + a_0$ is the characteristic polynomial. \
+  Clearly, solving the HLDE is equivalent to solving for $ker(P(D))$.
+
+  / Spectral Mapping Theorem: For any $T$ and polynomial $P$, if $v$ is an eigenvector of $T$ with eigenvalue $lambda$, then $v$ is also an eigenvector of $P(T)$ with eigenvalue $P(lambda)$:
+    $ T v = lambda v quad ==> quad P(T) v = P(lambda) v $
+
+  Applying this to $T = D$, whose eigenfunctions are $y = e^(lambda x)$ with eigenvalue $lambda$ (since $D(e^(lambda x)) = lambda e^(lambda x)$), we get:
+  $ P(D) e^(lambda x) = P(lambda) e^(lambda x) $
+
+  Thus, if some $lambda$ satisfies $P(lambda) = 0$, then $P(D) e^(lambda x) = 0$, meaning the eigenfunction $e^(lambda x) in ker(P(D))$ is a solution.
+]
+
+The general solution is built from the roots of the characteristic polynomial $chi(lambda) = P(lambda) = 0$:
+
++ *Distinct Real Roots*: For each real root $lambda_i$, there is a solution $e^(lambda_i x)$.
++ *Repeated Real Roots*: For a real root $lambda$ with multiplicity $m$, the kernel contains the $m$ linearly independent solutions:
+  $ e^(lambda x), thick x e^(lambda x), thick ..., thick x^(m-1) e^(lambda x) $
++ *Complex Conjugate Roots*: Since the coefficients $a_i$ are real, complex roots appear in conjugate pairs $lambda = a plus.minus i b$.
+  - These yield complex solutions $e^((a plus.minus i b)x) = e^(a x) e^(plus.minus i b x) = e^(a x)(cos(b x) plus.minus i sin(b x))$.
+  - Taking the real and imaginary parts (which are linear combinations) yields two real, linearly independent solutions:
+    $ e^(a x) cos(b x) quad "and" quad e^(a x) sin(b x) $
+  - If repeated with multiplicity $m$, multiply these by powers $x^k$ for $k < m$.
+
+#aside[
+  For complex conjugate solutions $y_1 = u + i v$ and $y_2 = u - i v$, their real and imaginary parts are linear combinations of the conjugate pair themselves:
+  $ u = (y_1 + y_2) / 2 quad "and" quad v = (y_1 - y_2) / (2i) $
+  By superposition, these linear combinations are also solutions, and they are guaranteed to be real-valued and linearly independent.
+]
 
 #pagebreak()
 = Euclidean Spaces
