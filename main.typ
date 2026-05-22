@@ -347,7 +347,7 @@ Assume $V$ denotes some finite-dimensional vector space over $FF$ ($= RR$ or $CC
 Assume $T : V -> V$ denotes some endomorphism of $V$. \
 Assume $M in cal(M)_(n,n)$ is the matrix representation of any such $T$.
 
-Observe that as $T$ is an endomorphism and $n = "rank" T = dim V$, we can always represent it as some square matrix.
+Observe that as $T$ is an endomorphism and $n = dim V$, we can always represent it as some square matrix.
 
 == Abstract ahh Stuff
 
@@ -367,7 +367,7 @@ Assume $U subset.eq V$ a subspace.
 / Coset: For any $v in V$, the coset $v + U$ (or $[v]$ in _equivalence class_ notation) is the set ${v + u | u in U}$.
 
 / Quotient Space: A quotient (vector) space $V \/ U$ is a new vector space over the set of all cosets of $U$. \
-  I.e., $FF = {{v + u | u in U} | v in V}$. \
+  I.e., $V \/ U$'s carrier set is ${{v + u | u in U} | v in V}$. \
   Vector operations are defined as
   $[x] + [y] = [x + y]$ and
   $c[x] = [c x]$. \
@@ -403,7 +403,7 @@ For a $T$-invariant $U$, one can construct, in a deliberate basis, a _block tria
 Let $W$ be a subspace complementary to $U$.
 
 Pick a basis $B_U = (u_1, ..., u_k)$ for $U$ and a basis $B_W = (w_1, ..., w_(n-k))$ for $W$. \
-$B = (u_1, ..., u_k, w_1, ..., w_(n-k))$ is then a basis for $V$. #h(2em) (Why? ...because I said so.).
+$B = (u_1, ..., u_k, w_1, ..., w_(n-k))$ is then a basis for $V$. (Since $V = U plus.o W$.)
 
 Now, we construct a matrix $M$ for $T$ in $B$. \
 Recall that a matrix can be constructed column-wise for $b in B$ as $T(b)$'s coordinates (in $B$):
@@ -460,7 +460,7 @@ Observe that ${"eigenspaces of" T} subset.neq {"invariant subspaces of" T}$. (Un
 
 / Algebraic Multiplicity: The algebraic multiplicity of an eigenvalue $lambda$ of $M$, $alpha_M (lambda)$, is its multiplicity as a root of $chi_M$ ($M$'s characteristic polynomial; see below).
 
-/ Linear Independence of Eigenvectors: For _distinct_ eigenvalues $lambda_1, ..., lambda_n$, their corresponding eigenvectors $v_1, ..., v_n$ are linearly independent. \
+/ Linear Independence of Eigenvectors: For _distinct_ eigenvalues $lambda_1, ..., lambda_k$, their corresponding eigenvectors $v_1, ..., v_k$ are linearly independent. \
   _Alternatively: Take a basis for each eigenspace; the union of all these bases, across distinct eigenvalues, is linearly independent._\
   This allows the construction of bases out of eigenvectors if we have enough eigenvalues.
 
@@ -508,7 +508,7 @@ I.e., any $lambda$ that satisfies any statement above is an eigenvalue, and the 
 
 ]
 
-Observe that $T: V -> V$ cannot more than $n = dim V$ eigenvalues (or eigenspaces). \
+Observe that $T: V -> V$ cannot have more than $n = dim V$ eigenvalues (or eigenspaces). \
 Observe that $chi_M$ has degree $n$. \
 $0$ is a root of $chi_M$ iff. $det(M) = 0$
 
@@ -573,7 +573,7 @@ Further properties:
 - Powers of $M$ are easy to compute: $M^k = P D^k P^(-1)$ (where $D^k$ is just diagonal entries raised to $k$).
 - Similarly, for any analytic function $f$ (e.g., $e^M$): $f(M) = P f(D) P^(-1)$.
 
-/ Kernel Decomposition Theorem: If the minimal polynomial of $T$ is split into pairwise corprime factors $p(x) = p_1 (x)^(r_1) ... p_k (x)^(r_k)$, then $V$ decomposes into a direct sum of the factors' kernels:
+/ Kernel Decomposition Theorem: If the minimal polynomial of $T$ is split into pairwise coprime factors $p(x) = p_1 (x)^(r_1) ... p_k (x)^(r_k)$, then $V$ decomposes into a direct sum of the factors' kernels:
   $
     V = ker(p_1 (T)^(r_1)) plus.o ... plus.o ker(p_k (T)^(r_k))
   $
