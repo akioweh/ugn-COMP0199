@@ -485,7 +485,7 @@ $<==>$ $det(M - lambda I) = 0$. \
 I.e., any $lambda$ that satisfies any statement above is an eigenvalue, and the set of all such solutions are the eigenvalues of the transformation represented by $M$.
 
 
-/ Characteristic Polynomial: The characteristic polynomial $chi_M$ for matrix $M$ represents the
+/ Characteristic Polynomial: The characteristic polynomial $chi_M$ for matrix $M$ is
   $ chi_M (lambda) = det(M - lambda I) $
   The roots of $chi_M$ (expanding $det$ with the Leibniz formula) are exactly the eigenvalues of $M$. \
 
@@ -521,46 +521,76 @@ Obviously, we just compute $ker (M - lambda I)$ for a given $lambda$ to obtain i
 == Polynomials and Linear Maps
 
 The characteristic polynomial computes eigenvalues. \
-The roots and their multiplicity provide information on possible diagonalization.
+The roots and their multiplicity provide information on possible reductions (see below).
 
 / Complex vs Real fields: \
   Per the fundamental theorem of algebra, not all roots of the characteristic polynomial may be real. \
   For $FF = RR$, some $n times n$ matrix $M$ has $<= n$ eigenvalues. \
   For $FF = CC$, $M$ has exactly $n$ eigenvalues (counted with algebraic multiplicity).
 
-/ Cayley-Hamilton Theorem: $chi_M (M) = 0$ for any $M in cal(M_(i, i))$. \
-  Effectively, this means ${I, M, M^2, ..., M^n}$ is linearly dependent, and $chi_M$ itself demonstrates the exact dependence (coefficients).
-  E.g., one can:
-  - compute matrix inverses cheaply (by rearranging $chi_M (M)$)
-  - represent high powers $M^k$ where $k >= n$ as some linear combination of the lower powers
+Recall that polynomials in $RR$ factor into linear _and_ irreducible quadratic factors, while polynomials in $CC$ factor fully into linear factors.
 
-If $FF = RR$, $chi_M$ factors, according to how, well, polynomials factor in $RR$, some distinct irreducible quadratic terms $P_i$ and linear terms.
-For $j$ distinct real eigenvalues:
+If $FF = RR$, $chi_M$ factors into distinct irreducible quadratic terms $P_i$ and linear terms.
 $
   chi_M (x) = a times P_1^(h_1)(x) times ... times P_k^(h_k)(x) times (x - lambda_1)^(g_1) times ... times (x - lambda_j)^(g_j)
 $
 
-If $FF = CC$, the polynomial can be fully factored, for $m$ distinct eigenvalues:
+If $FF = CC$:
 $
   chi_M (x) = a times (x - lambda_1)^(g_1) times ... times (x - lambda_m)^(g_m)
 $
 
-/ Kernel Decomposition Theorem: \
-  For $FF = RR$:
-  $
-    V = ker(P_1^(h_1)(M)) plus.o ... plus.o ker(P_n^(h_k)(M)) plus.o ker((M - lambda_1 I)^(g_1)) plus.o ... plus.o ker((M - lambda_j I)^(g_j))
-  $
-  For $FF = CC$:
-  $
-    V = ker((M - lambda_1 I)^(g_1)) plus.o ... plus.o ker((M - lambda_m I)^(g_m))
-  $
+/ Annihilating Polynomial: A polynomial $P$ over $FF$ is an annihilating polynomial for $M$ if \
+  $P(M) = 0$.
 
-The $ker((M - lambda I))^k$ stuff are _generalized_ eigenspaces...
+/ Minimal Polynomial: The _monic_ polynomial $mu_M$ over $FF$ of least degree that annihilates $M$; $mu_M (M) = 0$
+
+/ Cayley-Hamilton Theorem: Square matrices are annihilated by their own characteristic polynomials; $forall M in cal(M)_(i, i) : chi_M (M) = 0$ \
+  Effectively, this means ${I, M, M^2, ..., M^n}$ is linearly dependent, and $chi_M$ itself demonstrates the exact dependence (via the coefficients).
+  E.g., one can:
+  - compute matrix inverses cheaply (by rearranging $chi_M (M)$)
+  - represent high powers $M^k$ where $k >= n$ as some linear combination of the lower powers
 
 
 == Matrix Reduction
 
-Matrix reduction is finding subspaces where the associated transformation is simple.
+Recall that a given matrix is just _one_ representation of a linear transformation and is implicitly associated with a chosen basis. \
+Different bases thus correspond to different matrices that still represent the same transformation.
+
+- We want diagonal matrices as they're computationally advantageous.
+- While some $T$'s matrix $M$ in the standard basis may not be diagonal, it may have a diagonal representation under a different basis.
+- Such a basis is precisely an _eigenbasis_ -- a basis consisting only of eigenvectors.
+
+For a transformation $T$ represented by a matrix $M$, an _eigenbasis_ is a basis of $V$ consisting entirely of eigenvectors of $T$. \
+If an eigenbasis exists, $M$ is _diagonalizable_; constructing $P$ with the eigenbasis as columns, we obtain a change-of-basis matrix s.t. $D = P^(-1)M P$ is diagonal. \
+
+Further properties:
+- the entries of $D$ are the eigenvalues of $M$ (with multiplicity)
+// TODO: any further useful properties
+
+/ Kernel Decomposition Theorem: If the minimal polynomial of $T$ is split into pairwise corprime factors $p(x) = p_1 (x)^(r_1) ... p_k (x)^(r_k)$, then $V$ decomposes into a direct sum of the factors' kernels:
+  $
+    V = ker(p_1 (T)^(r_1)) plus.o ... plus.o ker(p_k (T)^(r_k))
+  $
+
+Following the complete factorization of the characteristic polynomial, we have...\
+For $FF = RR$:
+$
+  V = ker(P_1^(r_1)(M)) plus.o ... plus.o ker(P_n^(r_k)(M)) plus.o ker((M - lambda_1 I)^(s_1)) plus.o ... plus.o ker((M - lambda_j I)^(s_j))
+$
+For $FF = CC$:
+$
+  V = ker((M - lambda_1 I)^(r_1)) plus.o ... plus.o ker((M - lambda_m I)^(r_m))
+$
+
+The $ker((M - lambda I)^k)$ stuff are _generalized_ eigenspaces... \
+Usuallly, $ker(M - lambda I) != ker((M - lambda I)^k)$
+// TODO: explain briefly better-ly what generalized eigenspaces are and how they relate to everything else here.
+
+
+// TODO: notes on the idea that if $chi_M$ factors fully into linear factors then $M$ can be upper-triangularized (link to multiplicities of roots and such)
+// ...and the steps of finding basis for generalized eigenspaces...
+// follow this, the idea that if the $chi_M$ has irreducible factors then $M$ cannot be triangularized...
 
 
 
