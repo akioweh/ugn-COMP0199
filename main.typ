@@ -385,7 +385,7 @@ This is contrary to general groups or rings, which require specific properties (
 
 Complements to a subspace are generally *non-unique*, and a complementary subspace can be viewed geometrically as a _section_ of the corresponding quotient space.
 However, the addition of an inner product (to define orthogonality) allows the construction of a unique, *canonical* complement $U^perp$. \
-(See _orthogonal projections_ and _exact sequences_.)
+(See _Orthogonality_ subsection below.)
 
 #aside[
   Observe that $W tilde.equiv (V \/ U)$ for any complement $W$.
@@ -701,6 +701,158 @@ Classification of Stationary point $x$:
 
 #pagebreak()
 = Euclidean Spaces
+
+Continue assuming $V$ is a finite-dimensional vector space over $FF = RR$ _or_ $FF = CC$; \
+$u, v, w in V$ and $a, b in FF$.
+
+== Inner Products
+
+#let inner(a, b) = $chevron.l #a ""comma #b chevron.r$
+
+#aside[
+  The _canonical_ inner product is the dot product.
+]
+
+/ Inner Product: Additional structure on a $V$ as a binary operation $inner(dot, dot) : V times V -> FF$ satisfying:
+  + Conjugate symmetry: $inner(v, w) = overline(inner(w, v))$
+  + Linearity in the first argument: $inner(a v + b w, u) = a inner(v, u) + b inner(w, u)$
+  + Positive-definiteness: $u != 0 ==> inner(u, u) > 0$
+
+
+Observe that for $FF = RR$, $x = overline(x)$, so 1. is reduced to simple symmetry, and 2. extends to bilinearity. \
+Also, for $FF = CC$, 1. implies that $inner(u, u) in RR$.
+
+Implied properties:
+- $inner(0, u) = inner(u, 0) = 0$
+- $inner(u, u) = 0 <==> u = 0$ (A way to prove zero-ness of a vector)
+- $inner(u, a v + b w) = overline(a) inner(u, v) + overline(b) inner(u, w)$; i.e., conjugate-linearity in the second argument (_sesquilinear_).
+
+The inner product is a _symmetric positive-definite bilinear form_ for $FF = RR$, and a _positive-definite sesquilinear form_ for $FF = CC$.
+
+/ Inner Product Space: A vector space equipped with an inner product.
+
+/ Euclidean Space: An inner product space over $RR$.
+
+/ Matrix Representation of Inner Product: A matrix $M in cal(M)_(n,n)$ represents the inner product $ inner(u, v) = u^top M v $ for $u, v in RR^n$ iff. $M$ is symmetric and positive-definite; i.e.,
+  - $M^top = M$
+  - $v != 0 ==> v^top M v > 0$
+
+#aside[
+  For $FF = CC$, replace "transposition" $x^top$ with "conjugate transposition" $x^dagger = overline(x)^top$ and these conditions remain true.
+]
+
+I.e., (in finite dimension), every inner product can be represented as a matrix, and every matrix satisfying said conditions represents an inner product.
+
+$inner(dot, dot)_M$ denotes the inner product represented by $M$.
+
+=== Infinite Dimension
+
+Let's for example consider functions $f, g : RR -> RR$ on the interval $[a, b]$.
+
+The _canonical_ inner product is
+$
+  inner(f, g) = integral_a^b f(x) g(x) dif x
+$
+
+#aside[
+  Symmetry comes from the commutativity of multiplication; \
+  linearity is inherited from that of integration; \
+  positive-definiteness is inherited from $RR$ as a group.
+]
+
+== Norms
+
+/ Norm: A function $norm(dot) : V -> RR$ satisfying:
+  + Subadditivity (triangle inequality): $norm(v + w) <= norm(v) + norm(w)$
+  + Absolute homogeneity: $norm(a v) = |a| norm(v)$
+  + Positive-definiteness: $u != 0 ==> norm(u) > 0$
+
+/ Induced Norm: Every inner product naturally _induces_ a norm via $ norm(u) = sqrt(inner(u, u)) $
+  Note that the proof of the triangle inequality relies on the Cauchy-Schwarz inequality (below).
+
+#aside[
+  The other direction, i.e., whether a norm induces an inner product, requires the _parallelogram law_ $norm(u + v)^2 + norm(u - v)^2 = 2 (norm(u)^2 + norm(v)^2)$.
+]
+
+/ Euclidean Norm: The norm induced by the canonical inner product in Euclidean spaces. E.g., $ norm(vec(x, y)) = sqrt(inner(vec(x, y), vec(x, y))) = sqrt(vec(x, y) dot vec(x, y)) = sqrt(x^2 + y^2) $
+
+/ Cauchy-Schwarz Inequality: In any inner product space $V$, \
+  $abs(inner(v, w))^2 <= inner(u, u) inner(v, v)$ \
+  or, assuming the induced norm, \
+  $abs(inner(v, w)) <= norm(v) norm(w)$.
+
+Note that the Cauchy-Schwarz inequality is a consequence of the axioms of inner products; it is not an axiom itself, but it is a non-trivial result that helps prove, e.g., $sqrt(inner(u, u))$ is indeed a norm.
+
+== Metrics
+
+/ Metric (function): (Aka. distance) A function $d : A times A -> RR$ satisfying:
+  + Symmetry: $d(x, y) = d(y, x)$
+  + Positive-definiteness: $d(x, y) >= 0$ and $d(x, y) = 0 <==> x = y$
+  + Triangle inequality: $d(x, z) <= d(x, y) + d(y, z)$
+  for all $x, y, z in A$.
+
+/ Metric Space: A structure $(A, d)$ where $d : A times A -> RR$ is a metric.
+
+/ Induced Metric: Inner product spaces induce the metric $d(u, v) = norm(u - v)$.
+
+#aside[
+  Every inner product space is canonically a metric space using its induced norm and thus induced metric.
+]
+
+== Orthogonality
+
+// Assume $V$ now to be an Euclidean space.
+
+/ Orthogonality: For an inner product space, two vectors are orthogonal $v perp w$ iff. $inner(v, w) = 0$.
+
+/ Generalized Pythagorean Theorem: For an inner product space with the induced norm $norm(dot)$, $ v perp w quad ==> quad norm(v + w)^2 = norm(v)^2 + norm(w)^2 $
+
+/ Orthonormal Basis: A basis where vectors are pairwise orthogonal and of unit norm.
+
+The coordinates of a vector in an orthonormal basis are easily computed via the inner product;
+for a basis $(b_1, ..., b_n)$ and a vector $v$, $v = inner(v, b_1) b_1 + ... + inner(v, b_n) b_n$.
+
+Every orthonormal family of vectors is linearly independent, and every finite-dimensional inner product space has an orthonormal basis.
+
+/ Orthogonal Complementary Subspace: A given inner product subspace $W subset.eq V$ has a unique orthogonal complement (aka., the canonical complement)
+  $
+    W^perp = {v in V | inner(v, w) = 0 thick forall w in W}
+  $
+
+Clearly, \
+$V^perp = {0}$ and ${0}^perp = V$ \
+$V = W + W^perp$
+
+For an orthonormal basis $(w_1, ..., w_k)$ of $W subset.eq V$, we can define the _orthogonal projection_ s.t.
+$ P_W (v) = inner(v, w_1) w_1 + ... + inner(v, w_k) w_k $
+
+Clearly, $P_W (v) in W$ and $v - P_W (v) in W^perp$.
+
+/ Orthogonal Matrix: A matrix $M in cal(M)_(n, n)$ is orthogonal iff. its columns form an orthonormal basis. Alternatively, $M^top M = I$ or $M^top = M^(-1)$.
+
+/ Real Spectral Theorem: For a real symmetric matrix $M$,
+  - $M$ has a full eigenbasis
+  - The eigenbasis can be chosen to be orthonormal
+
+  Consequently, $M$ is orthogonally diagonalizable: there exists an orthogonal matrix $P$ s.t. \ $D = P^top M P$ is diagonal.
+
+For *real symmetric matrices*,
+- eigenvectors are orthogonal (and eigenvalues are real)
+- positive-definiteness $<==>$ (strictly) positive eigenvalues (*useful property*)
+
+This eigenvalue condition for positive-definiteness allows the _easier_ classification of matrices as inner products.
+
+Recall that matrix representations of inner products are symmetric; \
+they can thus always be diagonalized. \
+Furthermore, positive eigenvalues allows normalization of an diagonal form into the identity matrix, so *every inner product can be represented as the canonical inner product in some basis*.
+
+Advantages of an orthonormal basis:
++ Coordinates are easily computed via the inner product.
++ Inner products become the canonical dot product.
++ Orthogonal projections have a closed form (inner product).
++ Change of basis matrices between orthonormal bases are orthogonal.
++ A bunch more...
+
 
 #pagebreak()
 = Numerical Methods
