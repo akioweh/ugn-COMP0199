@@ -1,10 +1,18 @@
 #import "/style.typ": aside, note, note-ref, theme
 #import "@preview/booktabs:0.0.4": *
+#import "@preview/intextual:0.1.1": *
 
 #set document(title: "COMP0199")
 
 #show: theme
 #show: booktabs-default-table-style
+
+#let show_inter(body, fix: false) = {
+  // fix is to remove the extra space if a block equation follows a heading
+  if fix { v(-3pt, weak: true) } // yolo'd 3pt
+  show: intertext-rule
+  body
+}
 
 #let Var = math.op("Var")
 #let Cov = math.op("Cov")
