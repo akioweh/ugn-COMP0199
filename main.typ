@@ -971,28 +971,30 @@ If $X$ and $Y$ are independent, then $Cov(X, Y) = 0$.
 
 === Exponential
 
-$
-       X & tilde op("Exp")(lambda) \
-    f(x) & = lambda e^(-lambda x) quad {x >= 0} \
-       T & = \[0, infinity\) \
-    E[X] & = 1/lambda \
-  Var(X) & = 1/lambda^2
-$
+#show_inter(fix: true)[
+  $
+         X & tilde op("Exp")(lambda) #flushr[${lambda in RR^+}$] \
+      f(x) & = lambda e^(-lambda x) #flushr[${x >= 0}$] \
+         T & = \[0, infinity\) \
+      E[X] & = 1/lambda \
+    Var(X) & = 1/lambda^2
+  $
+]
 
 === Uniform
 
 $
-       X & tilde U(a, b) \
-    f(x) & = 1/(b - a) quad {a <= x <= b} \
+       X & tilde U(a, b) #flushr[${a < b in RR}$] \
+    f(x) & = 1/(b - a) #flushr[${a <= x <= b}$] \
        T & = [a, b] \
     E[X] & = (a + b)/2 \
-  Var(X) & = ???
+  Var(X) & = (b - a)^2 / 12
 $
 
 === Normal
 
 $
-       X & tilde N(mu, sigma^2) \
+       X & tilde N(mu, sigma^2) #flushr[${mu in RR, sigma in RR^+}$] \
     f(x) & = 1 / (sigma sqrt(2 pi)) e^(-1/2 ((x - mu) / sigma)^2) \
        T & = RR \
     E[X] & = mu \
@@ -1005,27 +1007,45 @@ No closed-form CDF.
 === Student's t-Distribution
 
 $
-       X & tilde t(nu) \
+       X & tilde t(nu) #flushr[${nu in RR^+}$] \
     f(x) & = Gamma((nu + 1)/2) / (sqrt(nu pi) thin Gamma(nu/2)) (1 + x^2 / nu)^(-(nu + 1)/2) \
        T & = RR \
-    E[X] & = 0 quad {nu > 1} \
-  Var(X) & = nu / (nu - 2) quad {nu > 2}
+    E[X] & = cases(
+             0 & thick "for" nu > 1,
+             "undefined" & thick "otherwise"
+           ) \
+  Var(X) & = cases(
+             nu / (nu - 2) & thick "for" nu > 2,
+             infinity & thick "for" 1 < nu <= 2,
+             "undefined" & thick "otherwise"
+           )
 $
+
+Its sole parameter $nu$ is called the _degrees of freedom_ and is usually an integer.
 
 Similar to the normal distribution but with heavier tails. \
 As $nu -> infinity$, $t(nu) -> N(0, 1)$.
 
+Definition via $chi^2$ and normal distributions:
+$ Z / sqrt(V \/ nu) ~ t(nu) $
+where $Z ~ N(0, 1)$ and $V ~ chi^2(nu)$ (and are independent).
+
 === Chi-Squared
 
 $
-       X & tilde chi^2(k) \
-    f(x) & = (x^(k/2 - 1) e^(-x/2)) / (2^(k/2) thin Gamma(k/2)) quad {x > 0} \
-       T & = [0, infinity) \
+       X & tilde chi^2(k) #flushr[${k in ZZ^+}$] \
+    f(x) & = (x^(k/2 - 1) e^(-x/2)) / (2^(k/2) thin Gamma(k\/2)) #flushr[${x > 0}$] \
+       T & = \[0, infinity\) \
     E[X] & = k \
   Var(X) & = 2 k
 $
 
-Sum of squares of $k$ independent standard normal random variables...
+Its sole parameter $k$ is called the _degrees of freedom_.
+
+$ sum_(i=1)^k Z_i^2 ~ chi^2(k) $ where $Z_i ~^("iid") N(0, 1)$.
+
+$chi^2(k) = op("Gamma")(alpha = k/2, theta = 2)$
+
 
 == Multivariate
 
