@@ -1046,12 +1046,12 @@ for the _joint_ PDF $f_(X,Y)$ of $X$ and $Y$.
 
 / Law of Large Numbers: For a sequence of _independent and identically distributed_ (i.i.d.) random variables, the average converges to the individual expected value as the number of variables goes to infinity. \
   Formally, if $X_1, X_2, ..., X_n$ are i.i.d. with expected value $mu$, then
-  $ P(lim_(n -> infinity) overline(X_n) = mu) = 1 $
-  where $overline(X_n) = 1/n (X_1 + ... + X_n)$.
+  $ P(lim_(n -> infinity) overline(X)_n = mu) = 1 $
+  where $overline(X)_n = 1/n (X_1 + ... + X_n)$.
 
 / Central Limit Theorem: (CLT) For i.i.d.s $X_1, X_2, ..., X_n$ with mean $mu$ and _finite_ variance $sigma^2$,
-  $ lim_(n -> infinity) overline(X_n) ~ N(mu, sigma^2 \/ n) $
-  where $overline(X_n) = 1/n (X_1 + ... + X_n)$.
+  $ lim_(n -> infinity) overline(X)_n ~ N(mu, sigma^2 \/ n) $
+  where $overline(X)_n = 1/n (X_1 + ... + X_n)$.
 
 We consider the approximation valid for $n >= 30$.
 
