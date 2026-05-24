@@ -857,89 +857,166 @@ Advantages of an orthonormal basis:
 #pagebreak()
 = Numerical Methods
 
+
 #pagebreak()
 = Probabilities
 
-PDF:
-1. $f : T mapsto RR$
-2. $forall x in T : f(x) >= 0$
-3. $integral_T f(x) dif x = 1$
+== Basics
 
-$
-  Pr(a <= X <= b) = integral_a^b f(x) dif x
-$
+/ Random Variable: A function $X : Omega -> T$ where \<insert measure theory baggage\>
+  #aside[To properly define a _random variable_, we need some background in _measure theory_ (or some setup with commutative unital algebras)... but that is completely out of scope... _gives up_]
 
-Evidently, $Pr(X = a) = 0$.
+  / Sample Space: $Omega$, the set of possible outcomes.
+  / Target Space: $T$, the image of $X$.
+    Often, $T = RR^n$.
 
-Cumulative DF:
-$
-  F_X(x) = Pr(X <= x) = integral_(-infinity)^x f(t) dif t
-$
+  When $T$ is continuous, $X$ is a _continuous random variable_.
 
+/ Probability Density Function: (PDF) Any function $f : T -> RR$ where
+  + $forall x in T : f(x) >= 0$
+  + $integral_T f(x) dif x = 1$
 
-also written as $mu$:
-$
-  E[X] = integral_(-infinity)^infinity x f(x) dif x \
-  E[X] = sum_T x Pr(X = x)
-$
+A given random variable $X$ can have multiple PDFs, but with enough meausure theory knowledge you know there is a canonical one :).
 
+If a random variable $X$ has PDF $f$, then for any $a, b in T$ with $a <= b$,
 $
-  op("Cov")(X, Y) & = E[(X - E[X])(Y - E[Y])] \
-                  & = E[X Y] - E[X]E[Y] \
-     op("Var")(X) & = E[(X - E[X])^2] \
-                  & = E[X^2] - E[X]^2 \
-$
-$
-  op("Var")(X) = integral_T x^2 f(x) dif x - mu^2 = integral_T (x - mu)^2 f(x) dif x
+  P(a <= X <= b) = integral_a^b f(x) dif x
 $
 
-$op("Cov")(X, Y) = 0$ if $X$ and $Y$ are independent.
+Note that it does not matter whether the inequalities are strict or not; they're all equivalent for continuous random variables since $Pr(X = a) = 0$ for any $a$.
 
-== classic distros
+/ Cumulative Distribution Function: (CDF) For a random variable $X$, the CDF is $F_X : T -> RR$ where
+  $ F_X (x) = P(X <= x) $
+  If $X$ has PDF $f$, then also
+  $ F_X (x) = integral_(-infinity)^x f(t) dif t $
+
+/ Expected Value: (Mean) For a random variable $X$ with PDF $f$, the expected value is
+  $ mu = E[X] = integral_T x f(x) dif x $
+  If $X$ is discrete, then $E[X] = sum_T x P(X = x)$.
+
+/ Covariance: For random variables $X$ and $Y$,
+  $
+    op("Cov")(X, Y) & = E[(X - E[X])(Y - E[Y])] \
+                    & = E[X Y] - E[X] E[Y]
+  $
+
+#aside[
+  The "product" $X Y$ is the pointwise product of the two random variables, i.e., $(X Y)(omega) = X(omega) Y(omega)$ for all $omega in Omega$...
+
+  But of course this doesn't directly yield useful computational formulas... so you should learn measure theory.
+]
+
+/ Variance: For a random variable $X$,
+  $
+    op("Var")(X) & = op("Cov")(X, X) \
+                 & = E[(X - E[X])^2] \
+                 & = E[X^2] - E[X]^2 \
+                 & = integral_T x^2 f(x) dif x - mu^2 = integral_T (x - mu)^2 f(x) dif x
+  $
+
+Covariance measures the dependence between $X$ and $Y$; \
+variance measures the spread of variable around its mean.
+
+/ Standard Deviation: $sigma(X) = sqrt(op("Var")(X))$
+
+If $X$ and $Y$ are independent, then $op("Cov")(X, Y) = 0$.
+
+
+== Classic Distributions
 
 === Exponential
 
 $
-  X tilde op("Exp")(lambda) \
-  f(x) = lambda e^(-lambda x) quad {x >= 0} \
-  E[X] = 1/lambda \
-  Var(X) = 1/lambda^2
+       X & tilde op("Exp")(lambda) \
+    f(x) & = lambda e^(-lambda x) quad {x >= 0} \
+       T & = [0, infinity) \
+    E[X] & = 1/lambda \
+  Var(X) & = 1/lambda^2
 $
 
 === Uniform
 
 $
-  X tilde U(a, b) \
-  f(x) = 1/(b - a) quad {a <= x <= b} \
-  E[X] = (a + b)/2 \
-  Var(X) = ???
+       X & tilde U(a, b) \
+    f(x) & = 1/(b - a) quad {a <= x <= b} \
+       T & = [a, b] \
+    E[X] & = (a + b)/2 \
+  Var(X) & = ???
 $
 
 === Normal
 
 $
-  X tilde N(mu, sigma^2) \
-  f(x) = y e a h \
-  E[X] = mu \
-  Var(X) = sigma^2
+       X & tilde N(mu, sigma^2) \
+    f(x) & = 1 / (sigma sqrt(2 pi)) e^(-1/2 ((x - mu) / sigma)^2) \
+       T & = RR \
+    E[X] & = mu \
+  Var(X) & = sigma^2
 $
 
+Aka. Gaussian distribution. \
+No closed-form CDF.
 
-=== what
+=== Student's t-Distribution
 
-and whatever Student's t-distribution and Chi-squared distribution are.
+$
+       X & tilde t(nu) \
+    f(x) & = Gamma((nu + 1)/2) / (sqrt(nu pi) thin Gamma(nu/2)) (1 + x^2 / nu)^(-(nu + 1)/2) \
+       T & = RR \
+    E[X] & = 0 quad {nu > 1} \
+  Var(X) & = nu / (nu - 2) quad {nu > 2}
+$
 
+Similar to the normal distribution but with heavier tails. \
+As $nu -> infinity$, $t(nu) -> N(0, 1)$.
+
+=== Chi-Squared
+
+$
+       X & tilde chi^2(k) \
+    f(x) & = (x^(k/2 - 1) e^(-x/2)) / (2^(k/2) thin Gamma(k/2)) quad {x > 0} \
+       T & = [0, infinity) \
+    E[X] & = k \
+  Var(X) & = 2 k
+$
+
+Sum of squares of $k$ independent standard normal random variables...
 
 == Multivariate
 
 ...joint probability distributions...
 
-_marginal distributions_ are single-variate distributions at some fixed values of all other variables. (E.g. a "slice" of a 2-d distribution.)
+$ P(X = a, Y = b) = P(X = a inter Y = b) $
 
+Joint distro of two continuous variables:
+$ P(a <= X <= b, c <= Y <= d) = integral_a^b integral_c^d f_(X,Y) (x, y) dif y dif x $
+for the _joint_ PDF $f_(X,Y)$ of $X$ and $Y$.
 
+/ Marginal Distributions: Of a multivariate distribution, a single-variate distributions at some fixed values of all other variables. E.g. for the joint PDF $f_(X,Y)$,
+  $
+    f_X (x) & = integral_T f_(X,Y) (x, y) dif y \
+    f_Y (y) & = integral_T f_(X,Y) (x, y) dif x
+  $
+  (Like a 2-d cross-section of the 3-d joint graph...)
 
-*Law of Large Numbers*: \
-For a sequence of _independent and identically distributed_ (i.i.d.) random variables, the sum
+/ Conditional Probabilities:
+  $
+    P(X <= x | Y = y) & = P(X <= x inter Y = y) / P(Y = y) \
+                      & = (integral_(-infinity)^x f_(X,Y) (t, y) dif t) / (f_Y (y))
+  $
+
+== Useful Stuff
+
+/ Law of Large Numbers: For a sequence of _independent and identically distributed_ (i.i.d.) random variables, the average converges to the individual expected value as the number of variables goes to infinity. \
+  Formally, if $X_1, X_2, ..., X_n$ are i.i.d. with expected value $mu$, then
+  $ P(lim_(n -> infinity) overline(X_n) = mu) = 1 $
+  where $overline(X_n) = 1/n (X_1 + ... + X_n)$.
+
+/ Central Limit Theorem: (CLT) For i.i.d.s $X_1, X_2, ..., X_n$ with mean $mu$ and variance $sigma^2$,
+  $ lim_(n -> infinity) overline(X_n) ~ N(mu, sigma^2 \/ n) $
+  where $overline(X_n) = 1/n (X_1 + ... + X_n)$.
+
+We consider the approximation valid for $n >= 30$.
 
 
 #pagebreak()
