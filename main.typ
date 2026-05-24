@@ -896,8 +896,8 @@ Note that it does not matter whether the inequalities are strict or not; they're
 
 / Covariance: For random variables $X$ and $Y$,
   $
-    op("Cov")(X, Y) & = E[(X - E[X])(Y - E[Y])] \
-                    & = E[X Y] - E[X] E[Y]
+    Cov(X, Y) & = E[(X - E[X])(Y - E[Y])] \
+              & = E[X Y] - E[X] E[Y]
   $
 
 #aside[
@@ -908,18 +908,18 @@ Note that it does not matter whether the inequalities are strict or not; they're
 
 / Variance: For a random variable $X$,
   $
-    op("Var")(X) & = op("Cov")(X, X) \
-                 & = E[(X - E[X])^2] \
-                 & = E[X^2] - E[X]^2 \
-                 & = integral_T x^2 f(x) dif x - mu^2 = integral_T (x - mu)^2 f(x) dif x
+    Var(X) & = Cov(X, X) \
+           & = E[(X - E[X])^2] \
+           & = E[X^2] - E[X]^2 \
+           & = integral_T x^2 f(x) dif x - mu^2 = integral_T (x - mu)^2 f(x) dif x
   $
 
 Covariance measures the dependence between $X$ and $Y$; \
 variance measures the spread of variable around its mean.
 
-/ Standard Deviation: $sigma(X) = sqrt(op("Var")(X))$
+/ Standard Deviation: $sigma(X) = sqrt(Var(X))$
 
-If $X$ and $Y$ are independent, then $op("Cov")(X, Y) = 0$.
+If $X$ and $Y$ are independent, then $Cov(X, Y) = 0$.
 
 
 == Classic Distributions
