@@ -1049,7 +1049,7 @@ for the _joint_ PDF $f_(X,Y)$ of $X$ and $Y$.
   $ P(lim_(n -> infinity) overline(X_n) = mu) = 1 $
   where $overline(X_n) = 1/n (X_1 + ... + X_n)$.
 
-/ Central Limit Theorem: (CLT) For i.i.d.s $X_1, X_2, ..., X_n$ with mean $mu$ and variance $sigma^2$,
+/ Central Limit Theorem: (CLT) For i.i.d.s $X_1, X_2, ..., X_n$ with mean $mu$ and _finite_ variance $sigma^2$,
   $ lim_(n -> infinity) overline(X_n) ~ N(mu, sigma^2 \/ n) $
   where $overline(X_n) = 1/n (X_1 + ... + X_n)$.
 
