@@ -857,6 +857,35 @@ Advantages of an orthonormal basis:
 #pagebreak()
 = Numerical Methods
 
+== Newton's Method
+
+finds roots...
+
+Prerequisites, algorithm + convergence
+
+== Euler's Method
+
+solves ODEs...
+
+Algorithm + error bounding
+
+== Gradient Descent
+
+finds minima...
+
+algorithm + convergence
+
+== Numerical Integration
+
+integrates...
+
+=== Riemann Sums
+
+rectangles, trapezoids... (brief metion of simpson's rule)
+
+=== Monte Carlo
+
+
 
 #pagebreak()
 = Probabilities
@@ -1022,4 +1051,10 @@ We consider the approximation valid for $n >= 30$.
 #pagebreak()
 = Statistics
 
+== Normal Distribution
 
+== Parameter Estimation
+
+== Hypothesis Testing
+
+== Bootstrapping
