@@ -923,19 +923,27 @@ Note that it does not matter whether the inequalities are strict or not; they're
   $ mu = E[X] = integral_T x f(x) dif x $
   If $X$ is discrete, then $E[X] = sum_T x P(X = x)$.
 
-/ Covariance: For random variables $X$ and $Y$,
+#aside[
+  Note that the expected value (and thus variance) can be defined for any random variable, even without a PDF, but this requires measure theory; for any random variable $X$ on $(Omega, cal(F), P)$,
+  $ E[X] = integral_Omega X(omega) dif P(omega) $
+
+  In the following section on statistics, this justifies the computation of means and variances on arbitrary statistical samples (which are assumed to be of some unspecified random variable).
+]
+
+/ Covariance: For random variables $X$ and $Y$ with means $mu_X$ and $mu_Y$ and _joint_ PDF $f_(X,Y)$,
   $
     Cov(X, Y) & = E[(X - E[X])(Y - E[Y])] \
-              & = E[X Y] - E[X] E[Y]
+              & = E[X Y] - E[X] E[Y] \
+              & = integral_T integral_T (x - mu_X)(y - mu_Y) f_(X,Y) (x, y) dif x dif y
   $
 
 #aside[
-  The "product" $X Y$ is the pointwise product of the two random variables, i.e., $(X Y)(omega) = X(omega) Y(omega)$ for all $omega in Omega$...
+  The "product" $X Y$ is a new random variable of the pointwise product of $X$ and $Y$, i.e., $(X Y)(omega) = X(omega) Y(omega)$ for all $omega in Omega$.
 
   But of course this doesn't directly yield useful computational formulas... so you should learn measure theory.
 ]
 
-/ Variance: For a random variable $X$,
+/ Variance: For a random variable $X$ with PDF $f$ and mean $mu$,
   $
     Var(X) & = Cov(X, X) \
            & = E[(X - E[X])^2] \
@@ -958,7 +966,7 @@ If $X$ and $Y$ are independent, then $Cov(X, Y) = 0$.
 $
        X & tilde op("Exp")(lambda) \
     f(x) & = lambda e^(-lambda x) quad {x >= 0} \
-       T & = [0, infinity) \
+       T & = \[0, infinity\) \
     E[X] & = 1/lambda \
   Var(X) & = 1/lambda^2
 $
