@@ -20,7 +20,7 @@ $(f_n)_(n=0)^infinity$ or $(f_n)$ denotes the sequence of functions where $f_n :
 
 Hereafter, assume $A$ as the domain / target interval.
 
-== Backgroud
+== Background
 
 For numbers, the sequence $u_n$ tends to $l$ iff.
 $
@@ -876,7 +876,7 @@ Advantages of an orthonormal basis:
   + $forall x in T : f(x) >= 0$
   + $integral_T f(x) dif x = 1$
 
-A given random variable $X$ can have multiple PDFs, but with enough meausure theory knowledge you know there is a canonical one :).
+A given random variable $X$ can have multiple PDFs, but with enough measure theory knowledge you know there is a canonical one :).
 
 If a random variable $X$ has PDF $f$, then for any $a, b in T$ with $a <= b$,
 $
