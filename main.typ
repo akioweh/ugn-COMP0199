@@ -1087,10 +1087,84 @@ We consider the approximation valid for $n >= 30$.
 #pagebreak()
 = Statistics
 
-== Normal Distribution
+Statistics can be seen as the physical manifestation of associated theoretical concepts in probability.
+
+- Interpreting probabilities as statistical quantities
+
+#aside[
+  Interesting: see _frequentist_ vs _Bayesian_ interpretations of probability.
+]
+
+== The Normal Distribution
+
+The normal distribution frequently appears in various statistical processes. \
+Different processes may produce different normal distributions, but they can be normalized to the _standard_ normal distribution $N(mu = 0, sigma^2 = 1)$.
+
+/ Normalization: For some $X ~ N(mu, sigma^2)$, the normalized variable $Z = (X - mu) / sigma ~ N(0, 1)$.
+
+#table(
+  columns: 2,
+  align: (left, center),
+  toprule(),
+  table.header([*$sigma$*], [*$P(abs(Z) <= sigma^2)$*]),
+  midrule(),
+
+  $1$, $68.27%$,
+  $1.96$, $95.00%$,
+  $2$, $95.45%$,
+  $3$, $99.73%$,
+
+  bottomrule(),
+)
 
 == Parameter Estimation
 
+To model a process with a given distribution, we must estimate its defining parameters from sample data.
+E.g., for a normal distribution, we estimate the mean $mu$ and variance $sigma^2$; for an exponential distribution, we estimate the rate $lambda$.
+
+If a realized sample of $n$ observations is drawn from the distribution of one random variable $X$, we can model the sample as a sequence of i.i.d.s $X_1, ..., X_n$ sharing the same distribution as $X$. \
+Per the CLT the distribution of the sample mean $overline(X)_n$ is approximated by a normal distribution (for sufficient $n$). \
+It is therefore useful to estimate the $mu$ and $sigma^2$ of an arbitrarily-distributed variable $X$, as these two parameters directly dictate the behavior of the sample mean even when $X$ itself is not normal.
+
+/ Sample: A sample $bold(X)$ of size $n$ is a sequence of random variables $bold(X) = (X_1, ..., X_n)$. \
+  A _realized_ sample is an observation of $bold(X)$, i.e. a sequence of values $bold(x) = (x_1, ..., x_n)$ where $x_i$ is a realization of $X_i$.
+
+/ Simple Random Sample: (SRS) A sample where $X_i$ are i.i.d.
+
+Clearly, the CLT apply to the sample mean of SRSs.
+
+/ Statistic: For a (realized) sample $bold(x)$, any function $T(bold(x))$ is a statistic.
+
+  E.g., the sample mean $overline(x) = 1/n (x_1 + ... + x_n)$ and the sample variance $tilde(S)^2 = 1/n sum_i (x_i - overline(x))^2$ are statistics.
+
+/ Estimator: A statistic $T$ of $bold(x)$ is an estimator of a parameter $theta$ of $bold(x)$'s underlying distribution if it is used to estimate $theta$ from $bold(x)$. \
+  $theta$ is the "real" value; $T(bold(x))$ is the estimate.
+  The goal is to design $T$ s.t. $T(bold(x)) ~ theta$ for any $bold(x)$.
+
+  E.g., the sample mean is an estimator of the mean of the underlying random variable.
+
+/ Bias: An estimator is called unbiased if its expected value equals the parameter it estimates.
+
+  E.g., the sample mean is an unbiased estimator, but the sample variance is a biased estimator.
+
+/ Sampling Distribution: The sampling distribution of an estimator $T$ is the distribution of $T(bold(x))$ over all possible samples $bold(x)$ (of a given size $n$).
+
+// TODO: somewhere mention that the connection of the sampling distributions of mean and variance to t-dist and chi-squared below only work if the underlying distribution is normal (the slides did not make this clear).
+
+=== Mean
+
+// TODO: mention that the sample mean is already unbaised. also discuss how the mean's sampling distribution constructed via CLT using the estimataed variance is actually the t-dist (not normal) and thus how to use this to construct confidence intervals for the estimated mean
+
+
+=== Variance
+
+Unbiased variance estimator (decrease denominator by 1):
+$ S^2 = n / (n - 1) tilde(S)^2 = 1/(n-1) sum_(i=1)^n (x_i - overline(x))^2 $
+
+// TODO: explain the bias and the correction. also discuss the sampling distribution of the unbiased variance estimator following the chi-squared distribution  and thus how to use this (with normalization) to construct confidence intervals for the estimated variance
+
 == Hypothesis Testing
 
-== Bootstrapping
+
+
+== Sampling -- Bootstrapping
