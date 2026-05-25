@@ -922,10 +922,13 @@ $
 
 Note that it does not matter whether the inequalities are strict or not; they're all equivalent for continuous random variables since $Pr(X = a) = 0$ for any $a$.
 
-/ Cumulative Distribution Function: (CDF) For a random variable $X$, the CDF is $F_X : T -> RR$ where
-  $ F_X (x) = P(X <= x) $
-  If $X$ has PDF $f$, then also
-  $ F_X (x) = integral_(-infinity)^x f(t) dif t $
+/ Cumulative Distribution Function: (CDF) For a random variable $X$, its CDF is $F : T -> RR$ where
+  $ F (x) = P(X <= x) $
+  If $X$ has a PDF $f$, then also
+  $ F (x) = integral_(-infinity)^x f(t) dif t $
+
+/ Inverse CDF: For a "distribution" $cal(X)$, we notate its inverse CDF as $cal(X)[c]$. I.e., \
+  $cal(X)[c] = x <==> P(X <= x) = c$.
 
 / Expected Value: (Mean) For a random variable $X$ with PDF $f$, the expected value is
   $ mu = E[X] = integral_T x f(x) dif x $
@@ -1085,12 +1088,12 @@ for the _joint_ PDF $f_(X,Y)$ of $X$ and $Y$.
 
 / Law of Large Numbers: For a sequence of _independent and identically distributed_ (i.i.d.) random variables, the average converges to the individual expected value as the number of variables goes to infinity. \
   Formally, if $X_1, X_2, ..., X_n$ are i.i.d. with expected value $mu$, then
-  $ P(lim_(n -> infinity) overline(X)_n = mu) = 1 $
-  where $overline(X)_n = 1/n (X_1 + ... + X_n)$.
+  $ P(lim_(n -> infinity) overline(X) = mu) = 1 $
+  where $overline(X) = 1/n (X_1 + ... + X_n)$.
 
 / Central Limit Theorem: (CLT) For i.i.d.s $X_1, X_2, ..., X_n$ with mean $mu$ and _finite_ variance $sigma^2$,
-  $ lim_(n -> infinity) overline(X)_n ~ N(mu, sigma^2 \/ n) $
-  where $overline(X)_n = 1/n (X_1 + ... + X_n)$.
+  $ lim_(n -> infinity) overline(X) ~ N(mu, sigma^2 \/ n) $
+  where $overline(X) = 1/n (X_1 + ... + X_n)$.
 
 We consider the approximation valid for $n >= 30$.
 
@@ -1133,34 +1136,35 @@ Different processes may produce different normal distributions, but they can be 
 To model a process with a given distribution, we must estimate its defining parameters from sample data.
 E.g., for a normal distribution, we estimate the mean $mu$ and variance $sigma^2$; for an exponential distribution, we estimate the rate $lambda$.
 
-If a realized sample of $n$ observations is drawn from the distribution of one random variable $X$, we can model the sample as a sequence of i.i.d.s $X_1, ..., X_n$ sharing the same distribution as $X$. \
-Per the CLT the distribution of the sample mean $overline(X)_n$ is approximated by a normal distribution (for sufficient $n$). \
+If a realized sample of $n$ observations is drawn from the distribution of one random variable $X$, we can model the sample prior to realization as a random sample: a sequence of i.i.d.s $X_1, ..., X_n$ sharing the same distribution as $X$. \
+Per the CLT, the distribution of the sample mean $overline(X)$ is approximated by a normal distribution (for sufficient $n$). \
 It is therefore useful to estimate the $mu$ and $sigma^2$ of an arbitrarily-distributed variable $X$, as these two parameters directly dictate the behavior of the sample mean even when $X$ itself is not normal.
 
-/ Sample: A sample $bold(X)$ of size $n$ is a sequence of random variables $bold(X) = (X_1, ..., X_n)$. \
-  A _realized_ sample is an observation of $bold(X)$, i.e. a sequence of values $bold(x) = (x_1, ..., x_n)$ where $x_i$ is a realization of $X_i$.
+/ Sample: (Random Sample) A sample $bold(X)$ of size $n$ is a sequence of random variables $bold(X) = (X_1, ..., X_n)$. \
+  A _realized_ sample is an observation of $bold(X)$, i.e. a sequence of real values $bold(x) = (x_1, ..., x_n)$ where $x_i$ is the observed realization of $X_i$.
 
 / Simple Random Sample: (SRS) A sample where $X_i$ are i.i.d.
 
-Clearly, the CLT apply to the sample mean of SRSs.
+Clearly, the CLT applies to the sample mean of SRSs.
 
-/ Statistic: For a (realized) sample $bold(x)$, any function $T(bold(x))$ is a statistic.
+/ Statistic: Any function $T$ that maps a random sample $bold(X)$ to a _statistic_ (a new random variable). \
+  When evaluated on a realized sample, $T(bold(x))$ yields a real value. \
 
-  E.g., the sample mean $overline(x) = 1/n (x_1 + ... + x_n)$ and the sample variance $tilde(S)^2 = 1/n sum_i (x_i - overline(x))^2$ are statistics.
+E.g., the sample mean estimator $overline(X) = 1/n sum_i X_i$ is a random variable, while the realized sample mean $overline(x) = 1/n sum_i x_i$ is a fixed number.
 
-/ Estimator: A statistic $T$ of $bold(x)$ is an estimator of a parameter $theta$ of $bold(x)$'s underlying distribution if it is used to estimate $theta$ from $bold(x)$. \
-  $theta$ is the "real" value; $T(bold(x))$ is the estimate.
-  The goal is to design $T$ s.t. $T(bold(x)) ~ theta$ for any $bold(x)$.
+/ Estimator: An estimator $T(bold(X))$ is a statistic used to estimate a parameter $theta$ of the underlying distribution.
+  The realized value $hat(theta) = T(bold(x))$ is an *estimate*.
 
-  E.g., the sample mean is an estimator of the mean of the underlying random variable.
+/ Bias: An estimator $T(bold(X))$ for $theta$ is unbiased iff. $E[T(bold(X))] = theta$.
 
-/ Bias: An estimator is called unbiased if its expected value equals the parameter it estimates.
+E.g. the sample mean estimator $overline(X)$ is an unbiased estimator of the true mean $mu$ since $E[overline(X)] = mu$.
 
-  E.g., the sample mean is an unbiased estimator, but the sample variance is a biased estimator.
-
-/ Sampling Distribution: The sampling distribution of an estimator $T$ is the distribution of $T(bold(x))$ over all possible realized samples $bold(x)$ (of a given size $n$).
+/ Sampling Distribution: The sampling distribution of an estimator $T(bold(X))$ is its probability distribution as a random variable. \
+  Equivalently, it is the distribution of realized estimates $T(bold(x))$ across all possible realizations of the random sample $bold(X)$.
 
 Knowledge of the sampling distribution of an estimator allows us to e.g. compute _confidence intervals_ for the estimate, and thus is a crucial part of statistics.
+
+Note that statistics and their sampling distributions are usually tied to the sample size $n$.
 
 #aside[
   *Parent Normality Assumption*: Note that the exact mathematical derivations for the sampling distributions of the estimated mean and variance (specifically, their exact connection to Student's $t$-distribution and the $chi^2$-distribution) below strictly depend on the *assumption that the underlying parent distribution is normal* (i.e., $X_i ~^("iid") N(mu, sigma^2)$).
@@ -1173,50 +1177,54 @@ Knowledge of the sampling distribution of an estimator allows us to e.g. compute
 
 / Mean Estimator: The canonical sample mean estimator is the arithmetic mean:
   $
-    overline(X)_n = 1/n sum_(i=1)^n X_i
+    overline(X) = 1/n sum_(i=1)^n X_i
   $
   It is *unbiased*:
   $
-    E[overline(X)_n] = E[1/n sum_(i=1)^n X_i] = 1/n sum_(i=1)^n E[X_i] = 1/n (n thin E[X]) = 1/n (n mu) = mu
+    E[overline(X)] = E[1/n sum_(i=1)^n X_i] = 1/n sum_(i=1)^n E[X_i] = 1/n (n thin E[X]) = 1/n (n mu) = mu
   $
 
-Also, $Var(overline(X)_n) = E[(overline(X)_n - mu)^2] = sigma^2 / n$.
+Also, $Var(overline(X)) = E[(overline(X) - mu)^2] = sigma^2 / n$.
 
-Under the parent normality assumption $X_i ~^("iid") N(mu, sigma^2)$, the exact sampling distribution of the sample mean is $ overline(X)_n ~ N(mu, sigma^2 \/ n) $
+Under the parent normality assumption $X_i ~^("iid") N(mu, sigma^2)$, the exact sampling distribution of the sample mean is
+$
+  overline(X) ~ N(mu, sigma^2 \/ n)
+$
+which can be standardized:
+$
+  Y = (overline(X) - mu) / (sigma \/ sqrt(n)) = sqrt(n) (overline(X) - mu) / sigma ~ N(0, 1)
+$
+...and rearranged to yield the realized $(1-alpha)$ confidence interval for $mu$:
+$
+  [ overline(x) + z[alpha/2] sigma/sqrt(n) thin, thick overline(x) + z[1 - alpha/2] sigma/sqrt(n) ] quad "or" quad
+  [ overline(x) - abs(z[alpha/2]) sigma/sqrt(n) thin, thick overline(x) + abs(z[alpha/2]) sigma/sqrt(n) ]
+$
+($z[c]$ is the inverse CDF of the standard normal distribution.)
 
-...or standardized:
-$
-  Y_n = (overline(X)_n - mu) / (sigma \/ sqrt(n)) = sqrt(n) (overline(X)_n - mu) / sigma ~ N(0, 1)
-$
-
-Using the standard normal critical value $z_(alpha\/2)$ for a significance level $alpha$ (where $P(abs(Z) <= z_(alpha\/2)) = 1 - alpha$), we obtain the $(1-alpha)$ confidence interval:
-$
-  [ overline(X)_n - z_(alpha\/2) sigma/sqrt(n) thin, thick overline(X)_n + z_(alpha\/2) sigma/sqrt(n) ]
-$
-
-/ Studentized Mean: Often, the true variance $sigma^2$ is unknown.
-  If $sigma^2$ is substituted with the unbiased sample estimate $S^2$, the resulting statistic instead follows the t-distribution with $n-1$ degrees of freedom:
+/ Studentized Mean: Often, the true variance $sigma^2$ required in the above interval is unknown.
+  If $sigma$ is substituted with the unbiased sample standard deviation $S$, the resulting statistic instead follows Student's t-distribution with $n-1$ degrees of freedom:
   $
-    Z_n = sqrt(n) (overline(X)_n - mu) / S ~ t(n-1)
+    Z = sqrt(n) (overline(X) - mu) / S ~ t(n-1)
   $
 
 #aside[
-  Because we are using an estimate $S$ instead of a constant $sigma$, $Z_n$ is subject to additional sampling variability and is thus _not_ standard normal.
-  The $t$-distribution exhibits heavier tails than the normal distribution to account for this uncertainty, though it asymptotically converges to $N(0, 1)$ as $n -> infinity$.
+  Because we are using an estimator $S$ instead of a constant $sigma$, $Z$ is the quotient of a normal distribution (the mean estimator) and the square root of a chi-squared distribution (the variance estimator, see below), which results in a $t$-distribution.
+  The $t$-distribution exhibits heavier tails than the normal distribution to account for this uncertainty in the variance.
 ]
 
-Using this exact sampling distribution, we can construct the $(1-alpha)$ confidence interval for $mu$ when the variance is unknown:
+Using this exact sampling distribution, the $(1-alpha)$ realized confidence interval for $mu$ is now
 $
-  [ overline(X)_n - t(n-1)_(alpha\/2) S/sqrt(n), overline(X)_n + t(n-1)_(alpha\/2) S/sqrt(n) ]
+  [ overline(x) - abs(t_(n-1)[alpha/2]) s/sqrt(n) thin, thick overline(x) + abs(t_(n-1)[alpha/2]) s/sqrt(n) ]
 $
+where $overline(x)$ and $s$ are the mean and standard deviation of the realized sample.
 
-Clearly, $t(n-1)_(alpha\/2) > z_(alpha\/2)$ for finite $n$, so the confidence intervals for the estimated mean are wider when the variance is also estimated.
+Clearly, $t_(n-1)[alpha/2] >= z[alpha/2]$, so the realized confidence intervals are wider when the variance is also estimated.
 
 === Variance
 
-/ Variance Estimator: Following the discrete variance formula, a statistic for sample variance is
+/ Variance Estimator: The estimator for sample variance following the discrete formula is
   $
-    tilde(S)^2 = 1/n sum_(i=1)^n (X_i - overline(X)_n)^2
+    tilde(S)^2 = 1/n sum_(i=1)^n (X_i - overline(X))^2
   $
 
   However, $tilde(S)^2$ is a *biased* estimator of the population variance $sigma^2$ (and thus called _uncorrected_):
@@ -1225,13 +1233,13 @@ Clearly, $t(n-1)_(alpha\/2) > z_(alpha\/2)$ for finite $n$, so the confidence in
   $
 
 #aside[
-  The bias arises because the sample mean $overline(X)_n$ is used in place of the unknown true population mean $mu$.
-  The sample observations $X_i$ are closer to their own sample mean $overline(X)_n$ than to the true mean $mu$, causing $tilde(S)^2$ to systematically underestimate the true variance.
+  The bias arises because the sample mean $overline(X)$ is used in place of the unknown true population mean $mu$.
+  The sample observations $X_i$ are closer to their own sample mean $overline(X)$ than to the true mean $mu$, causing $tilde(S)^2$ to systematically underestimate the true variance.
 ]
 
-/ Bessel's Correction: $tilde(S)^2$'s bias is corrected by a factor of $n / (n - 1)$:
+/ Bessel's Correction: $tilde(S)^2$'s bias is corrected by scaling by $n / (n - 1)$, yielding the *unbiased sample variance estimator*:
 $
-  S^2 = n / (n - 1) tilde(S)^2 = 1 / (n - 1) sum_(i=1)^n (X_i - overline(X)_n)^2
+  S^2 = n / (n - 1) tilde(S)^2 = 1 / (n - 1) sum_(i=1)^n (X_i - overline(X))^2
 $
 
 Now,
@@ -1239,37 +1247,27 @@ $
   E[S^2] = n / (n - 1) E[tilde(S)^2] = n / (n - 1) ( (n - 1) / n sigma^2 ) = sigma^2
 $
 
-==== Sampling Distribution and Confidence Intervals
+We denote the corresponding realized estimates (calculated from a realized sample $bold(x)$) as $tilde(s)^2$ and $s^2$.
 
-Under the parent normality assumption ($X_i ~^("iid") N(mu, sigma^2)$), the distribution of the unbiased sample variance is related to the chi-squared distribution. Specifically, the standardized statistic $K$ follows a $chi^2$ distribution with $n-1$ degrees of freedom:
+Under the parent normality assumption ($X_i ~^("iid") N(mu, sigma^2)$), the sampling distribution of $S^2$ is related to the chi-squared $chi^2$ distribution. \
+Specifically, the standardized statistic $K$ follows a $chi^2$ distribution with $n-1$ degrees of freedom:
 $
-  K = ((n - 1) S^2) / sigma^2 = 1 / sigma^2 sum_(i=1)^n (X_i - overline(X)_n)^2 ~ chi^2_(n - 1)
-$
-
-Since the $chi^2$ distribution is asymmetric and defined only on positive values, we must compute separate lower and upper critical values to construct a $(1-alpha)$ confidence interval.
-Following the slides' notation, let $chi^2_(n-1)[c]$ denote the value such that $P(K <= chi^2_(n-1)[c]) = c$.
-For a confidence level of $1 - alpha$, the central $(1 - alpha)$ probability region is bounded by the lower percentile $chi^2_(n-1)[alpha/2]$ and the upper percentile $chi^2_(n-1)[1 - alpha/2]$:
-$
-  P(chi^2_(n-1)[alpha/2] <= ((n - 1) S^2) / sigma^2 <= chi^2_(n-1)[1 - alpha/2]) = 1 - alpha
-$
-Taking the reciprocal of all terms reverses the direction of the inequalities:
-$
-  P(1 / (chi^2_(n-1)[1 - alpha/2]) <= sigma^2 / ((n - 1) S^2) <= 1 / (chi^2_(n-1)[alpha/2])) = 1 - alpha
-$
-Multiplying the entire inequality by $(n - 1) S^2$ yields:
-$
-  P( ((n - 1) S^2) / (chi^2_(n-1)[1 - alpha/2]) <= sigma^2 <= ((n - 1) S^2) / (chi^2_(n-1)[alpha/2]) ) = 1 - alpha
-$
-Thus, the exact $(1 - alpha)$ confidence interval for the population variance $sigma^2$ is:
-$
-  [ ((n - 1) S^2) / (chi^2_(n-1)[1 - alpha/2]), ((n - 1) S^2) / (chi^2_(n-1)[alpha/2]) ]
-$
-To obtain the confidence interval for the standard deviation $sigma$, we simply take the square root of the bounds:
-$
-  [ sqrt(((n - 1) S^2) / (chi^2_(n-1)[1 - alpha/2])), sqrt(((n - 1) S^2) / (chi^2_(n-1)[alpha/2])) ]
+  K = ((n - 1) S^2) / sigma^2 = 1 / sigma^2 sum_(i=1)^n (X_i - overline(X))^2 ~ chi^2 (n - 1)
 $
 
-// TODO: explain the bias and the correction. also discuss the sampling distribution of the unbiased variance estimator following the chi-squared distribution  and thus how to use this (with normalization) to construct confidence intervals for the estimated variance
+(Note that $chi^2$ is asymmetric.) \
+For a confidence level of $1 - alpha$, we have:
+$
+                        P(chi^2_(n-1)[alpha/2] <= ((n - 1) S^2) / sigma^2 <= chi^2_(n-1)[1 - alpha/2]) & = 1 - alpha \
+  P( ((n - 1) S^2) / (chi^2_(n-1)[1 - alpha/2]) <= sigma^2 <= ((n - 1) S^2) / (chi^2_(n-1)[alpha/2]) ) & = 1 - alpha
+$
+
+For a realized sample with unbiased variance estimate $s^2$, the confidence interval for $sigma^2$ is
+$
+  [ ((n - 1) s^2) / (chi^2_(n-1)[1 - alpha/2]) thin, thick ((n - 1) s^2) / (chi^2_(n-1)[alpha/2]) ]
+$
+
+To obtain the realized confidence interval for the standard deviation $sigma$, we simply take the square root of the bounds.
 
 == Hypothesis Testing
 
