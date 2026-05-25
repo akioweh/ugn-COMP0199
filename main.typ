@@ -1277,26 +1277,39 @@ $
 
 == Bootstrapping
 
-Given a sample $bold(x)$ and a parameter of interest $theta$ of the underlying distribution, one can of course use a statistic $T$ to compute an estimate $hat(theta)$, but without knowledge of the underlying distribution, one cannot parametrically determine the sampling distribution of $T$ and thus cannot e.g. compute confidence intervals for $hat(theta)$.
+#aside[
+  Traditional statistical inference relies on parametric assumptions (e.g., population normality) or large-sample asymptotics (the CLT) to analytically derive the sampling distribution of an estimator.
+  However, in many practical scenarios, these models fail:
+  - The underlying distribution may be highly skewed, multi-modal, or simply non-normal (e.g., alcohol consumption or wealth distributions).
+  - The sample size $n$ may be too small for asymptotic theorems (like the CLT) to provide a reliable approximation.
+  - Sourcing additional physical samples may be impossible or prohibitively expensive (e.g., a one-off historical survey).
+]
 
-Bootstrapping is a method to estimate the distribution of a statistic's estimate from a sample by:
-- assuming the sample is representative of the underlying distribution, and
-- resampling from the sample to create "new" samples, and
-- computing the statistic's estimate on these new samples to get an empirical distribution of the estimate.
+Bootstrapping provides a computational method to estimate the sampling distribution of any statistic directly from a single observed sample. \
+The only assumption is that the observed sample is _representative_ of the underlying distribution.
 
 
-/ Bootstrap Algorithm: \
-  We have:
-  - an unknown underlying distribution with true parameter $theta_0$
-  - a sample $bold(x)$ of size $n$
-  - a statistic $T$ that estimates $theta_0$
-  - $hat(theta) = T(bold(x))$ an estimate of $theta_0$ from $bold(x)$
+=== Bootstrap Algorithm
 
-  We can repeat $B$ times to obtain bootstrap estimates $hat(theta)^*_1, ..., hat(theta)^*_B$:
-  + draw a uniform random sample $bold(x)^*$ of size $n$ from $bold(x)$ _with replacement_
-  + calculate the statistic $hat(theta)^* = T(bold(x)^*)$
+Given:
+- An unknown population distribution with a true parameter of interest $theta$.
+- An observed sample $bold(x) = (x_1, ..., x_n)$ of size $n$.
+- An statistic $T(bold(X))$ estimating $theta$, yielding an initial estimate $hat(theta) = T(bold(x))$.
 
-  Then, the distribution of $hat(theta)^*_1, ..., hat(theta)^*_B$ approximates the sampling distribution of $hat(theta)$, and we can use it to e.g. compute confidence intervals for $hat(theta)$.
+Repeat $B$ times:
++ Draw a uniform random sample $bold(x)^* = (x_1^*, ..., x_n^*)$ of size $n$ from $bold(x)$ uniformly *with replacement*.
++ Compute the statistic $hat(theta)^* = T(bold(x)^*)$.
 
-As $B -> infinity$, the empirical distribution of $hat(theta)_i^*$ converges to the true sampling distribution of $T$.
+This yields a sequence of $B$ bootstrap estimates: $hat(theta)^*_1, hat(theta)^*_2, ..., hat(theta)^*_B$. \
+As $B -> infinity$, the empirical distribution of the bootstrap estimates converges to the true sampling distribution of $hat(theta)$, allowing statistical inference (e.g. confidence intervals) without parametric assumptions.
+
+=== Constructing Bootstrap Confidence Intervals
+
+Under the *Percentile Bootstrap Method*, we can construct a $(1 - alpha)$ confidence interval for $theta$ directly from the empirical distribution of our bootstrap estimates:
++ Sort the $B$ bootstrap estimates $hat(theta)^*_i$ in increasing order.
++ Find the lower percentile index at $alpha/2$ and the upper percentile index at $1 - alpha/2$.
++ The resulting confidence interval is
+  $
+    [ hat(theta)^*_([B thin alpha / 2]), hat(theta)^*_([B thin (1 - alpha / 2)]) ]
+  $
 
