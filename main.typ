@@ -1167,4 +1167,28 @@ $ S^2 = n / (n - 1) tilde(S)^2 = 1/(n-1) sum_(i=1)^n (x_i - overline(x))^2 $
 
 
 
-== Sampling -- Bootstrapping
+== Bootstrapping
+
+Given a sample $bold(x)$ and a parameter of interest $theta$ of the underlying distribution, one can of course use a statistic $T$ to compute an estimate $hat(theta)$, but without knowledge of the underlying distribution, one cannot parametrically determine the sampling distribution of $T$ and thus cannot e.g. compute confidence intervals for $hat(theta)$.
+
+Bootstrapping is a method to estimate the distribution of a statistic's estimate from a sample by:
+- assuming the sample is representative of the underlying distribution, and
+- resampling from the sample to create "new" samples, and
+- computing the statistic's estimate on these new samples to get an empirical distribution of the estimate.
+
+
+/ Bootstrap Algorithm: \
+  We have:
+  - an unknown underlying distribution with true parameter $theta_0$
+  - a sample $bold(x)$ of size $n$
+  - a statistic $T$ that estimates $theta_0$
+  - $hat(theta) = T(bold(x))$ an estimate of $theta_0$ from $bold(x)$
+
+  We can repeat $B$ times to obtain bootstrap estimates $hat(theta)^*_1, ..., hat(theta)^*_B$:
+  + draw a uniform random sample $bold(x)^*$ of size $n$ from $bold(x)$ _with replacement_
+  + calculate the statistic $hat(theta)^* = T(bold(x)^*)$
+
+  Then, the distribution of $hat(theta)^*_1, ..., hat(theta)^*_B$ approximates the sampling distribution of $hat(theta)$, and we can use it to e.g. compute confidence intervals for $hat(theta)$.
+
+As $B -> infinity$, the empirical distribution of $hat(theta)_i^*$ converges to the true sampling distribution of $T$.
+
