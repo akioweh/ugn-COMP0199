@@ -966,6 +966,11 @@ variance measures the spread of variable around its mean.
 
 If $X$ and $Y$ are independent, then $Cov(X, Y) = 0$.
 
+/ Independence: $X$ and $Y$ are independent iff. $P(X = x inter Y = y) = P(X = x) P(Y = y)$ (for all $x, y$).
+
+  For independent $X$ and $Y$, the joint PDF factorizes: $f_(X,Y) (x, y) = f_X (x) f_Y (y)$. \
+  Also, $E[X Y] = E[X] E[Y]$ and thus $Cov(X, Y) = 0$.
+
 
 == Classic Distributions
 
