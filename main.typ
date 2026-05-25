@@ -962,6 +962,12 @@ Note that it does not matter whether the inequalities are strict or not; they're
 Covariance measures the dependence between $X$ and $Y$; \
 variance measures the spread of variable around its mean.
 
+#aside[
+  / Law of the Unconscious Statistician: For a random variable $X$ with PDF $f$ and any function $g : T -> U$ ($U$ may be different target space), $ E[g(X)] = integral_T g(x) f(x) dif x $
+    This follows from the definition of the expected value but is not immediately obvious. \
+    This explains why $E[X^2] = integral_T x^2 f(x) dif x$ above.
+]
+
 / Standard Deviation: $sigma(X) = sqrt(Var(X))$
 
 If $X$ and $Y$ are independent, then $Cov(X, Y) = 0$.
