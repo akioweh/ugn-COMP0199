@@ -1158,19 +1158,116 @@ Clearly, the CLT apply to the sample mean of SRSs.
 
   E.g., the sample mean is an unbiased estimator, but the sample variance is a biased estimator.
 
-/ Sampling Distribution: The sampling distribution of an estimator $T$ is the distribution of $T(bold(x))$ over all possible samples $bold(x)$ (of a given size $n$).
+/ Sampling Distribution: The sampling distribution of an estimator $T$ is the distribution of $T(bold(x))$ over all possible realized samples $bold(x)$ (of a given size $n$).
 
-// TODO: somewhere mention that the connection of the sampling distributions of mean and variance to t-dist and chi-squared below only work if the underlying distribution is normal (the slides did not make this clear).
+Knowledge of the sampling distribution of an estimator allows us to e.g. compute _confidence intervals_ for the estimate, and thus is a crucial part of statistics.
+
+#aside[
+  *Parent Normality Assumption*: Note that the exact mathematical derivations for the sampling distributions of the estimated mean and variance (specifically, their exact connection to Student's $t$-distribution and the $chi^2$-distribution) below strictly depend on the *assumption that the underlying parent distribution is normal* (i.e., $X_i ~^("iid") N(mu, sigma^2)$).
+  If the underlying distribution is non-normal, these exact finite-sample results do not hold. \
+  Nevertheless, for the sample mean, the CLT provides an asymptotic approximation as $n -> infinity$ independent of the underlying distribution.
+  No such general non-parametric distribution holds for the sample variance in finite samples, motivating alternative non-parametric approaches like bootstrapping below.
+]
 
 === Mean
 
-// TODO: mention that the sample mean is already unbaised. also discuss how the mean's sampling distribution constructed via CLT using the estimataed variance is actually the t-dist (not normal) and thus how to use this to construct confidence intervals for the estimated mean
+/ Mean Estimator: The canonical sample mean estimator is the arithmetic mean:
+  $
+    overline(X)_n = 1/n sum_(i=1)^n X_i
+  $
+  It is *unbiased*:
+  $
+    E[overline(X)_n] = E[1/n sum_(i=1)^n X_i] = 1/n sum_(i=1)^n E[X_i] = 1/n (n thin E[X]) = 1/n (n mu) = mu
+  $
 
+Also, $Var(overline(X)_n) = E[(overline(X)_n - mu)^2] = sigma^2 / n$.
+
+Under the parent normality assumption $X_i ~^("iid") N(mu, sigma^2)$, the exact sampling distribution of the sample mean is $ overline(X)_n ~ N(mu, sigma^2 \/ n) $
+
+...or standardized:
+$
+  Y_n = (overline(X)_n - mu) / (sigma \/ sqrt(n)) = sqrt(n) (overline(X)_n - mu) / sigma ~ N(0, 1)
+$
+
+Using the standard normal critical value $z_(alpha\/2)$ for a significance level $alpha$ (where $P(abs(Z) <= z_(alpha\/2)) = 1 - alpha$), we obtain the $(1-alpha)$ confidence interval:
+$
+  [ overline(X)_n - z_(alpha\/2) sigma/sqrt(n) thin, thick overline(X)_n + z_(alpha\/2) sigma/sqrt(n) ]
+$
+
+/ Studentized Mean: Often, the true variance $sigma^2$ is unknown.
+  If $sigma^2$ is substituted with the unbiased sample estimate $S^2$, the resulting statistic instead follows the t-distribution with $n-1$ degrees of freedom:
+  $
+    Z_n = sqrt(n) (overline(X)_n - mu) / S ~ t(n-1)
+  $
+
+#aside[
+  Because we are using an estimate $S$ instead of a constant $sigma$, $Z_n$ is subject to additional sampling variability and is thus _not_ standard normal.
+  The $t$-distribution exhibits heavier tails than the normal distribution to account for this uncertainty, though it asymptotically converges to $N(0, 1)$ as $n -> infinity$.
+]
+
+Using this exact sampling distribution, we can construct the $(1-alpha)$ confidence interval for $mu$ when the variance is unknown:
+$
+  [ overline(X)_n - t(n-1)_(alpha\/2) S/sqrt(n), overline(X)_n + t(n-1)_(alpha\/2) S/sqrt(n) ]
+$
+
+Clearly, $t(n-1)_(alpha\/2) > z_(alpha\/2)$ for finite $n$, so the confidence intervals for the estimated mean are wider when the variance is also estimated.
 
 === Variance
 
-Unbiased variance estimator (decrease denominator by 1):
-$ S^2 = n / (n - 1) tilde(S)^2 = 1/(n-1) sum_(i=1)^n (x_i - overline(x))^2 $
+/ Variance Estimator: Following the discrete variance formula, a statistic for sample variance is
+  $
+    tilde(S)^2 = 1/n sum_(i=1)^n (X_i - overline(X)_n)^2
+  $
+
+  However, $tilde(S)^2$ is a *biased* estimator of the population variance $sigma^2$ (and thus called _uncorrected_):
+  $
+    E[tilde(S)^2] = #text[...complex derivation...] = (n-1)/n sigma^2
+  $
+
+#aside[
+  The bias arises because the sample mean $overline(X)_n$ is used in place of the unknown true population mean $mu$.
+  The sample observations $X_i$ are closer to their own sample mean $overline(X)_n$ than to the true mean $mu$, causing $tilde(S)^2$ to systematically underestimate the true variance.
+]
+
+/ Bessel's Correction: $tilde(S)^2$'s bias is corrected by a factor of $n / (n - 1)$:
+$
+  S^2 = n / (n - 1) tilde(S)^2 = 1 / (n - 1) sum_(i=1)^n (X_i - overline(X)_n)^2
+$
+
+Now,
+$
+  E[S^2] = n / (n - 1) E[tilde(S)^2] = n / (n - 1) ( (n - 1) / n sigma^2 ) = sigma^2
+$
+
+==== Sampling Distribution and Confidence Intervals
+
+Under the parent normality assumption ($X_i ~^("iid") N(mu, sigma^2)$), the distribution of the unbiased sample variance is related to the chi-squared distribution. Specifically, the standardized statistic $K$ follows a $chi^2$ distribution with $n-1$ degrees of freedom:
+$
+  K = ((n - 1) S^2) / sigma^2 = 1 / sigma^2 sum_(i=1)^n (X_i - overline(X)_n)^2 ~ chi^2_(n - 1)
+$
+
+Since the $chi^2$ distribution is asymmetric and defined only on positive values, we must compute separate lower and upper critical values to construct a $(1-alpha)$ confidence interval.
+Following the slides' notation, let $chi^2_(n-1)[c]$ denote the value such that $P(K <= chi^2_(n-1)[c]) = c$.
+For a confidence level of $1 - alpha$, the central $(1 - alpha)$ probability region is bounded by the lower percentile $chi^2_(n-1)[alpha/2]$ and the upper percentile $chi^2_(n-1)[1 - alpha/2]$:
+$
+  P(chi^2_(n-1)[alpha/2] <= ((n - 1) S^2) / sigma^2 <= chi^2_(n-1)[1 - alpha/2]) = 1 - alpha
+$
+Taking the reciprocal of all terms reverses the direction of the inequalities:
+$
+  P(1 / (chi^2_(n-1)[1 - alpha/2]) <= sigma^2 / ((n - 1) S^2) <= 1 / (chi^2_(n-1)[alpha/2])) = 1 - alpha
+$
+Multiplying the entire inequality by $(n - 1) S^2$ yields:
+$
+  P( ((n - 1) S^2) / (chi^2_(n-1)[1 - alpha/2]) <= sigma^2 <= ((n - 1) S^2) / (chi^2_(n-1)[alpha/2]) ) = 1 - alpha
+$
+Thus, the exact $(1 - alpha)$ confidence interval for the population variance $sigma^2$ is:
+$
+  [ ((n - 1) S^2) / (chi^2_(n-1)[1 - alpha/2]), ((n - 1) S^2) / (chi^2_(n-1)[alpha/2]) ]
+$
+To obtain the confidence interval for the standard deviation $sigma$, we simply take the square root of the bounds:
+$
+  [ sqrt(((n - 1) S^2) / (chi^2_(n-1)[1 - alpha/2])), sqrt(((n - 1) S^2) / (chi^2_(n-1)[alpha/2])) ]
+$
 
 // TODO: explain the bias and the correction. also discuss the sampling distribution of the unbiased variance estimator following the chi-squared distribution  and thus how to use this (with normalization) to construct confidence intervals for the estimated variance
 
