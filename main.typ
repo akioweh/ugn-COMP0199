@@ -1117,7 +1117,7 @@ Different processes may produce different normal distributions, but they can be 
   columns: 2,
   align: (left, center),
   toprule(),
-  table.header([*$sigma$*], [*$P(abs(Z) <= sigma^2)$*]),
+  table.header([*$z$*], [*$P(abs(Z) <= z)$*]),
   midrule(),
 
   $1$, $68.27%$,
