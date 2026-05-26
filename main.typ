@@ -1185,6 +1185,7 @@ Note that statistics and their sampling distributions are usually tied to the sa
 
 Also, $Var(overline(X)) = E[(overline(X) - mu)^2] = sigma^2 / n$.
 
+Recall that in general, $E[overline(X)] = mu$ and $Var(overline(X)) = sigma^2 / n$. \
 Under the parent normality assumption $X_i ~^("iid") N(mu, sigma^2)$, the exact sampling distribution of the sample mean is
 $
   overline(X) ~ N(mu, sigma^2 \/ n)
