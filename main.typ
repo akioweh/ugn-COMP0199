@@ -515,7 +515,6 @@ I.e., any $lambda$ that satisfies any statement above is an eigenvalue, and the 
 
   Aside#super[2]: there's a very subtle (and mostly insignificant) difference between $det(M - lambda I)$ and $det(lambda I - M)$.
   I refuse to elaborate further.
-
 ]
 
 Observe that $T: V -> V$ cannot have more than $n = dim V$ eigenvalues (or eigenspaces). \
