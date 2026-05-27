@@ -1129,10 +1129,15 @@ Statistics can be seen as the physical manifestation of associated theoretical c
   Interesting: see _frequentist_ vs _Bayesian_ interpretations of probability.
 ]
 
-/ Sample: (Random Sample) A sample $bold(X)$ of size $n$ is a sequence of random variables $bold(X) = (X_1, ..., X_n)$. \
+/ Model: (Statistical Model) The probability distribution (or family of distributions) from which a sample is drawn (aka. the _underlying parent distribution_). \
+
+When describing a physical process, the model is almost always an assumption.
+
+/ Sample: (Random Sample) A sample $bold(X)$ of size $n$ is a sequence of random variables $bold(X) = (X_1, ..., X_n)$ drawn from the model. \
   A _realized_ sample is an observation of $bold(X)$, i.e. a sequence of real values $bold(x) = (x_1, ..., x_n)$ where $x_i$ is the observed realization of $X_i$.
 
-/ Simple Random Sample: (SRS) A sample where $X_i$ are i.i.d.
+/ Simple Random Sample: (SRS) A sample where $X_i$ are i.i.d. \
+  E.g., a sample drawn uniformly at random from the model, with replacement.
 
 Clearly, the CLT can be used to approximate the mean of SRSs.
 
@@ -1160,8 +1165,8 @@ Different processes may produce different normal distributions, but they can be 
 
 == Parameter Estimation
 
-To model a physical random process with a given distribution, we must estimate its defining parameters from sample data.
-E.g., for a normal distribution, we estimate the mean $mu$ and variance $sigma^2$; for an exponential distribution, we estimate the rate $lambda$.
+To use a statistical model to represent a physical random process, we must estimate its defining parameters $theta$ from sample data.
+E.g., under a normal model, we estimate the mean $mu$ and variance $sigma^2$; under an exponential model, we estimate the rate $lambda$.
 
 #aside[
   If a realized sample of $n$ observations is drawn from the distribution of one random variable $X$, we can model the sample prior to realization as a random sample: a sequence of i.i.d.s $X_1, ..., X_n$ sharing the same distribution as $X$. \
@@ -1189,10 +1194,8 @@ Knowledge of the sampling distribution of an estimator allows us to e.g. compute
 Note that statistics and their sampling distributions are usually tied to the sample size $n$.
 
 #aside[
-  *Parent Normality Assumption*: Note that the exact mathematical derivations for the sampling distributions of the estimated mean and variance (specifically, their exact connection to Student's $t$-distribution and the $chi^2$-distribution) below strictly depend on the *assumption that the underlying parent distribution is normal* (i.e., $X_i ~^("iid") N(mu, sigma^2)$).
-  If the underlying distribution is non-normal, these exact finite-sample results do not hold. \
-  Nevertheless, for the sample mean, the CLT provides an asymptotic approximation as $n -> infinity$ independent of the underlying distribution.
-  No such general non-parametric distribution holds for the sample variance in finite samples, motivating alternative non-parametric approaches like bootstrapping below.
+  *Normality Assumption*: The exact sampling distributions of the estimated mean (Student's $t$) and variance ($chi^2$) below assume a normal model, i.e., $X_i ~^("iid") N(mu, sigma^2)$.
+  For non-normal models, these exact finite-sample results do not hold, although the CLT does permit the normal approximation of the sample mean for large sample sizes.
 ]
 
 === Mean
@@ -1295,20 +1298,17 @@ To obtain the realized confidence interval for the standard deviation $sigma$, w
 == Hypothesis Testing
 
 #aside[
-  Hypothesis testing provides a structured statistical framework to make decisions about a population parameter using sample data.
+  Hypothesis testing provides a structured statistical framework to make decisions about a model parameter using sample data.
 
-  A _null hypothesis_ that makes a claim about the parameter's value is stated, then a _test statistic_ estimates the parameter from a realized sample, and finally a _p-value_ is computed to quantify the evidence against the null hypothesis.
+  A _null hypothesis_ making a claim about a parameter is stated, then a test statistic is computed from a realized sample, and finally a $p$-value is calculated to quantify the strength of evidence against the null hypothesis under the model's assumed sampling distribution.
 ]
 
 === Procedure
 
 #aside[
-  / Model: It is important to note that hypothesis testing as a framework operates _above_ an assumed _model_.
-    The model encapsulates assumptions, e.g. the underlying parent distribution. \
-    The hypotheses only make claims about the _value_ of a parameter;
-    the model is what that provides the sampling distribution of the test statistic under $H_0$ (which is core to calculating $p$-values used to draw conclusions).
-
-  While a rejection of $H_0$ technically rejects the _combination_ of the hypothesis and the model, the framework assumes the model correct and thus attributes the rejection to the hypothesis alone. \
+  The hypothesis testing framework operates on top of the model's assumptions.
+  The hypotheses make assertions about the parameter $theta$ itself, while the model provides the reference sampling distribution of the test statistic under $H_0$ (which is core to calculating $p$-values used to draw conclusions). \
+  While a rejection of $H_0$ technically rejects the _combination_ of the hypothesis and the model, the framework assumes the model correct and attributes the rejection to $H_0$ alone.
   Similarly, failing to reject does _not_ validate the model.
 ]
 
@@ -1323,27 +1323,37 @@ Note that we do not know the true value of $theta$.
   - *Left-tailed*: $theta < theta_0$ (true $theta$ is smaller than $theta_0$)
   - *Right-tailed*: $theta > theta_0$ (true $theta$ is larger than $theta_0$)
 
-/ Test Statistic: A (standardized) statistic for $theta$ with the distribution $cal(X)$ implied by the _model_.
+/ Test Statistic: An estimator $T$ for $theta$ whose sampling distribution under $H_0$ is (completely) specified by the model.
+  Its evaluation on a realized sample yields an observed value $t_0 = T(bold(x))$.
 
-E.g., for a normal parent distribution with unknown variance, we use the $t$-statistic if we are testing the mean:
-$
-  t_0 = sqrt(n) (overline(x) - theta_0) / s
-$
-This is a realization of the random variable $T ~ t(n - 1)$.
+#aside[
+  E.g., for a normal model ($X_i ~^("iid") N(mu, sigma^2)$) with unknown variance, the appropriate test statistic for the mean $H_0: mu = mu_0$ is
+  $
+    T(bold(X)) = (overline(X) - mu_0) / (S \/ sqrt(n)) = sqrt(n) (overline(X) - mu_0) / S ~ t(n-1) quad text("under") H_0
+  $
 
-/ $p$-value: The probability, assuming $H_0$ is true, of observing a test statistic at least as extreme as the observed value $t_0$.
+  Evaluating this on our realized sample yields the observed value $t_0 = sqrt(n) (overline(x) - mu_0) / s$.
+]
 
-Continuing the normal-mean example:
-- *Two-tailed*: $p = P(abs(T) >= abs(t_0)) = 2 P(T >= abs(t_0))$
-- *Left-tailed*: $p = P(T <= t_0)$
-- *Right-tailed*: $p = P(T >= t_0)$
+/ $p$-value: The probability, under $H_0$, of obtaining a test statistic $T$ at least as extreme as the observed value $t_0$.
+  Clearly, this depends on the type of $H_1$:
+  - For *two-tailed*: $p = P(abs(T) >= abs(t_0))$
+  - For *left-tailed*: $p = P(T <= t_0)$
+  - For *right-tailed*: $p = P(T >= t_0)$
 
-/ Significance Level: ($alpha$) The maximum tolerated probability of a false positive / type I error; used to determine the threshold for rejecting $H_0$.
+#aside[
+  E.g., (continuing with the above example)
+  Under the Student's $t(n-1)$ distribution of $T$ under $H_0$:
+  - Two-tailed: $p = 2 P(T >= abs(t_0))$ (by symmetry of the $t$-distribution)
+  - Left-tailed: $p = P(T <= t_0)$
+  - Right-tailed: $p = P(T >= t_0)$
+]
+
+/ Significance Level: ($alpha$) The maximum tolerated probability of a false positive (i.e., type I error); used to determine the threshold for rejecting $H_0$.
   - $p < alpha$: we *reject $H_0$* in favor of $H_1$ (the observed effect is statistically significant).
   - $p >= alpha$: we *fail to reject $H_0$* (we cannot conclude anything significant; we do not "accept" $H_0$, but rather find insufficient evidence to discard it).
 
 $alpha$ is commonly 5%.
-
 
 
 == Bootstrapping
