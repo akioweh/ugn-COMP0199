@@ -899,32 +899,55 @@ rectangles, trapezoids... (brief metion of simpson's rule)
 
 == Basics
 
-/ Random Variable: A function $X : Omega -> T$ where \<insert measure theory baggage\>
-  #aside[To properly define a _random variable_, we need some background in _measure theory_ (or some setup with commutative unital algebras)... but that is completely out of scope... _gives up_]
+/ Random Variable: A _measurable_ function $X : Omega -> T$. \
+  #aside[
+    $Omega$ belongs to a _probability triple_ $(Omega, cal(F), P)$ where the _probability measure_ $P: cal(F) -> [0, 1]$ assigns probabilities to _events_ $a in cal(F) subset.eq scr(P)(Omega)$.
+    Naturally, an event, being a subset of outcomes, is considered to have occurred iff. the actual outcome is an element of it.
 
-  / Sample Space: $Omega$, the set of possible outcomes.
-  / Target Space: $T$, the image of $X$.
+    Conceptually, a random variable maps abstract outcomes to concrete "numeric" values.
+    Measurability ensures this mapping is well-behaved wrt. the structure of $cal(F)$ and $P$, and is analogous to continuity in standard analysis.
+
+    Study _measure theory_ for further rigor.
+  ]
+
+  / Sample Space: $Omega$, the set of possible outcomes (symbolic).
+  / Target Space: $T$, a measurable space (numeric repr. of outcomes).
     Often, $T = RR^n$.
 
-  When $T$ is continuous, $X$ is a _continuous random variable_.
+  $X$ may be discrete or continuous.
 
-/ Probability Density Function: (PDF) Any function $f : T -> RR$ where
-  + $forall x in T : f(x) >= 0$
+#aside[
+  It is important to realize that random variables can be freely _transformed_: \
+  $Y = f(X)$ is a new random variable for any measurable function $f : T -> T'$; \
+  and _combined_: \
+  $Z = g(X, Y)$ is a new random variable for any measurable function $g : T times T -> T'$.
+
+  Continuous functions on $RR^n$ are measurable.
+  In fact, you'd rarely encounter a non-measurable function unless you're looking for one.
+]
+
+/ Probability Density Function: The PDF of a random variable is a function $f : T -> RR$ mapping a given target space outcome to its _relative_ probability. \
+  A PDF $f : T -> RR$ must satisfy
+  + $f(x) >= 0$
   + $integral_T f(x) dif x = 1$
 
-A given random variable $X$ can have multiple PDFs, but with enough measure theory knowledge you know there is a canonical one :).
+PDFs are non-unique wrt. a given random variable. \
+A random variable can be "reconstructed" from a PDF, also non-uniquely.
 
-If a random variable $X$ has PDF $f$, then for any $a, b in T$ with $a <= b$,
+Concretely, a PDF specifies, via its integral, the probability of the random variable taking values within a given interval;
+if a random variable $X$ has PDF $f$, then for any $a, b in T$ with $a <= b$,
 $
   P(a <= X <= b) = integral_a^b f(x) dif x
 $
 
-Note that it does not matter whether the inequalities are strict or not; they're all equivalent for continuous random variables since $Pr(X = a) = 0$ for any $a$.
+Clearly, $P(X = a) = 0$ for any $a$, and the strictness of the inequalities does not matter.
 
-/ Cumulative Distribution Function: (CDF) For a random variable $X$, its CDF is $F : T -> RR$ where
+/ Cumulative Distribution Function: The CDF of a random variable $X$ is the function $F : T -> RR$ s.t.
   $ F (x) = P(X <= x) $
   If $X$ has a PDF $f$, then also
   $ F (x) = integral_(-infinity)^x f(t) dif t $
+
+The association between a random variable and its CDF is unique.
 
 / Inverse CDF: For a "distribution" $cal(X)$, we notate its inverse CDF as $cal(X)[c]$. I.e., \
   $cal(X)[c] = x <==> P(X <= x) = c$.
@@ -940,7 +963,7 @@ Note that it does not matter whether the inequalities are strict or not; they're
   In the following section on statistics, this justifies the computation of means and variances on arbitrary statistical samples (which are assumed to be of some unspecified random variable).
 ]
 
-/ Covariance: For random variables $X$ and $Y$ with means $mu_X$ and $mu_Y$ and _joint_ PDF $f_(X,Y)$,
+/ Covariance: For random variables $X$ and $Y$ with means $mu_X$ and $mu_Y$ and a _joint_ PDF $f_(X,Y)$,
   $
     Cov(X, Y) & = E[(X - E[X])(Y - E[Y])] \
               & = E[X Y] - E[X] E[Y] \
@@ -961,7 +984,7 @@ Note that it does not matter whether the inequalities are strict or not; they're
            & = integral_T x^2 f(x) dif x - mu^2 = integral_T (x - mu)^2 f(x) dif x
   $
 
-Covariance measures the dependence between $X$ and $Y$; \
+Covariance measures the linear dependence between $X$ and $Y$; \
 variance measures the spread of variable around its mean.
 
 #aside[
