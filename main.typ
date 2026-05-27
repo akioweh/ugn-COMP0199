@@ -1125,11 +1125,16 @@ We consider the approximation valid for $n >= 30$.
 
 Statistics can be seen as the physical manifestation of associated theoretical concepts in probability.
 
-- Interpreting probabilities as statistical quantities
-
 #aside[
   Interesting: see _frequentist_ vs _Bayesian_ interpretations of probability.
 ]
+
+/ Sample: (Random Sample) A sample $bold(X)$ of size $n$ is a sequence of random variables $bold(X) = (X_1, ..., X_n)$. \
+  A _realized_ sample is an observation of $bold(X)$, i.e. a sequence of real values $bold(x) = (x_1, ..., x_n)$ where $x_i$ is the observed realization of $X_i$.
+
+/ Simple Random Sample: (SRS) A sample where $X_i$ are i.i.d.
+
+Clearly, the CLT can be used to approximate the mean of SRSs.
 
 == The Normal Distribution
 
@@ -1155,19 +1160,14 @@ Different processes may produce different normal distributions, but they can be 
 
 == Parameter Estimation
 
-To model a process with a given distribution, we must estimate its defining parameters from sample data.
+To model a physical random process with a given distribution, we must estimate its defining parameters from sample data.
 E.g., for a normal distribution, we estimate the mean $mu$ and variance $sigma^2$; for an exponential distribution, we estimate the rate $lambda$.
 
-If a realized sample of $n$ observations is drawn from the distribution of one random variable $X$, we can model the sample prior to realization as a random sample: a sequence of i.i.d.s $X_1, ..., X_n$ sharing the same distribution as $X$. \
-Per the CLT, the distribution of the sample mean $overline(X)$ is approximated by a normal distribution (for sufficient $n$). \
-It is therefore useful to estimate the $mu$ and $sigma^2$ of an arbitrarily-distributed variable $X$, as these two parameters directly dictate the behavior of the sample mean even when $X$ itself is not normal.
-
-/ Sample: (Random Sample) A sample $bold(X)$ of size $n$ is a sequence of random variables $bold(X) = (X_1, ..., X_n)$. \
-  A _realized_ sample is an observation of $bold(X)$, i.e. a sequence of real values $bold(x) = (x_1, ..., x_n)$ where $x_i$ is the observed realization of $X_i$.
-
-/ Simple Random Sample: (SRS) A sample where $X_i$ are i.i.d.
-
-Clearly, the CLT applies to the sample mean of SRSs.
+#aside[
+  If a realized sample of $n$ observations is drawn from the distribution of one random variable $X$, we can model the sample prior to realization as a random sample: a sequence of i.i.d.s $X_1, ..., X_n$ sharing the same distribution as $X$. \
+  Per the CLT, the distribution of the sample mean $overline(X)$ is approximated by a normal distribution (for sufficient $n$). \
+  It is therefore useful to estimate the $mu$ and $sigma^2$ of an arbitrarily-distributed variable $X$, as these two parameters directly dictate the behavior of the sample mean even when $X$ itself is not normal.
+]
 
 / Statistic: Any function $T$ that maps a random sample $bold(X)$ to a _statistic_ (a new random variable). \
   When evaluated on a realized sample, $T(bold(x))$ yields a real value. \
@@ -1293,6 +1293,56 @@ $
 To obtain the realized confidence interval for the standard deviation $sigma$, we simply take the square root of the bounds.
 
 == Hypothesis Testing
+
+#aside[
+  Hypothesis testing provides a structured statistical framework to make decisions about a population parameter using sample data.
+
+  A _null hypothesis_ that makes a claim about the parameter's value is stated, then a _test statistic_ estimates the parameter from a realized sample, and finally a _p-value_ is computed to quantify the evidence against the null hypothesis.
+]
+
+=== Procedure
+
+#aside[
+  / Model: It is important to note that hypothesis testing as a framework operates _above_ an assumed _model_.
+    The model encapsulates assumptions, e.g. the underlying parent distribution. \
+    The hypotheses only make claims about the _value_ of a parameter;
+    the model is what that provides the sampling distribution of the test statistic under $H_0$ (which is core to calculating $p$-values used to draw conclusions).
+
+  While a rejection of $H_0$ technically rejects the _combination_ of the hypothesis and the model, the framework assumes the model correct and thus attributes the rejection to the hypothesis alone. \
+  Similarly, failing to reject does _not_ validate the model.
+]
+
+Let $theta$ be the parameter of interest.
+Note that we do not know the true value of $theta$.
+
+/ Null Hypothesis: ($H_0$) The baseline or default assumption that $theta = theta_0$, an assumed value.
+
+/ Alternative Hypothesis: ($H_1$) A claim contradicting $H_0$ that we wish to seek statistical evidence for.
+  There are three common forms of $H_1$:
+  - *Two-tailed*: $theta != theta_0$ (true $theta$ is different from $theta_0$)
+  - *Left-tailed*: $theta < theta_0$ (true $theta$ is smaller than $theta_0$)
+  - *Right-tailed*: $theta > theta_0$ (true $theta$ is larger than $theta_0$)
+
+/ Test Statistic: A (standardized) statistic for $theta$ with the distribution $cal(X)$ implied by the _model_.
+
+E.g., for a normal parent distribution with unknown variance, we use the $t$-statistic if we are testing the mean:
+$
+  t_0 = sqrt(n) (overline(x) - theta_0) / s
+$
+This is a realization of the random variable $T ~ t(n - 1)$.
+
+/ $p$-value: The probability, assuming $H_0$ is true, of observing a test statistic at least as extreme as the observed value $t_0$.
+
+Continuing the normal-mean example:
+- *Two-tailed*: $p = P(abs(T) >= abs(t_0)) = 2 P(T >= abs(t_0))$
+- *Left-tailed*: $p = P(T <= t_0)$
+- *Right-tailed*: $p = P(T >= t_0)$
+
+/ Significance Level: ($alpha$) The maximum tolerated probability of a false positive / type I error; used to determine the threshold for rejecting $H_0$.
+  - $p < alpha$: we *reject $H_0$* in favor of $H_1$ (the observed effect is statistically significant).
+  - $p >= alpha$: we *fail to reject $H_0$* (we cannot conclude anything significant; we do not "accept" $H_0$, but rather find insufficient evidence to discard it).
+
+$alpha$ is commonly 5%.
 
 
 
