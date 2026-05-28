@@ -37,7 +37,7 @@ $
 
 A sequence of numbers $u_n$ is Cauchy if
 $
-  forall epsilon > 0, exists N > NN, forall m, n >= N : abs(u_m - u_n) < epsilon
+  forall epsilon > 0, exists N in NN, forall m, n >= N : abs(u_m - u_n) < epsilon
 $
 
 A sequence is Cauchy iff. it is convergent (in _complete_ metric spaces).
@@ -72,7 +72,7 @@ A sequence is pointwise Cauchy iff. it converges pointwise.
 Uniform convergence implies pointwise convergence, to the same limit. (It is _stronger_.)
 
 *Uniformity* is preserved: \
-The limit $f$ continuous if all $f_n$ is continuous and $(f_n)$ converges uniformly.
+The limit $f$ is continuous if all $f_n$ are continuous and $(f_n)$ converges uniformly.
 
 *Integrals* are preserved: \
 If $(f_n)$ converges uniformly to $f$ on $[a, b]$, then
@@ -97,7 +97,7 @@ $sum f_n$ denotes the series of functions, i.e., the sum of the sequence $(f_n)$
 
 == easy stuff
 
-$f = sum f_n$ is more specifically $f : x mapsto sum_(n=infinity)^infinity f_n (x)$. \
+$f = sum f_n$ is more specifically $f : x mapsto sum_(n=0)^infinity f_n (x)$. \
 Clearly, this (infinite) sum may be undefined.
 
 The partial sums of a series is a sequence itself: $(sum_(k=0)^n f_k (x))_n$
@@ -113,7 +113,7 @@ Note that _normal convergence_ implies *_uniform_* and *_absolute_ convergence*.
 The Weierstrass M-test may be seen as the Cauchy Criterion for uniform convergence. \
 Furthermore, the $x$-dependence is eliminated by effectively taking the suprema:
 $
-  sup_x abs(sum_(n=N)^infinity f_n (x)) <= sum_(n=N)^infinity sup_x abs(f_n (x)) = sum_(n=N)^infinity M_n -> 0
+  sup_x abs(sum_(n=N)^infinity f_n (x)) <= sum_(n=N)^infinity sup_x abs(f_n (x)) <= sum_(n=N)^infinity M_n -> 0
 $
 - Does not help find the actual limit.
 - Main tool used to test for uniform convergence.
@@ -151,21 +151,21 @@ I.e., convergence when $abs(x - b) < 1 / L$.
 == Taylor Series
 
 Taylor Series are a special case of power series. \
-They converge (within the radius) to arbitrary functions.
+They converge (within the radius) to arbitrary _analytic_ functions.
 
 For a function $f$ infinitely differentiable at $b in RR$, its Taylor Series centered at $b$ is
 $
   sum_(n>=0) (f^((n))(b)) / n! (x - b)^n
 $
 
-- converges to $f$ in $(b - r, b + r)$
+- converges to $f$ in $(b - r, b + r)$ (if $f$ is analytic at $b$)
 - Maclaurin Series are a special case where $b=0$
 
 === Well-known Functions
 
 $
   e^x & = sum_(n>=0) x^n / n! && = 1 + x + x^2/2! + x^3/3! + ... &&\
-  cos(x) & = sum_(n>=0) (-1)^n / (2n!) x^(2n) && = 1 - x^2/2! + x^4/4! - x^6/6! + ... &&\
+  cos(x) & = sum_(n>=0) (-1)^n / ((2n)!) x^(2n) && = 1 - x^2/2! + x^4/4! - x^6/6! + ... &&\
   sin(x) & = sum_(n>=0) (-1)^n / (2n+1)! x^(2n+1) && = x - x^3/3! + x^5/5! - x^7/7! + ... &&\
   ln(1+x) & = sum_(n>=1) (-1)^(n+1)/n x^n && = x - x^2/2 + x^3/3 - x^4/4 + ... &quad quad& "for" abs(x) < 1, x = 1 \
   1 / (1 - x) & = sum_(n>=0) x^n && = 1 + x + x^2 + x^3 + ... &quad quad &"for" abs(x) < 1 \
@@ -177,7 +177,7 @@ $
 The degree-$n$ Taylor polynomial of $f$ centered at $b$ is just the series truncated after $n+1$  terms:
 $ T_n (x) = sum_(k=0)^n (f^((k))(b)) / k! (x - b)^k $
 
-$f(x) approx T_n (x)$ for $x approx a$.
+$f(x) approx T_n (x)$ for $x approx b$.
 
 $R_n (x) = f(x) - T_n (x)$ is the tail of the terms in the series. \
 There are numerous ways to express this sub-series beyond a simple summation.
@@ -199,13 +199,13 @@ Since $M$ is constant, we have, for $x -> b$:
 = Linear Algebra
 
 Assume $U$, $V$, and $W$ to be vector spaces. \
-Assume vector spaces to be over the field of $RR$. \
+Assume vector spaces to be over a field $FF$ (usually $RR$). \
 Assume $+$ over functions be _pointwise addition_ -- $(f + g)(x) = f(x) + g(x)$. \
 
 == easy stuff
 
 / Linear Independence: A subset $S = {v_1, ..., v_k} subset.eq V$ is linearly independent if \
-  $sum_(i=0)^k a_i v_i = bold(0) quad ==> quad "all" a_i = 0$ \
+  $sum_(i=1)^k a_i v_i = bold(0) quad ==> quad "all" a_i = 0$ \
 
 Alternatively, the map $(a_1, ..., a_k) mapsto a_1 v_1 + ... + a_k v_k$ is injective.
 
@@ -489,14 +489,14 @@ $
 
 Observe that a given $lambda$ is a solution \
 $<==>$ $ker (M - lambda I)$ is non-trivial \
-$<==>$ $M - lambda I$ is not injective $<=>$ surjective $<=>$ bijective \
+$<==>$ $M - lambda I$ is not injective ($<=>$ not surjective $<=>$ not bijective) \
 $<==>$ $M - lambda I$ is not _invertible_ \
-$<==>$ $det(M - lambda I) = 0$. \
+$<==>$ $det(lambda I - M) = 0$. \
 I.e., any $lambda$ that satisfies any statement above is an eigenvalue, and the set of all such solutions are the eigenvalues of the transformation represented by $M$.
 
 
 / Characteristic Polynomial: The characteristic polynomial $chi_M$ for matrix $M$ is
-  $ chi_M (lambda) = det(M - lambda I) $
+  $ chi_M (lambda) = det(lambda I - M) $
   The roots of $chi_M$ (expanding $det$ with the Leibniz formula) are exactly the eigenvalues of $M$. \
 
 #aside[
@@ -541,12 +541,12 @@ Recall that polynomials in $RR$ factor into linear _and_ irreducible quadratic f
 
 If $FF = RR$, $chi_M$ factors into distinct irreducible quadratic terms $P_i$ and linear terms.
 $
-  chi_M (x) = a times P_1^(r_1)(x) times ... times P_k^(r_k)(x) times (x - lambda_1)^(s_1) times ... times (x - lambda_j)^(s_j)
+  chi_M (x) = P_1^(r_1)(x) times ... times P_k^(r_k)(x) times (x - lambda_1)^(s_1) times ... times (x - lambda_j)^(s_j)
 $
 
 If $FF = CC$:
 $
-  chi_M (x) = a times (x - lambda_1)^(r_1) times ... times (x - lambda_m)^(r_m)
+  chi_M (x) = (x - lambda_1)^(r_1) times ... times (x - lambda_m)^(r_m)
 $
 
 / Annihilating Polynomial: A polynomial $P$ over $FF$ is an annihilating polynomial for $M$ if \
@@ -578,7 +578,8 @@ Different bases thus correspond to different matrices that still represent the s
 Further properties:
 - the entries of $D$ are the eigenvalues of $M$ (with multiplicity)
 - $M$ is diagonalizable iff. $mu_M$ splits into _distinct_ linear factors.
-- $M$ is diagonalizable iff. $alpha_M (lambda) = gamma_M (lambda)$ for all eigenvalues $lambda$.
+- $M$ is diagonalizable iff. $chi_M$ splits over $FF$ _and_ $alpha_M (lambda) = gamma_M (lambda)$ for all eigenvalues $lambda$.
+- $M$ is diagonalizable iff. $sum_i gamma_M (lambda_i) = n$.
 - Powers of $M$ are easy to compute: $M^k = P D^k P^(-1)$ (where $D^k$ is just diagonal entries raised to $k$).
 - Similarly, for any analytic function $f$ (e.g., $e^M$): $f(M) = P f(D) P^(-1)$.
 
@@ -590,7 +591,7 @@ Further properties:
 Following the complete factorization of the characteristic polynomial, we have...\
 For $FF = RR$:
 $
-  V = ker(P_1^(r_1)(M)) plus.o ... plus.o ker(P_n^(r_k)(M)) plus.o ker((M - lambda_1 I)^(s_1)) plus.o ... plus.o ker((M - lambda_j I)^(s_j))
+  V = ker(P_1^(r_1)(M)) plus.o ... plus.o ker(P_k^(r_k)(M)) plus.o ker((M - lambda_1 I)^(s_1)) plus.o ... plus.o ker((M - lambda_j I)^(s_j))
 $
 For $FF = CC$:
 $
@@ -669,15 +670,15 @@ The general solution is built from the roots of the characteristic polynomial $c
   $
     integral.double_(X times Y) f(x, y) dif(x, y) = integral_X (integral_Y f(x, y) dif y) dif x = integral_Y (integral_X f(x, y) dif x) dif y
   $
-  This double-to-iterated conversion is valid for any shape of area as long as $f$ is continuous over it.
+  This extends to non-rectangular regions with appropriate limits of integration.
 
 / Gradient: A representation of the first derivative of a multivariate function. \
-  For a function $f : RR^n -> RR$, the gradient of $f$ at some point $x = (x_1, ..., x_n) in R^n$ is the vector of partial derivatives:
+  For a function $f : RR^n -> RR$, the gradient of $f$ at some point $x = (x_1, ..., x_n) in RR^n$ is the vector of partial derivatives:
   $ gradient f = vec((partial f) / (partial x_1), ..., (partial f) / (partial x_n)) $
   The gradient points in the direction of steepest ascent, and its magnitude is the rate of increase in that direction.
 
 / Hessian: A representation of the second derivative of a multivariate function. \
-  For a function $f : RR^n -> RR$, the Hessian of $f$ at some point $x = (x_1, ..., x_n) in R^n$ is the matrix of second partial derivatives:
+  For a function $f : RR^n -> RR$, the Hessian of $f$ at some point $x = (x_1, ..., x_n) in RR^n$ is the matrix of second partial derivatives:
   $
     (bold(cal(H))_f)_(i,j) = (partial^2 f) / (partial x_i partial x_j) \
     bold(cal(H))_f = mat(
@@ -705,6 +706,15 @@ Classification of Stationary point $x$:
   $x$ is a saddle point.
 - $det(bold(cal(H))_f (x)) = 0$ \
   inconclusive
+
+#aside[
+  More generally (beyond 2 dimensions), by the _Real Spectral Theorem_, the classification is performed from the signs of the eigenvalues (aka, _definiteness_) of the Hessian:
+  - positive definite (all eigenvalues $> 0$): local minimum
+  - negative definite (all eigenvalues $< 0$): local maximum
+  - indefinite (eigenvalues of mixed sign): saddle point
+  - singular (some eigenvalue $= 0$): inconclusive
+]
+
 
 #pagebreak()
 = Euclidean Spaces
@@ -784,7 +794,7 @@ $
 / Euclidean Norm: The norm induced by the canonical inner product in Euclidean spaces. E.g., $ norm(vec(x, y)) = sqrt(inner(vec(x, y), vec(x, y))) = sqrt(vec(x, y) dot vec(x, y)) = sqrt(x^2 + y^2) $
 
 / Cauchy-Schwarz Inequality: In any inner product space $V$, \
-  $abs(inner(v, w))^2 <= inner(u, u) inner(v, v)$ \
+  $abs(inner(v, w))^2 <= inner(v, v) inner(w, w)$ \
   or, assuming the induced norm, \
   $abs(inner(v, w)) <= norm(v) norm(w)$.
 
@@ -828,7 +838,7 @@ Every orthonormal family of vectors is linearly independent, and every finite-di
 
 Clearly, \
 $V^perp = {0}$ and ${0}^perp = V$ \
-$V = W + W^perp$
+$V = W plus.o W^perp$
 
 For an orthonormal basis $(w_1, ..., w_k)$ of $W subset.eq V$, we can define the _orthogonal projection_ s.t.
 $ P_W (v) = inner(v, w_1) w_1 + ... + inner(v, w_k) w_k $
@@ -997,11 +1007,15 @@ variance measures the spread of variable around its mean.
 
 If $X$ and $Y$ are independent, then $Cov(X, Y) = 0$.
 
-/ Independence: $X$ and $Y$ are independent iff. $P(X = x inter Y = y) = P(X = x) P(Y = y)$ (for all $x, y$).
+/ Independence: $X$ and $Y$ are independent iff. their joint distribution factorizes; $f_(X,Y) (x, y) = f_X (x) f_Y (y)$.
+  I.e.,
+  $ P(X <= x inter Y <= y) = P(X <= x) P(Y <= y). $
 
-  For independent $X$ and $Y$, the joint PDF factorizes: $f_(X,Y) (x, y) = f_X (x) f_Y (y)$. \
-  Also, $E[X Y] = E[X] E[Y]$ and thus $Cov(X, Y) = 0$.
+  #aside[
+    Equivalently for discrete variables, $P(X = x inter Y = y) = P(X = x) P(Y = y)$.
 
+    Also, $E[X Y] = E[X] E[Y]$ and thus $Cov(X, Y) = 0$.
+  ]
 
 == Classic Distributions
 
@@ -1093,12 +1107,13 @@ Joint distro of two continuous variables:
 $ P(a <= X <= b, c <= Y <= d) = integral_a^b integral_c^d f_(X,Y) (x, y) dif y dif x $
 for the _joint_ PDF $f_(X,Y)$ of $X$ and $Y$.
 
-/ Marginal Distributions: Of a multivariate distribution, a single-variate distributions at some fixed values of all other variables. E.g. for the joint PDF $f_(X,Y)$,
+/ Marginal Distributions: Given a multivariate distribution, the single-variate distribution of one variable is obtained by "integrating out" (summing over) all other variables. E.g. for the joint PDF $f_(X,Y)$,
   $
     f_X (x) & = integral_T f_(X,Y) (x, y) dif y \
     f_Y (y) & = integral_T f_(X,Y) (x, y) dif x
   $
-  (Like a 2-d cross-section of the 3-d joint graph...)
+
+This "recovers" the individual distributions.
 
 / Conditional Probabilities:
   $
@@ -1113,10 +1128,13 @@ for the _joint_ PDF $f_(X,Y)$ of $X$ and $Y$.
   $ P(lim_(n -> infinity) overline(X) = mu) = 1 $
   where $overline(X) = 1/n (X_1 + ... + X_n)$.
 
-/ Central Limit Theorem: (CLT) For i.i.d.s $X_1, X_2, ..., X_n$ with mean $mu$ and _finite_ variance $sigma^2$,
-  $ lim_(n -> infinity) overline(X) ~ N(mu, sigma^2 \/ n) $
-  where $overline(X) = 1/n (X_1 + ... + X_n)$.
+/ Central Limit Theorem: (CLT) For i.i.d.s $X_1, X_2, ..., X_n$ with mean $mu$ and _finite_ variance $sigma^2$, the standardized sample mean converges in distribution to a standard normal:
+  $
+    sqrt(n) (overline(X)_n - mu) / sigma ->^~ N(0, 1) quad "as" n -> infinity
+  $
+  where $overline(X)_n = 1/n (X_1 + ... + X_n)$. \
 
+Equivalently, for large (finite) $n$, $overline(X)_n$ is approximately $N(mu, sigma^2 \/ n)$-distributed. \
 We consider the approximation valid for $n >= 30$.
 
 
@@ -1230,11 +1248,11 @@ $
 / Studentized Mean: Often, the true variance $sigma^2$ required in the above interval is unknown.
   If $sigma$ is substituted with the unbiased sample standard deviation $S$, the resulting statistic instead follows Student's t-distribution with $n-1$ degrees of freedom:
   $
-    Z = sqrt(n) (overline(X) - mu) / S ~ t(n-1)
+    T = sqrt(n) (overline(X) - mu) / S ~ t(n-1)
   $
 
 #aside[
-  Because we are using an estimator $S$ instead of a constant $sigma$, $Z$ is the quotient of a normal distribution (the mean estimator) and the square root of a chi-squared distribution (the variance estimator, see below), which results in a $t$-distribution.
+  Because we are using an estimator $S$ instead of a constant $sigma$, $T$ is the quotient of a normal distribution (the mean estimator) and the square root of a chi-squared distribution (the variance estimator, see below), which results in a $t$-distribution.
   The $t$-distribution exhibits heavier tails than the normal distribution to account for this uncertainty in the variance.
 ]
 
@@ -1244,7 +1262,7 @@ $
 $
 where $overline(x)$ and $s$ are the mean and standard deviation of the realized sample.
 
-Clearly, $t_(n-1)[alpha/2] >= z[alpha/2]$, so the realized confidence intervals are wider when the variance is also estimated.
+Clearly, $abs(t_(n-1)[alpha/2]) >= abs(z[alpha/2])$, so the realized confidence intervals are wider when the variance is also estimated.
 
 === Variance
 
@@ -1323,8 +1341,10 @@ Note that we do not know the true value of $theta$.
   - *Left-tailed*: $theta < theta_0$ (true $theta$ is smaller than $theta_0$)
   - *Right-tailed*: $theta > theta_0$ (true $theta$ is larger than $theta_0$)
 
-/ Test Statistic: An estimator $T$ for $theta$ whose sampling distribution under $H_0$ is (completely) specified by the model.
+/ Test Statistic: A statistic $T$ whose sampling distribution under $H_0$ is (completely) specified by the model.
   Its evaluation on a realized sample yields an observed value $t_0 = T(bold(x))$.
+
+The test statistic is typically built from an estimator of $theta$, re-centered and rescaled under $H_0$.
 
 #aside[
   E.g., for a normal model ($X_i ~^("iid") N(mu, sigma^2)$) with unknown variance, the appropriate test statistic for the mean $H_0: mu = mu_0$ is
