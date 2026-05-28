@@ -450,14 +450,14 @@ Observe that $B$ will be zeroes if $W$ is _also_ invariant, yielding a _block di
 
 Other equations characterizing eigenvalues and eigenvectors wrt. matrix representations include
 $
-  (M - lambda I) v = bold(0) quad "or" quad v in ker (M - lambda I)
+  (lambda I - M) v = bold(0) quad "or" quad v in ker (lambda I - M)
 $
 (See section below on the computational utility of these.)
 
 An eigenvector's span is an invariant subspace where the associated endomorphism acts like a scaling: \
 An eigenvector spans a 1-dimensional invariant subspace, and a linear transformation on 1-dimensional invariant subspaces can _only_ be a scaling.
 
-/ Eigenspace: For a given eigenvalue $lambda$, we have its eigenspace $E_lambda = ker (M - lambda I) subset.eq V$. \
+/ Eigenspace: For a given eigenvalue $lambda$, we have its eigenspace $E_lambda = ker (lambda I - M) subset.eq V$. \
   Equivalently, $E_lambda = op("span"){v_1, ..., v_k}$ where ${v_1, ..., v_k}$ is a basis of eigenvectors for $lambda$ (and $k$ is the geometric multiplicity).
 
 Observe that any $v in E_lambda \\ {bold(0)}$ is an eigenvector corresponding to $lambda$. \
@@ -482,15 +482,15 @@ Assume $v in V != bold(0)$ and $lambda in FF$.
 Derivation from $M v = lambda v$ to the _characteristic polynomial_:
 $
                  M v & = lambda v \
-      M v - lambda v & = bold(0) \
-  M v - lambda (I v) & = bold(0) \
-    (M - lambda I) v & = bold(0)
+      lambda v - M v & = bold(0) \
+  lambda (I v) - M v & = bold(0) \
+    (lambda I - M) v & = bold(0)
 $
 
 Observe that a given $lambda$ is a solution \
-$<==>$ $ker (M - lambda I)$ is non-trivial \
-$<==>$ $M - lambda I$ is not injective ($<=>$ not surjective $<=>$ not bijective) \
-$<==>$ $M - lambda I$ is not _invertible_ \
+$<==>$ $ker (lambda I - M)$ is non-trivial \
+$<==>$ $lambda I - M$ is not injective ($<=>$ not surjective $<=>$ not bijective) \
+$<==>$ $lambda I - M$ is not _invertible_ \
 $<==>$ $det(lambda I - M) = 0$. \
 I.e., any $lambda$ that satisfies any statement above is an eigenvalue, and the set of all such solutions are the eigenvalues of the transformation represented by $M$.
 
@@ -524,7 +524,7 @@ $0$ is a root of $chi_M$ iff. $det(M) = 0$
 
 === Computing Eigenvectors
 
-Obviously, we just compute $ker (M - lambda I)$ for a given $lambda$ to obtain its eigenspace.
+Obviously, we just compute $ker (lambda I - M)$ for a given $lambda$ to obtain its eigenspace.
 
 
 == Polynomials and Linear Maps
@@ -591,16 +591,16 @@ Further properties:
 Following the complete factorization of the characteristic polynomial, we have...\
 For $FF = RR$:
 $
-  V = ker(P_1^(r_1)(M)) plus.o ... plus.o ker(P_k^(r_k)(M)) plus.o ker((M - lambda_1 I)^(s_1)) plus.o ... plus.o ker((M - lambda_j I)^(s_j))
+  V = ker(P_1^(r_1)(M)) plus.o ... plus.o ker(P_k^(r_k)(M)) plus.o ker((lambda_1 I - M)^(s_1)) plus.o ... plus.o ker((lambda_j I - M)^(s_j))
 $
 For $FF = CC$:
 $
-  V = ker((M - lambda_1 I)^(r_1)) plus.o ... plus.o ker((M - lambda_m I)^(r_m))
+  V = ker((lambda_1 I - M)^(r_1)) plus.o ... plus.o ker((lambda_m I - M)^(r_m))
 $
 Note that every term and its power $r$ or $s$ directly correspond to the factorization of $chi_M$.
 
 / Generalized Eigenspace: For an eigenvalue $lambda$ with algebraic multiplicity $m = alpha_M (lambda)$, the generalized eigenspace is
-  $ K_lambda = ker((M - lambda I)^m) $
+  $ K_lambda = ker((lambda I - M)^m) $
   - Its elements are _generalized eigenvectors_.
   - $dim K_lambda = alpha_M (lambda)$ (always, unlike eigenspaces where $dim E_lambda <= alpha_M (lambda)$).
   - While the direct sum of eigenspaces $plus.o.big E_lambda$ may not span $V$, the direct sum of generalized eigenspaces always does (if $chi_M$ splits, e.g., over $CC$):
