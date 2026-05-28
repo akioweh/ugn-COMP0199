@@ -874,34 +874,190 @@ Advantages of an orthonormal basis:
 #pagebreak()
 = Numerical Methods
 
+Numerical methods approximate continuous mathematical problems (such as finding roots, solving differential equations, optimizing functions, or integrating) using discrete algorithms.
+
+== Preliminaries and Error Analysis
+
+/ Absolute Error: Let $x$ be the exact mathematical quantity and $hat(x)$ be its numerical approximation.
+  The absolute error is defined as $e = abs(x - hat(x))$.
+
+/ Order of Convergence $q$: Let a sequence $(x_n)$ converge to a limit $l$.
+  The sequence converges with *order of convergence* $q >= 1$ and *asymptotic error constant* $M > 0$ if:
+  $ lim_(n->infinity) abs(x_(n+1) - l) / abs(x_n - l)^q = M $
+  For $q = 1$, we require $M < 1$ for convergence (linear convergence).
+
+#aside[
+  The order $q$ governs the asymptotic speed of convergence:
+  - Linear ($q = 1$): The error is reduced by a constant factor $M$ at each step.
+  - Quadratic ($q = 2$): The distance to the limit is squared at each step, which roughly doubles the number of correct decimal digits per iteration.
+  The constant $M$ acts as a scaling factor on the error propagation.
+]
+
+/ Asymptotic Error Bounding (Big-O Notation): In step-based or partition-based methods with step/subinterval size $h > 0$, we say the error $e(h)$ is $O(h^p)$ as $h -> 0$ if there exist constants $C > 0$ and $h_0 > 0$ such that:
+  $ abs(e(h)) <= C h^p quad forall h in (0, h_0] $
+  The integer $p >= 1$ is the *order of accuracy* of the method.
+
+#aside[
+  An error bound of $O(h^p)$ implies that halving the step size $h$ reduces the asymptotic error bound by a factor of $2^p$.
+  Equivalently, for a partition of $[a, b]$ into $n$ subintervals where $h$ is proportional to $1/n$, the error is $O(1/n^p)$.
+]
+
+
 == Newton's Method
 
-finds roots...
+Newton's Method is an iterative numerical technique to find roots/zeroes of a differentiable function $f : RR -> RR$.
+The goal is to find values $a$ such that $f(a) = 0$.
 
-Prerequisites, algorithm + convergence
+#aside[
+  Geometrically, each iteration approximates the curve by its tangent line at the current point, and finds the intersection of this tangent with the $x$-axis.
+]
+
+For an initial guess $x_0 in RR$ and a desired tolerance $delta > 0$, while $abs(f(x_n)) > delta$, compute:
+$ x_(n+1) = x_n - f(x_n) / (f'(x_n)) $
+
+/ Fixed Point Characterization: Let $f$ be differentiable with $f'(x) != 0$ for all $x$.
+  A point $l$ satisfies $f(l) = 0$ iff. $l$ is a fixed point of the sequence-defining function $g : x mapsto x - f(x) / (f'(x))$.
+
+/ Convergence to Zero: If the sequence $(x_n)$ defined by Newton's method converges to a limit $l$, $f'$ is continuous on an interval containing $l$, and $f'(l) != 0$, then $f(l) = 0$.
+
+- *Sufficient Conditions for Local Convergence*:
+  If $f(a) = 0$, $f'$ is continuous on an open interval $I$ containing $a$, and $f'(a) != 0$, then there exists an interval $J subset I$ containing $a$ such that for any starting point $x_0 in J$, the sequence $(x_n)$ converges to $a$.
+
+- *Quadratic Convergence*:
+  If $f(a) = 0$, $f'(a) != 0$, and $f$ is twice continuously differentiable ($f in cal(C)^2$) in a neighborhood of $a$, then Newton's method converges quadratically (with order $q = 2$).
+  As established in the preliminaries, this means the distance to the root is squared at each step, doubling the number of correct digits.
+
+- *Limitations*:
+  - Newton's method fails to converge if $f'(x_n) = 0$ for some iteration.
+  - Convergence is highly sensitive to the initial guess $x_0$.
+    Poor choices can result in oscillation or divergence (e.g., $f(x) = abs(x)^(0.25)$).
+
 
 == Euler's Method
 
-solves ODEs...
+Euler's Method is a first-order numerical procedure for solving ordinary differential equations (ODEs).
+Consider an ODE of the form:
+$ y' = f'(x) = G(x, f(x)) quad "with initial condition" quad f(x_0) = y_0 $
 
-Algorithm + error bounding
+To approximate the exact solution $f$, we partition the domain with step size $h > 0$ and grid points $x_k = x_0 + k h$.
+We approximate the values $y_k approx f(x_k)$ recursively via:
+$ y_(k+1) = y_k + h G(x_k, y_k) $
+
+- *Error Analysis via Taylor Expansion*:
+  Let $f$ be the exact solution to the ODE.
+  Assuming $f in cal(C)^2$, its Taylor expansion is:
+  $ f(x_0 + h) = f(x_0) + h f'(x_0) + 1/2 h^2 f''(x_0) + O(h^3) $
+  Using the ODE relation $f'(x_0) = G(x_0, f(x_0))$ and substituting $y_0 = f(x_0)$:
+  $ f(x_0 + h) = y_0 + h G(x_0, y_0) + 1/2 h^2 f''(x_0) + O(h^3) $
+  Comparing this to a single Euler step $y_1 = y_0 + h G(x_0, y_0)$, we obtain the *local truncation error*:
+  $ e_1 = f(x_0 + h) - y_1 = 1/2 h^2 f''(x_0) + O(h^3) $
+
+/ Local Truncation Error (LTE): The error introduced by a single step assuming the previous step was exact.
+  For Euler's method, LTE is $O(h^2)$ asymptotically.
+
+/ Global Truncation Error (GTE): The cumulative error over the entire integration interval $[x_0, x_N]$.
+  Since the number of steps $N = (x_N - x_0) / h$ is proportional to $1/h$, the errors propagate and accumulate.
+  Consequently, Euler's method is a first-order method with a GTE of $O(h)$.
+  #aside[
+    Thus, Euler's method is a first-order method: halving the step size $h$ roughly halves the global approximation error.
+  ]
+
 
 == Gradient Descent
 
-finds minima...
+Gradient Descent is a first-order iterative optimization algorithm for finding local minima of a differentiable multivariate function $f : RR^d -> RR$.
 
-algorithm + convergence
+#aside[
+  Because the gradient $gradient f(x)$ points in the direction of steepest *ascent*, moving in the opposite direction $-gradient f(x)$ slides down the function's surface.
+]
+
+Choose a starting point $x_0 in RR^d$, learning rate (step size) $r > 0$, and convergence tolerance $delta > 0$.
+Iterate:
+$ x_(n+1) = x_n - r gradient f(x_n) $
+Exit the loop when $norm(x_(n+1) - x_n) < delta$.
+
+- *Convergence Analysis*:
+  Let the gradient of $f$ be $L$-Lipschitz continuous; i.e., there exists $L > 0$ such that:
+  $ norm(gradient f(y) - gradient f(x)) <= L norm(y - x) quad forall x, y in RR^d $
+
+  / Convergence Rate: Under the Lipschitz condition, if the learning rate satisfies $r <= 1/L$, then after $k$ iterations:
+    $ f(x_k) - f(x^*) = O(1/k) $
+    where $x^*$ is a local minimum.
+    This represents a sublinear rate of convergence, which is slower than linear convergence.
+
+- *Remarks & Limitations*:
+  - The behavior depends heavily on the learning rate $r$.
+    If $r$ is too large (e.g., $r > 2/L$), the steps overshoot and can cause divergence.
+    If $r$ is too small, convergence is excessively slow.
+  - In non-convex landscapes, gradient descent can easily get trapped in sub-optimal local minima or stall at saddle points.
+
+- *Common Extensions*:
+  / Stochastic Gradient Descent (SGD): Approximates the true gradient using a subset of data or adds controlled noise to the gradient updates.
+    This enables the algorithm to escape local minima and saddle points.
+  / Momentum (Heavy Ball Method): Accelerates convergence by incorporating a fraction of the previous step's update, mimicking physical momentum:
+    $
+      v_(n+1) &= beta v_n - r gradient f(x_n) quad "where" beta in [0, 1) \
+      x_(n+1) &= x_n + v_(n+1)
+    $
+
 
 == Numerical Integration
 
-integrates...
+Numerical Integration methods approximate definite integrals when the antiderivative of the integrand is analytically intractable.
+The objective is to approximate the definite integral:
+$ I = integral_a^b f(x) dif x $
 
-=== Riemann Sums
+Let the interval $[a, b]$ be partitioned into $n$ equal subintervals of width $h = (b-a)/n$.
+Let $x_k = a + k h$ for $k = 0, 1, ..., n$.
 
-rectangles, trapezoids... (brief metion of simpson's rule)
+=== Riemann Sums & Trapeziums
+
+/ Midpoint Rule: Approximates $f$ on each subinterval $[x_k, x_(k+1)]$ by a constant value evaluated at the midpoint $m_k = x_k + h/2$:
+  $ I_n^M = h sum_(k=0)^(n-1) f(m_k) $
+
+  / Midpoint Error Bound: If $f$ is twice continuously differentiable ($f in cal(C)^2([a, b])$) and $abs(f''(x)) <= M$ for all $x in [a, b]$, then the approximation error satisfies:
+    $ abs(I - I_n^M) <= M (b-a)^3 / (24 n^2) $
+    This indicates quadratic convergence ($O(1/n^2)$ or $O(h^2)$) as defined in the preliminaries.
+
+/ Trapezium Rule: Approximates $f$ on each subinterval by a linear interpolant (piecewise linear approximation):
+  $ I_n^T = h sum_(k=0)^(n-1) (f(x_k) + f(x_(k+1))) / 2 = h ( (f(a) + f(b)) / 2 + sum_(k=1)^(n-1) f(x_k) ) $
+
+  / Trapezium Error Bound: If $f in cal(C)^2([a, b])$ and $abs(f''(x)) <= M$ for all $x in [a, b]$, then the approximation error satisfies:
+    $ abs(I - I_n^T) <= M (b-a)^3 / (12 n^2) $
+    The trapezium rule also achieves quadratic convergence ($O(1/n^2)$), but carries a larger error bound constant than the midpoint rule.
+
+/ Simpson's Rule: Approximates $f$ on pairs of subintervals using quadratic interpolants (piecewise quadratic approximation).
+  For an even number of subintervals $n$:
+  $ I_n^S = h / 3 [ f(a) + f(b) + 4 sum_(j=1)^(n/2) f(x_(2j-1)) + 2 sum_(j=1)^(n/2 - 1) f(x_(2j)) ] $
+
+  / Simpson Error Bound: If $f$ is four-times continuously differentiable ($f in cal(C)^4([a, b])$) and $abs(f^((4))(x)) <= M_4$ for all $x in [a, b]$, then the approximation error satisfies:
+    $ abs(I - I_n^S) <= M_4 (b-a)^5 / (180 n^4) $
+    This yields a higher order of accuracy of $O(1/n^4)$ or $O(h^4)$.
+    #aside[
+      This $O(h^4)$ convergence rate makes Simpson's rule highly efficient: doubling the number of intervals reduces the error bound by a factor of 16.
+    ]
 
 === Monte Carlo
 
+/ Monte Carlo Integration: A randomized algorithm for estimating integrals, particularly valuable in multi-dimensional domains where standard grid-based methods suffer from the *curse of dimensionality*.
+
+- *Algorithm (Geometric Interpretation)*:
+  1. Bound the integration region within a rectangle $D = [a, b] times [y_(min), y_(max)]$ such that $y_(min) <= f(x) <= y_(max)$ for all $x in [a, b]$.
+  2. Generate $N$ independent and identically distributed (i.e. i.i.d.) random points $(X_i, Y_i)$ uniformly on $D$.
+  3. Count the number of points $C$ that fall under the curve (i.e., $Y_i <= f(X_i)$, assuming $f(x) >= 0$).
+  4. Estimate the integral by scaling the bounding area:
+     $ I approx "Area"(D) times C / N $
+
+- *Probabilistic Derivation via Expectation*:
+  By the Law of Large Numbers, the integral can be estimated as:
+  $ I = (b-a) E[f(X)] approx (b-a) / N sum_(i=1)^N f(X_i) $
+  where $X_i tilde U(a, b)$ are i.i.d. random variables.
+
+- *Convergence Rate*:
+  By the Central Limit Theorem, the error converges at a rate of $O(1/sqrt(N))$ regardless of the dimensionality $d$ of the integration domain.
+  #aside[
+    While $O(1/sqrt(N))$ is slow compared to $O(1/n^2)$ or $O(1/n^4)$ in 1D, Monte Carlo remains highly scalable for high-dimensional integration where standard grid methods require $O(n^d)$ points.
+  ]
 
 
 #pagebreak()
